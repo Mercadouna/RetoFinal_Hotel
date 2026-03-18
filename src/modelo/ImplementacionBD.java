@@ -26,6 +26,7 @@ public class ImplementacionBD implements AdminDAO {
 
 	// Sentencias SQL
 	private final String SQL_VIEW_ROOMS = "SELECT * FROM room";
+	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_costumer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.room_number";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -77,4 +78,23 @@ public class ImplementacionBD implements AdminDAO {
 		return rooms;
 	}
 
+	/*public ArrayList<Booking> viewBookings(){
+		ArrayList<Booking>bookings = new ArrayList<>();
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_VIEW_BOOKINGS);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				int idCustomer = rs.getInt("id_customer");
+				String name = rs.getString("name_customer");
+				String surname = rs.getString("surname");
+				Booking booking = new Booking();
+			}
+		}catch (SQLException e) {
+			System.out.println("Error al recuperar las habitaciones");
+			e.printStackTrace();
+		}
+		return bookings;
+		
+	}*/
 }
