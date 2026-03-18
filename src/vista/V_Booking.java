@@ -1,0 +1,190 @@
+package vista;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
+public class V_Booking extends JDialog {
+	private static final long serialVersionUID = 1L;
+	private JTable Tabla_Cust;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	/**
+	 * Launch the application.
+	 */
+	
+	
+	
+	
+	public static void main(String[] args) {
+		try {
+			V_Customer dialog = new V_Customer();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void cargarTabla() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("ID");
+		model.addColumn("Número");
+		model.addColumn("Tipo");
+		model.addColumn("Estado");
+		model.addColumn("Precio");
+		model.addColumn("Capacidad");
+	}
+	/**
+	 * Create the dialog.
+	 */
+	public V_Booking() {
+		setBounds(100, 100, 620, 420);
+		getContentPane().setLayout(null);
+		{
+			JPanel TITULO = new JPanel();
+			TITULO.setBounds(10, 11, 586, 22);
+			getContentPane().add(TITULO);
+			TITULO.setLayout(null);
+			
+			JButton Exit = new JButton("Exit");
+			Exit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			Exit.setBounds(492, 0, 84, 20);
+			TITULO.add(Exit);
+			
+			JLabel lblNewLabel = new JLabel("Booking Managment");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 13));
+			lblNewLabel.setBounds(10, 4, 139, 12);
+			TITULO.add(lblNewLabel);
+		}
+		{
+			JPanel SUBTITULO = new JPanel();
+			SUBTITULO.setBounds(10, 43, 586, 23);
+			getContentPane().add(SUBTITULO);
+			SUBTITULO.setLayout(null);
+			
+			JLabel lblNewLabel_1 = new JLabel("Sort by state:");
+			lblNewLabel_1.setBounds(10, 5, 95, 12);
+			SUBTITULO.add(lblNewLabel_1);
+			
+			JButton Buscar = new JButton("Search");
+			Buscar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			Buscar.setBounds(204, 1, 84, 20);
+			SUBTITULO.add(Buscar);
+			
+			JLabel lblNewLabel_2 = new JLabel("Total:");
+			lblNewLabel_2.setBounds(319, 5, 44, 12);
+			SUBTITULO.add(lblNewLabel_2);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(99, 1, 95, 20);
+			SUBTITULO.add(comboBox);
+		}
+		{
+			JPanel TABLA = new JPanel();
+			TABLA.setBounds(10, 82, 586, 78);
+			getContentPane().add(TABLA);
+			TABLA.setLayout(null);
+			
+			Tabla_Cust = new JTable();
+			Tabla_Cust.setBounds(208, 5, 0, 0);
+			TABLA.add(Tabla_Cust);
+		}
+		{
+			JPanel INFO = new JPanel();
+			INFO.setBounds(10, 170, 586, 203);
+			getContentPane().add(INFO);
+			INFO.setLayout(null);
+			
+			JLabel lblNewLabel_1 = new JLabel("Booking");
+			lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 12));
+			lblNewLabel_1.setBounds(10, 10, 92, 13);
+			INFO.add(lblNewLabel_1);
+			
+			JLabel lblNewLabel_2 = new JLabel("Room ID:");
+			lblNewLabel_2.setBounds(20, 44, 44, 12);
+			INFO.add(lblNewLabel_2);
+			
+			JLabel lblNewLabel_2_1 = new JLabel("Client ID:");
+			lblNewLabel_2_1.setBounds(20, 116, 44, 12);
+			INFO.add(lblNewLabel_2_1);
+			
+			JLabel lblNewLabel_2_2 = new JLabel("Check-in (DD/MM/YY):");
+			lblNewLabel_2_2.setBounds(98, 44, 107, 12);
+			INFO.add(lblNewLabel_2_2);
+			
+			JLabel lblNewLabel_2_3 = new JLabel("Check-out (DD/MM/YY):");
+			lblNewLabel_2_3.setBounds(98, 116, 122, 12);
+			INFO.add(lblNewLabel_2_3);
+			
+			textField_1 = new JTextField();
+			textField_1.setColumns(10);
+			textField_1.setBounds(6, 66, 96, 18);
+			INFO.add(textField_1);
+			
+			textField_2 = new JTextField();
+			textField_2.setColumns(10);
+			textField_2.setBounds(6, 138, 96, 18);
+			INFO.add(textField_2);
+			
+			textField_3 = new JTextField();
+			textField_3.setColumns(10);
+			textField_3.setBounds(111, 66, 96, 18);
+			INFO.add(textField_3);
+			
+			textField_4 = new JTextField();
+			textField_4.setColumns(10);
+			textField_4.setBounds(112, 138, 96, 18);
+			INFO.add(textField_4);
+			
+			JButton btnAadir = new JButton(" Add +");
+			btnAadir.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnAadir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btnAadir.setBounds(357, 66, 84, 20);
+			INFO.add(btnAadir);
+			
+			JButton btnEliminar = new JButton("Delete -");
+			btnEliminar.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnEliminar.setBounds(451, 66, 84, 20);
+			INFO.add(btnEliminar);
+			
+			JButton btnEdit = new JButton("Edit []");
+			btnEdit.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnEdit.setBounds(357, 123, 84, 20);
+			INFO.add(btnEdit);
+			
+			JButton btnClear = new JButton("Clear []");
+			btnClear.setBounds(451, 122, 84, 20);
+			INFO.add(btnClear);
+			
+			JLabel lblNewLabel_2_4 = new JLabel("Payment State:");
+			lblNewLabel_2_4.setBounds(218, 45, 92, 12);
+			INFO.add(lblNewLabel_2_4);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(217, 65, 95, 20);
+			INFO.add(comboBox);
+		}
+		
+		cargarTabla();
+	}
+}
