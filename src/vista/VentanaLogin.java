@@ -51,29 +51,29 @@ public class VentanaLogin extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 
 		campoUsuario = new JTextField();
-		campoUsuario.setBounds(200, 98, 105, 19);
+		campoUsuario.setBounds(567, 519, 105, 19);
 		contentPane.add(campoUsuario);
 		campoUsuario.setColumns(10);
 
 		campoContrasena = new JPasswordField();
-		campoContrasena.setBounds(200, 148, 105, 19);
+		campoContrasena.setBounds(567, 570, 105, 19);
 		contentPane.add(campoContrasena);
 
 		btnLogin = new JButton("Login");
-		btnLogin.setBounds(160, 209, 85, 21);
+		btnLogin.setBounds(477, 639, 85, 21);
 		contentPane.add(btnLogin);
 		btnLogin.addActionListener(this);
 
 		lblNewLabel = new JLabel("Usuario");
-		lblNewLabel.setBounds(78, 100, 109, 16);
+		lblNewLabel.setBounds(406, 521, 109, 16);
 		contentPane.add(lblNewLabel);
 
 		Contarseña = new JLabel("Contarseña");
-		Contarseña.setBounds(78, 151, 109, 16);
+		Contarseña.setBounds(406, 572, 109, 16);
 		contentPane.add(Contarseña);
 
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(78, 240, 274, 23);
+		lblNewLabel_1.setBounds(363, 698, 274, 23);
 		contentPane.add(lblNewLabel_1);
 		
 	}
