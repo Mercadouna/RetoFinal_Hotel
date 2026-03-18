@@ -80,7 +80,11 @@ public class VentanaLogin extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if(e.getSource()==btnLogin) {
+			V_Menu m = new V_Menu(cont);
+			m.setVisible(true);
+			this.dispose();
+		}
 	}
 }
 

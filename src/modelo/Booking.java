@@ -23,7 +23,7 @@ public class Booking {
     }
 
     public int getIdBooking() {
-        return idBooking;
+        return idBooking;	
     }
 
     public void setIdBooking(int idBooking) {
