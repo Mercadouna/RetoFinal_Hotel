@@ -14,9 +14,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controlador.LoginControlador;
+
 import java.awt.Color;
 
-public class V_ExtraServices extends JDialog {
+public class V_ExtraServices extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JTable Tabla_Cust;
 	private JTextField textField_2;
@@ -185,5 +188,28 @@ public class V_ExtraServices extends JDialog {
 		}
 
 		cargarTabla();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == exit) {
+			V_Menu m = new V_Menu (cont);
+			m.setVisible(true);
+			this.dispose();
+		}
+		
+		if (e.getSource() == textField_2) {}
+		
+		if (e.getSource() == textField_4) {}
+
+		if (e.getSource() == btnAdd) {}
+		
+		if (e.getSource() == btnDelete) {}
+		
+		if (e.getSource() == btnEdit) {}
+		
+		if (e.getSource() == btnClear) {}
+		
 	}
 }

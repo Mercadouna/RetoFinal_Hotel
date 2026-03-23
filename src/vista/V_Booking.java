@@ -33,6 +33,8 @@ public class V_Booking extends JDialog implements ActionListener {
 	private JButton Buscar;
 	private JLabel lblNewLabel_2;
 	private JComboBox comboBox;
+	private JComboBox comboBox2;
+	private JComboBox comboBox1;
 	private JPanel table;
 	private JPanel info;
 	private JLabel lblNewLabel_2_1_1;
@@ -100,9 +102,9 @@ public class V_Booking extends JDialog implements ActionListener {
 			lblNewLabel_2.setBounds(319, 5, 44, 12);
 			subtitulo.add(lblNewLabel_2);
 
-			comboBox = new JComboBox();
-			comboBox.setBounds(99, 1, 95, 20);
-			subtitulo.add(comboBox);
+			comboBox1 = new JComboBox();
+			comboBox1.setBounds(99, 1, 95, 20);
+			subtitulo.add(comboBox1);
 		}
 		{
 			table = new JPanel();
@@ -169,6 +171,10 @@ public class V_Booking extends JDialog implements ActionListener {
 			info.add(btnAadir);
 
 			btnDelete = new JButton("Delete -");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			btnDelete.setFont(new Font("Times New Roman", Font.PLAIN, 10));
 			btnDelete.setBounds(451, 66, 84, 20);
 			info.add(btnDelete);
@@ -186,9 +192,9 @@ public class V_Booking extends JDialog implements ActionListener {
 			lblNewLabel_2_4.setBounds(218, 45, 92, 12);
 			info.add(lblNewLabel_2_4);
 
-			comboBox = new JComboBox();
-			comboBox.setBounds(217, 65, 95, 20);
-			info.add(comboBox);
+			comboBox2 = new JComboBox();
+			comboBox2.setBounds(217, 65, 95, 20);
+			info.add(comboBox2);
 		}
 
 		cargarTabla();
@@ -201,6 +207,30 @@ public class V_Booking extends JDialog implements ActionListener {
 			m.setVisible(true);
 			this.dispose();
 		}
+		
+		if (e.getSource() == comboBox1) {}
+		
+		if (e.getSource() == Buscar) {}
+		
+		if (e.getSource() == textField_1) {}
+		
+		if (e.getSource() == textField_2) {}
+		
+		if (e.getSource() == textField_3) {}
+		
+		if (e.getSource() == textField_4) {}
+		
+		if (e.getSource() == comboBox2) {}
+		
+		if (e.getSource() == btnAadir) {}
+		
+		if (e.getSource() == btnDelete) {}
+		
+		if (e.getSource() == btnEdit) {}
+		
+		if (e.getSource() == btnClear) {}
+		
+		
 
 	}
 }
