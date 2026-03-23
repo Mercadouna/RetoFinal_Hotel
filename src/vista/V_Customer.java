@@ -6,6 +6,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controlador.LoginControlador;
+
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Font;
