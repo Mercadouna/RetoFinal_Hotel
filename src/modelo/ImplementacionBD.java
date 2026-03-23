@@ -103,7 +103,7 @@ public class ImplementacionBD implements AdminDAO {
 		
 	}
 	
-	/*public ArrayList<Booking> viewBookings(){
+	/*public ArrayList<Aux_booking> viewBookings(){
 		ArrayList<Booking>bookings = new ArrayList<>();
 		this.openConnection();
 		try {
