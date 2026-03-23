@@ -122,4 +122,6 @@ public class ImplementacionBD implements AdminDAO {
 		return bookings;
 		
 	}*/
+	
+	
 }
