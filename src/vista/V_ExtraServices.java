@@ -42,6 +42,7 @@ public class V_ExtraServices extends JDialog {
 	private JButton btnDelete;
 	private JButton btnEdit;
 	private JButton btnClear;
+	private LoginControlador cont;
 
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel();
@@ -56,7 +57,8 @@ public class V_ExtraServices extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public V_ExtraServices() {
+	public V_ExtraServices(LoginControlador cont) {
+		this.cont=cont;
 		setBounds(100, 100, 620, 420);
 		getContentPane().setLayout(null);
 		{

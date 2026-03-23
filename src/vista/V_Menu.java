@@ -85,5 +85,17 @@ public class V_Menu extends JDialog implements ActionListener {
 			b.setVisible(true);
 			this.dispose();
 		}
+		
+		if(e.getSource() == btnNewButton_Clients) {
+			V_Customer c = new V_Customer(cont);
+			c.setVisible(true);
+			this.dispose();
+		}
+		
+		if(e.getSource() == btnNewButton_ExtraServices) {
+			V_ExtraServices ex = new V_ExtraServices(cont);
+			ex.setVisible(true);
+			this.dispose();
+		}
 	}
 }

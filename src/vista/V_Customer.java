@@ -21,6 +21,7 @@ public class V_Customer extends JDialog {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField;
+	private LoginControlador cont;
 	/**
 	 * Launch the application.
 	 */
@@ -28,15 +29,7 @@ public class V_Customer extends JDialog {
 	
 	
 	
-	public static void main(String[] args) {
-		try {
-			V_Customer dialog = new V_Customer();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("ID");
@@ -49,7 +42,7 @@ public class V_Customer extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public V_Customer() {
+	public V_Customer(LoginControlador cont) {
 		setBounds(100, 100, 620, 420);
 		getContentPane().setLayout(null);
 		{
