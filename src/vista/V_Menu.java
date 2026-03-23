@@ -43,6 +43,7 @@ public class V_Menu extends JDialog implements ActionListener {
 		btnNewButton_Booking = new JButton("Booking");
 		btnNewButton_Booking.setBounds(59, 35, 153, 23);
 		panel_Botones_Ventanas.add(btnNewButton_Booking);
+		btnNewButton_Booking.addActionListener(this);
 
 		btnNewButton_Clients = new JButton("Clients");
 		btnNewButton_Clients.setBounds(59, 105, 153, 23);
@@ -74,8 +75,14 @@ public class V_Menu extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewButton_Rooms) {
-			V_Room v_Room = new V_Room(cont);
-			v_Room.setVisible(true);
+			V_Room r = new V_Room(cont);
+			r.setVisible(true);
+			this.dispose();
+		}
+		
+		if(e.getSource() == btnNewButton_Booking) {
+			V_Booking b = new V_Booking(cont);
+			b.setVisible(true);
 			this.dispose();
 		}
 	}
