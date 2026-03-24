@@ -199,6 +199,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			info.add(btnAdd);
 
 			btnDelete = new JButton("Delete -");
+			btnDelete.addActionListener(this);
 			btnDelete.setFont(new Font("Times New Roman", Font.PLAIN, 10));
 			btnDelete.setBounds(451, 66, 84, 20);
 			info.add(btnDelete);
@@ -314,6 +315,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnDelete) {
+			cont.deleteCostumer(Integer.parseInt(textField_ID.getText()));
 		}
 
 		if (e.getSource() == btnEdit) {
