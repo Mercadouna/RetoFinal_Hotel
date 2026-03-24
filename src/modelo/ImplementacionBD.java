@@ -166,7 +166,7 @@ public class ImplementacionBD implements AdminDAO {
 				correct = true;
 			}
 		}catch (SQLException e) {
-			System.out.println("Error al recuperar las habitaciones");
+			System.out.println("Error");
 			e.printStackTrace();
 		}
 		return correct;
