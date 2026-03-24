@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -103,17 +104,34 @@ public class ImplementacionBD implements AdminDAO {
 		
 	}
 	
-	/*public ArrayList<Aux_booking> viewBookings(){
-		ArrayList<Booking>bookings = new ArrayList<>();
+	public ArrayList<Aux_booking> viewBookings(){
+		ArrayList<Aux_booking>bookings = new ArrayList<>();
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_VIEW_BOOKINGS);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				int idCustomer = rs.getInt("id_customer");
-				String name = rs.getString("name_customer");
-				String surname = rs.getString("surname");
-				Booking booking = new Booking();
+				
+				Customer c = new Customer();
+				
+				c.setIdCustomer(rs.getInt("id_customer"));
+				c.setNameCostumer(rs.getString("name_customer"));
+				c.setSurname(rs.getString("surname"));
+				
+				Room r = new Room();
+				
+				r.setRoomNumber(rs.getInt("room_number"));
+				r.setTypeRoom(rs.getString("type_room"));
+				
+				Booking b = new Booking();
+				
+				b.setCheckIn(rs.getObject("check_in", LocalDate.class));
+			    b.setCheckOut(rs.getObject("check_out", LocalDate.class));
+			    b.setPaid(rs.getBoolean("paid"));
+			   
+				Aux_booking booking = new Aux_booking(c, r, b);
+				
+				bookings.add(booking);
 			}
 		}catch (SQLException e) {
 			System.out.println("Error al recuperar las habitaciones");
@@ -121,7 +139,7 @@ public class ImplementacionBD implements AdminDAO {
 		}
 		return bookings;
 		
-	}*/
+	}
 	
 	
 }
