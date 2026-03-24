@@ -95,132 +95,155 @@ public class V_Customer extends JDialog implements ActionListener {
 	 */
 	public V_Customer(LoginControlador cont) {
 		this.cont = cont;
-		setBounds(100, 100, 620, 420);
+		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
+		
+		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
+		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
+		
 		{
 			titulo = new JPanel();
-			titulo.setBounds(10, 11, 586, 22);
+			titulo.setBounds(10, 10, 1024, 40);
 			getContentPane().add(titulo);
 			titulo.setLayout(null);
 
 			exit = new JButton("Exit");
 			exit.addActionListener(this);
-			exit.setBounds(492, 0, 84, 20);
+			exit.setFont(normalFont);
+			exit.setBounds(910, 0, 100, 35);
 			titulo.add(exit);
 
-			lblNewLabel = new JLabel("Client Managment");
-			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 13));
-			lblNewLabel.setBounds(10, 4, 139, 12);
+			lblNewLabel = new JLabel("Client Management");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			lblNewLabel.setBounds(10, 5, 200, 25);
 			titulo.add(lblNewLabel);
 		}
 		{
 			subtitulo = new JPanel();
-			subtitulo.setBounds(10, 43, 586, 23);
+			subtitulo.setBounds(10, 60, 1024, 40);
 			getContentPane().add(subtitulo);
 			subtitulo.setLayout(null);
 
 			lblNewLabel_1 = new JLabel("Search for client: ");
-			lblNewLabel_1.setBounds(10, 5, 95, 12);
+			lblNewLabel_1.setFont(normalFont);
+			lblNewLabel_1.setBounds(10, 5, 150, 25);
 			subtitulo.add(lblNewLabel_1);
 
+			textField = new JTextField();
+			textField.setFont(normalFont);
+			textField.setBounds(160, 2, 250, 30);
+			subtitulo.add(textField);
+			textField.setColumns(10);
+			
 			search = new JButton("Search");
 			search.addActionListener(this);
-			search.setBounds(204, 1, 84, 20);
+			search.setFont(normalFont);
+			search.setBounds(420, 0, 100, 35);
 			subtitulo.add(search);
 
 			lblNewLabel_2 = new JLabel("Total:");
-			lblNewLabel_2.setBounds(319, 5, 44, 12);
+			lblNewLabel_2.setFont(normalFont);
+			lblNewLabel_2.setBounds(550, 5, 80, 25);
 			subtitulo.add(lblNewLabel_2);
-
-			textField = new JTextField();
-			textField.setBounds(98, 2, 96, 18);
-			subtitulo.add(textField);
-			textField.setColumns(10);
 		}
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 82, 586, 78);
+			scrollPane.setBounds(10, 110, 1024, 470);
 			getContentPane().add(scrollPane);
 
 			Tabla_Cust = new JTable();
+			Tabla_Cust.setFont(normalFont);
+			Tabla_Cust.setRowHeight(30);
+			Tabla_Cust.getTableHeader().setFont(boldFont);
 			scrollPane.setViewportView(Tabla_Cust);
 		}
 		{
 			info = new JPanel();
-			info.setBounds(10, 170, 586, 203);
+			info.setBounds(10, 600, 1024, 200);
 			getContentPane().add(info);
 			info.setLayout(null);
 
 			lblNewLabel_1 = new JLabel("Client: ");
-			lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 12));
-			lblNewLabel_1.setBounds(10, 10, 92, 13);
+			lblNewLabel_1.setFont(boldFont);
+			lblNewLabel_1.setBounds(10, 5, 120, 25);
 			info.add(lblNewLabel_1);
 
 			lblNewLabel_2_4 = new JLabel("Name:");
-			lblNewLabel_2_4.setBounds(20, 44, 44, 12);
+			lblNewLabel_2_4.setFont(normalFont);
+			lblNewLabel_2_4.setBounds(20, 35, 100, 20);
 			info.add(lblNewLabel_2_4);
-
-			lblNewLabel_2_1 = new JLabel("Phone:");
-			lblNewLabel_2_1.setBounds(20, 116, 44, 12);
-			info.add(lblNewLabel_2_1);
-
-			lblNewLabel_2_2 = new JLabel("Surname:");
-			lblNewLabel_2_2.setBounds(112, 44, 67, 12);
-			info.add(lblNewLabel_2_2);
-
-			lblNewLabel_2_3 = new JLabel("ID (DNI):");
-			lblNewLabel_2_3.setBounds(114, 116, 44, 12);
-			info.add(lblNewLabel_2_3);
-
+			
 			textField_name = new JTextField();
+			textField_name.setFont(normalFont);
 			textField_name.setColumns(10);
-			textField_name.setBounds(6, 66, 96, 18);
+			textField_name.setBounds(20, 60, 180, 30);
 			info.add(textField_name);
 
-			textField_phone = new JTextField();
-			textField_phone.setColumns(10);
-			textField_phone.setBounds(6, 138, 96, 18);
-			info.add(textField_phone);
+			lblNewLabel_2_2 = new JLabel("Surname:");
+			lblNewLabel_2_2.setFont(normalFont);
+			lblNewLabel_2_2.setBounds(230, 35, 100, 20);
+			info.add(lblNewLabel_2_2);
 
 			textField_surname = new JTextField();
+			textField_surname.setFont(normalFont);
 			textField_surname.setColumns(10);
-			textField_surname.setBounds(112, 66, 96, 18);
+			textField_surname.setBounds(230, 60, 180, 30);
 			info.add(textField_surname);
 
+			JLabel lblNewLabel_2_3_1 = new JLabel("ID:");
+			lblNewLabel_2_3_1.setFont(normalFont);
+			lblNewLabel_2_3_1.setBounds(440, 35, 100, 20);
+			info.add(lblNewLabel_2_3_1);
+
+			textField_ID = new JTextField();
+			textField_ID.setFont(normalFont);
+			textField_ID.setColumns(10);
+			textField_ID.setBounds(440, 60, 180, 30);
+			info.add(textField_ID);
+
+			lblNewLabel_2_1 = new JLabel("Phone:");
+			lblNewLabel_2_1.setFont(normalFont);
+			lblNewLabel_2_1.setBounds(20, 100, 100, 20);
+			info.add(lblNewLabel_2_1);
+
+			textField_phone = new JTextField();
+			textField_phone.setFont(normalFont);
+			textField_phone.setColumns(10);
+			textField_phone.setBounds(20, 125, 180, 30);
+			info.add(textField_phone);
+
+			lblNewLabel_2_3 = new JLabel("ID (DNI):");
+			lblNewLabel_2_3.setFont(normalFont);
+			lblNewLabel_2_3.setBounds(230, 100, 100, 20);
+			info.add(lblNewLabel_2_3);
+
 			textField_ID_DNI = new JTextField();
+			textField_ID_DNI.setFont(normalFont);
 			textField_ID_DNI.setColumns(10);
-			textField_ID_DNI.setBounds(112, 138, 96, 18);
+			textField_ID_DNI.setBounds(230, 125, 180, 30);
 			info.add(textField_ID_DNI);
 
 			btnAdd = new JButton(" Add +");
-			btnAdd.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnAdd.setFont(normalFont);
 			btnAdd.addActionListener(this);
-			btnAdd.setBounds(357, 66, 84, 20);
+			btnAdd.setBounds(680, 55, 120, 35);
 			info.add(btnAdd);
 
 			btnDelete = new JButton("Delete -");
 			btnDelete.addActionListener(this);
-			btnDelete.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-			btnDelete.setBounds(451, 66, 84, 20);
+			btnDelete.setFont(normalFont);
+			btnDelete.setBounds(820, 55, 120, 35);
 			info.add(btnDelete);
 
 			btnEdit = new JButton("Edit []");
-			btnEdit.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-			btnEdit.setBounds(357, 123, 84, 20);
+			btnEdit.setFont(normalFont);
+			btnEdit.setBounds(680, 125, 120, 35);
 			info.add(btnEdit);
 
 			btnClear = new JButton("Clear []");
-			btnClear.setBounds(451, 122, 84, 20);
+			btnClear.setFont(normalFont);
+			btnClear.setBounds(820, 125, 120, 35);
 			info.add(btnClear);
-			
-			textField_ID = new JTextField();
-			textField_ID.setColumns(10);
-			textField_ID.setBounds(240, 65, 96, 18);
-			info.add(textField_ID);
-			
-			JLabel lblNewLabel_2_3_1 = new JLabel("ID:");
-			lblNewLabel_2_3_1.setBounds(244, 43, 44, 12);
-			info.add(lblNewLabel_2_3_1);
 		}
 
 		cargarTabla();
@@ -254,64 +277,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnAdd) {
-			boolean valido = true;
-			String name = textField_name.getText();
-			String surname = textField_surname.getText();
-			String phoneStr = textField_phone.getText();
-			String dni = textField_ID_DNI.getText();
-			int phoneInt = 0;
-
-			if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()) {
-				valido = false;
-				JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-
-			if (valido) {
-				try {
-					if (!phoneStr.matches("\\d{9}")) {
-						throw new PhoneNumException("Formato de teléfono incorrecto (deben ser 9 dígitos).");
-					}
-					phoneInt = Integer.parseInt(phoneStr);
-				} catch (PhoneNumException ex) {
-					valido = false;
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
-				} catch (NumberFormatException ex) {
-					valido = false;
-					JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de formato",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-
-			if (valido) {
-				try {
-					if (!dni.matches("\\d{8}[A-Za-z]")) {
-						throw new DniException("Formato de DNI incorrecto (8 números y 1 letra).");
-					}
-				} catch (DniException ex) {
-					valido = false;
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-
-			if (valido) {
-				if (cont.checkDni(dni)) {
-					valido = false;
-					JOptionPane.showMessageDialog(this, "El DNI ya existe en la base de datos.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (cont.checkPhone(phoneInt)) {
-					valido = false;
-					JOptionPane.showMessageDialog(this, "El teléfono ya existe en la base de datos.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-
-			if (valido) {
-				cont.addCostumer(name, surname, phoneInt, dni);
-				JOptionPane.showMessageDialog(this, "Cliente añadido con éxito.", "Éxito",
-						JOptionPane.INFORMATION_MESSAGE);
-				cargarTabla();
-			}
+			add();
 		}
 
 		if (e.getSource() == btnDelete) {
@@ -322,6 +288,67 @@ public class V_Customer extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnClear) {
+		}
+	}
+	
+	private void add() {
+		boolean valido = true;
+		String name = textField_name.getText();
+		String surname = textField_surname.getText();
+		String phoneStr = textField_phone.getText();
+		String dni = textField_ID_DNI.getText();
+		int phoneInt = 0;
+
+		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()) {
+			valido = false;
+			JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				if (!phoneStr.matches("\\d{9}")) {
+					throw new PhoneNumException("Formato de teléfono incorrecto (deben ser 9 dígitos).");
+				}
+				phoneInt = Integer.parseInt(phoneStr);
+			} catch (PhoneNumException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de formato",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			try {
+				if (!dni.matches("\\d{8}[A-Za-z]")) {
+					throw new DniException("Formato de DNI incorrecto (8 números y 1 letra).");
+				}
+			} catch (DniException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (cont.checkDni(dni)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El DNI ya existe en la base de datos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (cont.checkPhone(phoneInt)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El teléfono ya existe en la base de datos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			cont.addCostumer(name, surname, phoneInt, dni);
+			JOptionPane.showMessageDialog(this, "Cliente añadido con éxito.", "Éxito",
+					JOptionPane.INFORMATION_MESSAGE);
+			cargarTabla();
 		}
 	}
 }

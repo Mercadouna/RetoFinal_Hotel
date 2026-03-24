@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.JScrollPane;
 import controlador.LoginControlador;
 
 import javax.swing.JComboBox;
@@ -65,109 +65,136 @@ public class V_Booking extends JDialog implements ActionListener {
 	 */
 	public V_Booking(LoginControlador cont) {
 		this.cont=cont;
-		setBounds(100, 100, 620, 420);
+		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
+		
+		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
+		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
+
 		{
 			titulo = new JPanel();
-			titulo.setBounds(10, 11, 586, 22);
+			titulo.setBounds(10, 10, 1024, 40);
 			getContentPane().add(titulo);
 			titulo.setLayout(null);
 
 			exit = new JButton("Exit");
-			exit.setBounds(492, 0, 84, 20);
+			exit.setBounds(910, 0, 100, 35);
+			exit.setFont(normalFont);
 			titulo.add(exit);
 			exit.addActionListener(this);
 
-			lblNewLabel = new JLabel("Booking Managment");
-			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 13));
-			lblNewLabel.setBounds(10, 4, 139, 12);
+			lblNewLabel = new JLabel("Booking Management");
+			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			lblNewLabel.setBounds(10, 5, 200, 25);
 			titulo.add(lblNewLabel);
 		}
 		{
 			subtitulo = new JPanel();
-			subtitulo.setBounds(10, 43, 586, 23);
+			subtitulo.setBounds(10, 60, 1024, 40);
 			getContentPane().add(subtitulo);
 			subtitulo.setLayout(null);
 
 			lblNewLabel_1 = new JLabel("Sort by state:");
-			lblNewLabel_1.setBounds(10, 5, 95, 12);
+			lblNewLabel_1.setFont(normalFont);
+			lblNewLabel_1.setBounds(10, 5, 100, 25);
 			subtitulo.add(lblNewLabel_1);
 
+			comboBox1 = new JComboBox();
+			comboBox1.setFont(normalFont);
+			comboBox1.setBounds(120, 2, 150, 30);
+			subtitulo.add(comboBox1);
+
 			Buscar = new JButton("Search");
+			Buscar.setFont(normalFont);
 			Buscar.addActionListener(this);
-			Buscar.setBounds(204, 1, 84, 20);
+			Buscar.setBounds(290, 0, 100, 35);
 			subtitulo.add(Buscar);
 
 			lblNewLabel_2 = new JLabel("Total:");
-			lblNewLabel_2.setBounds(319, 5, 44, 12);
+			lblNewLabel_2.setFont(normalFont);
+			lblNewLabel_2.setBounds(550, 5, 80, 25);
 			subtitulo.add(lblNewLabel_2);
-
-			comboBox1 = new JComboBox();
-			comboBox1.setBounds(99, 1, 95, 20);
-			subtitulo.add(comboBox1);
 		}
 		{
-			table = new JPanel();
-			table.setBounds(10, 82, 586, 78);
-			getContentPane().add(table);
-			table.setLayout(null);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 110, 1024, 470);
+			getContentPane().add(scrollPane);
 
 			Tabla_Cust = new JTable();
-			Tabla_Cust.setBounds(208, 5, 0, 0);
-			table.add(Tabla_Cust);
+			Tabla_Cust.setFont(normalFont);
+			Tabla_Cust.setRowHeight(30);
+			Tabla_Cust.getTableHeader().setFont(boldFont);
+			scrollPane.setViewportView(Tabla_Cust);
 		}
 		{
 			info = new JPanel();
-			info.setBounds(10, 170, 586, 203);
+			info.setBounds(10, 600, 1024, 200);
 			getContentPane().add(info);
 			info.setLayout(null);
 
-			lblNewLabel_1 = new JLabel("Booking");
-			lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 12));
-			lblNewLabel_1.setBounds(10, 10, 92, 13);
+			lblNewLabel_1 = new JLabel("Booking:");
+			lblNewLabel_1.setFont(boldFont);
+			lblNewLabel_1.setBounds(10, 5, 120, 25);
 			info.add(lblNewLabel_1);
 
 			lblNewLabel_2_1_1 = new JLabel("Room ID:");
-			lblNewLabel_2_1_1.setBounds(20, 44, 58, 12);
+			lblNewLabel_2_1_1.setFont(normalFont);
+			lblNewLabel_2_1_1.setBounds(20, 35, 100, 20);
 			info.add(lblNewLabel_2_1_1);
 
-			lblNewLabel_2_1 = new JLabel("Client ID:");
-			lblNewLabel_2_1.setBounds(20, 116, 58, 12);
-			info.add(lblNewLabel_2_1);
-
-			lblNewLabel_2_2_1 = new JLabel("Check-in (DD/MM/YY):");
-			lblNewLabel_2_2_1.setBounds(98, 44, 107, 12);
-			info.add(lblNewLabel_2_2_1);
-
-			lblNewLabel_2_3 = new JLabel("Check-out (DD/MM/YY):");
-			lblNewLabel_2_3.setBounds(98, 116, 122, 12);
-			info.add(lblNewLabel_2_3);
-
 			textField_room_id = new JTextField();
+			textField_room_id.setFont(normalFont);
 			textField_room_id.setColumns(10);
-			textField_room_id.setBounds(6, 66, 96, 18);
+			textField_room_id.setBounds(20, 60, 180, 30);
 			info.add(textField_room_id);
 
-			textField_client_id = new JTextField();
-			textField_client_id.setColumns(10);
-			textField_client_id.setBounds(6, 138, 96, 18);
-			info.add(textField_client_id);
+			lblNewLabel_2_2_1 = new JLabel("Check-in (DD/MM/YY):");
+			lblNewLabel_2_2_1.setFont(normalFont);
+			lblNewLabel_2_2_1.setBounds(230, 35, 180, 20);
+			info.add(lblNewLabel_2_2_1);
 
 			textField_check_in = new JTextField();
+			textField_check_in.setFont(normalFont);
 			textField_check_in.setColumns(10);
-			textField_check_in.setBounds(111, 66, 96, 18);
+			textField_check_in.setBounds(230, 60, 180, 30);
 			info.add(textField_check_in);
 
+			lblNewLabel_2_4 = new JLabel("Payment State:");
+			lblNewLabel_2_4.setFont(normalFont);
+			lblNewLabel_2_4.setBounds(440, 35, 100, 20);
+			info.add(lblNewLabel_2_4);
+
+			comboBox_paid = new JComboBox();
+			comboBox_paid.setFont(normalFont);
+			comboBox_paid.setBounds(440, 60, 180, 30);
+			info.add(comboBox_paid);
+
+			lblNewLabel_2_1 = new JLabel("Client ID:");
+			lblNewLabel_2_1.setFont(normalFont);
+			lblNewLabel_2_1.setBounds(20, 100, 100, 20);
+			info.add(lblNewLabel_2_1);
+
+			textField_client_id = new JTextField();
+			textField_client_id.setFont(normalFont);
+			textField_client_id.setColumns(10);
+			textField_client_id.setBounds(20, 125, 180, 30);
+			info.add(textField_client_id);
+
+			lblNewLabel_2_3 = new JLabel("Check-out (DD/MM/YY):");
+			lblNewLabel_2_3.setFont(normalFont);
+			lblNewLabel_2_3.setBounds(230, 100, 180, 20);
+			info.add(lblNewLabel_2_3);
+
 			textField_check_out = new JTextField();
+			textField_check_out.setFont(normalFont);
 			textField_check_out.setColumns(10);
-			textField_check_out.setBounds(112, 138, 96, 18);
+			textField_check_out.setBounds(230, 125, 180, 30);
 			info.add(textField_check_out);
 
 			btnAadir = new JButton(" Add +");
-			btnAadir.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnAadir.setFont(normalFont);
 			btnAadir.addActionListener(this);
-
-			btnAadir.setBounds(357, 66, 84, 20);
+			btnAadir.setBounds(680, 55, 120, 35);
 			info.add(btnAadir);
 
 			btnDelete = new JButton("Delete -");
@@ -175,26 +202,19 @@ public class V_Booking extends JDialog implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			btnDelete.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-			btnDelete.setBounds(451, 66, 84, 20);
+			btnDelete.setFont(normalFont);
+			btnDelete.setBounds(820, 55, 120, 35);
 			info.add(btnDelete);
 
 			btnEdit = new JButton("Edit []");
-			btnEdit.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-			btnEdit.setBounds(357, 123, 84, 20);
+			btnEdit.setFont(normalFont);
+			btnEdit.setBounds(680, 125, 120, 35);
 			info.add(btnEdit);
 
 			btnClear = new JButton("Clear []");
-			btnClear.setBounds(451, 122, 84, 20);
+			btnClear.setFont(normalFont);
+			btnClear.setBounds(820, 125, 120, 35);
 			info.add(btnClear);
-
-			lblNewLabel_2_4 = new JLabel("Payment State:");
-			lblNewLabel_2_4.setBounds(218, 45, 92, 12);
-			info.add(lblNewLabel_2_4);
-
-			comboBox_paid = new JComboBox();
-			comboBox_paid.setBounds(217, 65, 95, 20);
-			info.add(comboBox_paid);
 		}
 
 		cargarTabla();
