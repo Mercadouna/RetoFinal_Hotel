@@ -20,8 +20,8 @@ public class LoginControlador {
 		return dao.editCostumer();
 	}
 
-	public boolean deleteCostumer() {
-		return dao.deleteCostumer();
+	public boolean deleteCostumer(int id) {
+		return dao.deleteCostumer(id);
 	}
 
 	public boolean createBooking() {
