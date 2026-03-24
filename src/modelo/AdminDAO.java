@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public interface AdminDAO {
 	public boolean addCostumer(String name, String surname, int phone, String dni);
 	public boolean editCostumer();
-	public boolean deleteCostumer();
+	public boolean deleteCostumer(int id);
 	public boolean createBooking();
 	public boolean editBooking();
 	public boolean deleteBooking();

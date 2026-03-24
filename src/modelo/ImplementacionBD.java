@@ -30,7 +30,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_costumer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.room_number";
 	private final String SQL_VIEW_CUSTOMERS = "SELECT * FROM Customer";
 	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_costumer, surname, phone, dni) VALUES (?, ?, ?, ?)";
-	
+	private final String SQLBORRAR = "DELETE FROM Customer WHERE id_customer=?";
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
 
@@ -171,9 +171,22 @@ public class ImplementacionBD implements AdminDAO {
 	}
 
 	@Override
-	public boolean deleteCostumer() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteCostumer(int id) {
+		boolean correct = false;
+
+			this.openConnection();
+			try {
+				stmt = con.prepareStatement(SQLBORRAR);
+				stmt.setInt(1, id);
+				if (stmt.executeUpdate() > 0) {
+					correct = true;
+				}
+				stmt.close();
+				con.close();
+			} catch (SQLException e) {
+				System.out.println("Error deleting customer");
+			}
+		return correct;
 	}
 
 	@Override
