@@ -29,6 +29,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_VIEW_ROOMS = "SELECT * FROM Room";
 	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_costumer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.room_number";
 	private final String SQL_VIEW_CUSTOMERS = "SELECT * FROM Customer";
+	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_costumer, surname, phone, dni) VALUES (?, ?, ?, ?)";
 	
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -139,6 +140,85 @@ public class ImplementacionBD implements AdminDAO {
 		}
 		return bookings;
 		
+	}
+
+	public boolean addCostumer() {
+		int idCustomer;
+		String name;
+		String surname;
+		int phone;
+		String dni;	
+		boolean correct = false;
+		this.openConnection();
+		ArrayList<Customer>customers = new ArrayList<>();
+		try {
+			stmt = con.prepareStatement(SQL_ADD_CUSTUMER);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				idCustomer = rs.getInt("id_customer");
+				name = rs.getString("name_customer");
+				surname = rs.getString("surname");
+				phone = rs.getInt("phone");
+				dni = rs.getString("dni");
+				
+				Customer customer = new Customer(idCustomer, name, surname, phone, dni);
+				customers.add(customer);
+				correct = true;
+			}
+		}catch (SQLException e) {
+			System.out.println("Error al recuperar las habitaciones");
+			e.printStackTrace();
+		}
+		return correct;
+	}
+
+
+	@Override
+	public boolean editCostumer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteCostumer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean createBooking() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean editBooking() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteBooking() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addExtraService() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteExtraService() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkPhone(int phone) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
