@@ -85,11 +85,11 @@ public class ImplementacionBD implements AdminDAO {
 		ArrayList<Customer>customers = new ArrayList<>();
 		this.openConnection();
 		try {
-			stmt = con.prepareStatement(SQL_VIEW_BOOKINGS);
+			stmt = con.prepareStatement(SQL_VIEW_CUSTOMERS);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				int idCustomer = rs.getInt("id_customer");
-				String name = rs.getString("name_customer");
+				String name = rs.getString("name_costumer");
 				String surname = rs.getString("surname");
 				int phone = rs.getInt("phone");
 				String dni = rs.getString("dni");
@@ -98,7 +98,7 @@ public class ImplementacionBD implements AdminDAO {
 				customers.add(customer);
 			}
 		}catch (SQLException e) {
-			System.out.println("Error al recuperar las habitaciones");
+			System.out.println("Error al recuperar los clientes");
 			e.printStackTrace();
 		}
 		return customers;
@@ -142,31 +142,22 @@ public class ImplementacionBD implements AdminDAO {
 		
 	}
 
-	public boolean addCostumer() {
-		int idCustomer;
-		String name;
-		String surname;
-		int phone;
-		String dni;	
+	public boolean addCostumer(String name, String surname, int phone, String dni) {
 		boolean correct = false;
 		this.openConnection();
-		ArrayList<Customer>customers = new ArrayList<>();
 		try {
 			stmt = con.prepareStatement(SQL_ADD_CUSTUMER);
-			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				idCustomer = rs.getInt("id_customer");
-				name = rs.getString("name_customer");
-				surname = rs.getString("surname");
-				phone = rs.getInt("phone");
-				dni = rs.getString("dni");
-				
-				Customer customer = new Customer(idCustomer, name, surname, phone, dni);
-				customers.add(customer);
+			stmt.setString(1, name);
+			stmt.setString(2, surname);
+			stmt.setInt(3, phone);
+			stmt.setString(4, dni);
+			
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
 				correct = true;
 			}
-		}catch (SQLException e) {
-			System.out.println("Error");
+		} catch (SQLException e) {
+			System.out.println("Error al añadir cliente");
 			e.printStackTrace();
 		}
 		return correct;
@@ -217,9 +208,40 @@ public class ImplementacionBD implements AdminDAO {
 
 	@Override
 	public boolean checkPhone(int phone) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean exists = false;
+		this.openConnection();
+		try {
+			String sql = "SELECT * FROM Customer WHERE phone = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, phone);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar el teléfono");
+			e.printStackTrace();
+		}
+		return exists;
 	}
 	
+	@Override
+	public boolean checkDni(String dni) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			String sql = "SELECT * FROM Customer WHERE dni = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dni);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar el DNI");
+			e.printStackTrace();
+		}
+		return exists;
+	}
 	
 }

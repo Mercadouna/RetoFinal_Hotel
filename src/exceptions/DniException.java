@@ -1,7 +1,6 @@
 package exceptions;
 
 public class DniException extends Exception{
-
 	/**
 	 * 
 	 */

@@ -48,6 +48,7 @@ public class V_Menu extends JDialog implements ActionListener {
 		btnNewButton_Clients = new JButton("Clients");
 		btnNewButton_Clients.setBounds(59, 105, 153, 23);
 		panel_Botones_Ventanas.add(btnNewButton_Clients);
+		btnNewButton_Clients.addActionListener(this);
 
 		btnNewButton_Rooms = new JButton("Rooms");
 		btnNewButton_Rooms.setBounds(59, 184, 153, 23);
@@ -61,6 +62,7 @@ public class V_Menu extends JDialog implements ActionListener {
 		btnNewButton_Exit = new JButton("Exit");
 		btnNewButton_Exit.setBounds(10, 621, 89, 23);
 		panel_Botones_Ventanas.add(btnNewButton_Exit);
+		btnNewButton_Exit.addActionListener(this);
 
 		panel_Titulo = new JPanel();
 		panel_Titulo.setBounds(223, 0, 811, 157);

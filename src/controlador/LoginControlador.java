@@ -12,8 +12,8 @@ public class LoginControlador {
 		ven.setVisible(true);
 	}
 
-	public boolean addCostumer() {
-		return dao.addCostumer();
+	public boolean addCostumer(String name, String surname, int phone, String dni) {
+		return dao.addCostumer(name, surname, phone, dni);
 	}
 
 	public boolean editCostumer() {
@@ -46,6 +46,10 @@ public class LoginControlador {
 
 	public boolean checkPhone(int phone) {
 		return dao.checkPhone(phone);
+	}
+
+	public boolean checkDni(String dni) {
+		return dao.checkDni(dni);
 	}
 
 }
