@@ -22,8 +22,8 @@ import java.awt.Color;
 public class V_ExtraServices extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JTable Tabla_Cust;
-	private JTextField textField_2;
-	private JTextField textField_4;
+	private JTextField textField_service_name;
+	private JTextField textField_price;
 	private JPanel titulo;
 	private JButton exit;
 	private JLabel lblNewLabel;
@@ -153,15 +153,15 @@ public class V_ExtraServices extends JDialog implements ActionListener{
 			lblNewLabel_2_3.setBounds(120, 33, 44, 12);
 			info.add(lblNewLabel_2_3);
 
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(10, 55, 96, 18);
-			info.add(textField_2);
+			textField_service_name = new JTextField();
+			textField_service_name.setColumns(10);
+			textField_service_name.setBounds(10, 55, 96, 18);
+			info.add(textField_service_name);
 
-			textField_4 = new JTextField();
-			textField_4.setColumns(10);
-			textField_4.setBounds(119, 55, 96, 18);
-			info.add(textField_4);
+			textField_price = new JTextField();
+			textField_price.setColumns(10);
+			textField_price.setBounds(119, 55, 96, 18);
+			info.add(textField_price);
 
 			btnAdd = new JButton(" Add +");
 			btnAdd.setFont(new Font("Times New Roman", Font.PLAIN, 10));
@@ -199,9 +199,9 @@ public class V_ExtraServices extends JDialog implements ActionListener{
 			this.dispose();
 		}
 		
-		if (e.getSource() == textField_2) {}
+		if (e.getSource() == textField_service_name) {}
 		
-		if (e.getSource() == textField_4) {}
+		if (e.getSource() == textField_price) {}
 
 		if (e.getSource() == btnAdd) {}
 		

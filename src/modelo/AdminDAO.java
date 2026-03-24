@@ -2,19 +2,27 @@ package modelo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.time.LocalDate;
 
 public interface AdminDAO {
 	public boolean addCostumer(String name, String surname, int phone, String dni);
+
 	public boolean editCostumer();
+
 	public boolean deleteCostumer(int id);
-	public boolean createBooking();
+
+	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid);
+
 	public boolean editBooking();
+
 	public boolean deleteBooking();
-	public boolean addExtraService();
+
 	public boolean deleteExtraService();
+
 	public boolean checkPhone(int phone);
+
 	public boolean checkDni(String dni);
-	
-	
+
+	public boolean addExtraService(String name_service, double price);
+
 }

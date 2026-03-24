@@ -21,10 +21,10 @@ import javax.swing.JComboBox;
 public class V_Booking extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTable Tabla_Cust;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField textField_room_id;
+	private JTextField textField_client_id;
+	private JTextField textField_check_in;
+	private JTextField textField_check_out;
 	private JPanel titulo;
 	private JButton exit;
 	private JLabel lblNewLabel;
@@ -33,7 +33,7 @@ public class V_Booking extends JDialog implements ActionListener {
 	private JButton Buscar;
 	private JLabel lblNewLabel_2;
 	private JComboBox comboBox;
-	private JComboBox comboBox2;
+	private JComboBox comboBox_paid;
 	private JComboBox comboBox1;
 	private JPanel table;
 	private JPanel info;
@@ -128,11 +128,11 @@ public class V_Booking extends JDialog implements ActionListener {
 			info.add(lblNewLabel_1);
 
 			lblNewLabel_2_1_1 = new JLabel("Room ID:");
-			lblNewLabel_2_1_1.setBounds(20, 44, 44, 12);
+			lblNewLabel_2_1_1.setBounds(20, 44, 58, 12);
 			info.add(lblNewLabel_2_1_1);
 
 			lblNewLabel_2_1 = new JLabel("Client ID:");
-			lblNewLabel_2_1.setBounds(20, 116, 44, 12);
+			lblNewLabel_2_1.setBounds(20, 116, 58, 12);
 			info.add(lblNewLabel_2_1);
 
 			lblNewLabel_2_2_1 = new JLabel("Check-in (DD/MM/YY):");
@@ -143,25 +143,25 @@ public class V_Booking extends JDialog implements ActionListener {
 			lblNewLabel_2_3.setBounds(98, 116, 122, 12);
 			info.add(lblNewLabel_2_3);
 
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
-			textField_1.setBounds(6, 66, 96, 18);
-			info.add(textField_1);
+			textField_room_id = new JTextField();
+			textField_room_id.setColumns(10);
+			textField_room_id.setBounds(6, 66, 96, 18);
+			info.add(textField_room_id);
 
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(6, 138, 96, 18);
-			info.add(textField_2);
+			textField_client_id = new JTextField();
+			textField_client_id.setColumns(10);
+			textField_client_id.setBounds(6, 138, 96, 18);
+			info.add(textField_client_id);
 
-			textField_3 = new JTextField();
-			textField_3.setColumns(10);
-			textField_3.setBounds(111, 66, 96, 18);
-			info.add(textField_3);
+			textField_check_in = new JTextField();
+			textField_check_in.setColumns(10);
+			textField_check_in.setBounds(111, 66, 96, 18);
+			info.add(textField_check_in);
 
-			textField_4 = new JTextField();
-			textField_4.setColumns(10);
-			textField_4.setBounds(112, 138, 96, 18);
-			info.add(textField_4);
+			textField_check_out = new JTextField();
+			textField_check_out.setColumns(10);
+			textField_check_out.setBounds(112, 138, 96, 18);
+			info.add(textField_check_out);
 
 			btnAadir = new JButton(" Add +");
 			btnAadir.setFont(new Font("Times New Roman", Font.PLAIN, 10));
@@ -192,9 +192,9 @@ public class V_Booking extends JDialog implements ActionListener {
 			lblNewLabel_2_4.setBounds(218, 45, 92, 12);
 			info.add(lblNewLabel_2_4);
 
-			comboBox2 = new JComboBox();
-			comboBox2.setBounds(217, 65, 95, 20);
-			info.add(comboBox2);
+			comboBox_paid = new JComboBox();
+			comboBox_paid.setBounds(217, 65, 95, 20);
+			info.add(comboBox_paid);
 		}
 
 		cargarTabla();
@@ -212,15 +212,15 @@ public class V_Booking extends JDialog implements ActionListener {
 		
 		if (e.getSource() == Buscar) {}
 		
-		if (e.getSource() == textField_1) {}
+		if (e.getSource() == textField_room_id) {}
 		
-		if (e.getSource() == textField_2) {}
+		if (e.getSource() == textField_client_id) {}
 		
-		if (e.getSource() == textField_3) {}
+		if (e.getSource() == textField_check_in) {}
 		
-		if (e.getSource() == textField_4) {}
+		if (e.getSource() == textField_check_out) {}
 		
-		if (e.getSource() == comboBox2) {}
+		if (e.getSource() == comboBox_paid) {}
 		
 		if (e.getSource() == btnAadir) {}
 		

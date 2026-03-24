@@ -1,6 +1,9 @@
 package controlador;
 
 import vista.V_1;
+
+import java.time.LocalDate;
+
 import modelo.AdminDAO;
 import modelo.ImplementacionBD;
 
@@ -20,12 +23,12 @@ public class LoginControlador {
 		return dao.editCostumer();
 	}
 
-	public boolean deleteCostumer() {
-		return dao.deleteCostumer();
+	public boolean deleteCostumer(int id) {
+		return dao.deleteCostumer(id);
 	}
 
-	public boolean createBooking() {
-		return dao.createBooking();
+	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid) {
+		return dao.createBooking(id_room, id_customer, check_in, check_out, paid);
 	}
 
 	public boolean editBooking() {
@@ -36,8 +39,8 @@ public class LoginControlador {
 		return dao.deleteBooking();
 	}
 
-	public boolean addExtraService() {
-		return dao.addExtraService();
+	public boolean addExtraService(String name_service, double price) {
+		return dao.addExtraService(name_service, price);
 	}
 
 	public boolean deleteExtraService() {
