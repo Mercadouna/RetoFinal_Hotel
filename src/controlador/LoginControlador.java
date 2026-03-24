@@ -12,7 +12,7 @@ public class LoginControlador {
 
 	public void visualizarPantalla() {
 		V_1 ven = new V_1(this);
-		ven.setVisible(true);
+		ven.setVisible(true); 
 	}
 
 	public boolean addCostumer(String name, String surname, int phone, String dni) {
