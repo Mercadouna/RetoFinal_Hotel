@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Booking {
     private int idBooking;
@@ -9,21 +10,24 @@ public class Booking {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private boolean paid;
+    private ArrayList<ExtraService> extraServices;
 
     public Booking() {
     }
 
-    public Booking(int idBooking, int idRoom, int idCustomer, LocalDate checkIn, LocalDate checkOut, boolean paid) {
+    public Booking(int idBooking, int idRoom, int idCustomer, LocalDate checkIn, LocalDate checkOut, boolean paid,
+            ArrayList<ExtraService> extraServices) {
         this.idBooking = idBooking;
         this.idRoom = idRoom;
         this.idCustomer = idCustomer;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.paid = paid;
+        this.extraServices = extraServices;
     }
 
     public int getIdBooking() {
-        return idBooking;	
+        return idBooking;
     }
 
     public void setIdBooking(int idBooking) {
@@ -70,6 +74,14 @@ public class Booking {
         this.paid = paid;
     }
 
+    public ArrayList<ExtraService> getExtraServices() {
+        return extraServices;
+    }
+
+    public void setExtraServices(ArrayList<ExtraService> extraServices) {
+        this.extraServices = extraServices;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -79,6 +91,7 @@ public class Booking {
                 ", checkIn=" + checkIn +
                 ", checkOut=" + checkOut +
                 ", paid=" + paid +
+                ", extraServices=" + extraServices +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package modelo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public interface AdminDAO {
 	public boolean addCostumer(String name, String surname, int phone, String dni);
@@ -25,4 +26,5 @@ public interface AdminDAO {
 
 	public boolean addExtraService(String name_service, double price);
 
+	public ArrayList<Room> viewRooms();
 }

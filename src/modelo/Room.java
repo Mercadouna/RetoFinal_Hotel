@@ -6,7 +6,6 @@ public class Room {
     private String typeRoom;
     private String statusRoom;
     private double pricePerNight;
-    private int quantPers;
 
     public Room() {
     }
@@ -17,7 +16,6 @@ public class Room {
         this.typeRoom = typeRoom;
         this.statusRoom = statusRoom;
         this.pricePerNight = pricePerNight;
-        this.quantPers = quantPers;
     }
 
     public int getIdRoom() {
@@ -60,13 +58,6 @@ public class Room {
         this.pricePerNight = pricePerNight;
     }
 
-    public int getQuantPers() {
-        return quantPers;
-    }
-
-    public void setQuantPers(int quantPers) {
-        this.quantPers = quantPers;
-    }
 
     @Override
     public String toString() {
@@ -76,7 +67,6 @@ public class Room {
                 ", typeRoom='" + typeRoom + '\'' +
                 ", statusRoom='" + statusRoom + '\'' +
                 ", pricePerNight=" + pricePerNight +
-                ", quantPers=" + quantPers +
                 '}';
     }
 }

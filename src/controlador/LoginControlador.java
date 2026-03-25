@@ -3,16 +3,18 @@ package controlador;
 import vista.V_1;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import modelo.AdminDAO;
 import modelo.ImplementacionBD;
+import modelo.Room;
 
 public class LoginControlador {
 	AdminDAO dao = new ImplementacionBD();
 
 	public void visualizarPantalla() {
 		V_1 ven = new V_1(this);
-		ven.setVisible(true); 
+		ven.setVisible(true);
 	}
 
 	public boolean addCostumer(String name, String surname, int phone, String dni) {
@@ -53,6 +55,10 @@ public class LoginControlador {
 
 	public boolean checkDni(String dni) {
 		return dao.checkDni(dni);
+	}
+
+	public ArrayList<Room> viewRooms() {
+		return dao.viewRooms();
 	}
 
 }

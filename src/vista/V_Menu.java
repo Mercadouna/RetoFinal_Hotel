@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -34,6 +34,8 @@ public class V_Menu extends JDialog implements ActionListener {
 		this.cont = controlador;
 		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
+		
+		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 
 		panel_Botones_Ventanas = new JPanel();
 		panel_Botones_Ventanas.setBounds(0, 157, 222, 655);
@@ -41,26 +43,32 @@ public class V_Menu extends JDialog implements ActionListener {
 		panel_Botones_Ventanas.setLayout(null);
 
 		btnNewButton_Booking = new JButton("Booking");
-		btnNewButton_Booking.setBounds(59, 35, 153, 23);
+		btnNewButton_Booking.setFont(normalFont);
+		btnNewButton_Booking.setBounds(20, 35, 180, 45);
 		panel_Botones_Ventanas.add(btnNewButton_Booking);
 		btnNewButton_Booking.addActionListener(this);
 
 		btnNewButton_Clients = new JButton("Clients");
-		btnNewButton_Clients.setBounds(59, 105, 153, 23);
+		btnNewButton_Clients.setFont(normalFont);
+		btnNewButton_Clients.setBounds(20, 105, 180, 45);
 		panel_Botones_Ventanas.add(btnNewButton_Clients);
 		btnNewButton_Clients.addActionListener(this);
 
 		btnNewButton_Rooms = new JButton("Rooms");
-		btnNewButton_Rooms.setBounds(59, 184, 153, 23);
+		btnNewButton_Rooms.setFont(normalFont);
+		btnNewButton_Rooms.setBounds(20, 184, 180, 45);
 		panel_Botones_Ventanas.add(btnNewButton_Rooms);
 		btnNewButton_Rooms.addActionListener(this);
 
 		btnNewButton_ExtraServices = new JButton("Extra Services");
-		btnNewButton_ExtraServices.setBounds(59, 266, 153, 23);
+		btnNewButton_ExtraServices.setFont(normalFont);
+		btnNewButton_ExtraServices.setBounds(20, 266, 180, 45);
 		panel_Botones_Ventanas.add(btnNewButton_ExtraServices);
+		btnNewButton_ExtraServices.addActionListener(this);
 
 		btnNewButton_Exit = new JButton("Exit");
-		btnNewButton_Exit.setBounds(10, 621, 89, 23);
+		btnNewButton_Exit.setFont(normalFont);
+		btnNewButton_Exit.setBounds(20, 600, 180, 45);
 		panel_Botones_Ventanas.add(btnNewButton_Exit);
 		btnNewButton_Exit.addActionListener(this);
 

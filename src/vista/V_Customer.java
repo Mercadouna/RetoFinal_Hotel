@@ -97,10 +97,10 @@ public class V_Customer extends JDialog implements ActionListener {
 		this.cont = cont;
 		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
-		
+
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
-		
+
 		{
 			titulo = new JPanel();
 			titulo.setBounds(10, 10, 1024, 40);
@@ -134,7 +134,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			textField.setBounds(160, 2, 250, 30);
 			subtitulo.add(textField);
 			textField.setColumns(10);
-			
+
 			search = new JButton("Search");
 			search.addActionListener(this);
 			search.setFont(normalFont);
@@ -172,7 +172,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			lblNewLabel_2_4.setFont(normalFont);
 			lblNewLabel_2_4.setBounds(20, 35, 100, 20);
 			info.add(lblNewLabel_2_4);
-			
+
 			textField_name = new JTextField();
 			textField_name.setFont(normalFont);
 			textField_name.setColumns(10);
@@ -281,7 +281,24 @@ public class V_Customer extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnDelete) {
-			cont.deleteCostumer(Integer.parseInt(textField_ID.getText()));
+			if (textField_ID.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Please enter an ID to delete.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				try {
+					int id = Integer.parseInt(textField_ID.getText().trim());
+					if (cont.deleteCostumer(id)) {
+						JOptionPane.showMessageDialog(this, "Deleted successfully.", "Success",
+								JOptionPane.INFORMATION_MESSAGE);
+						cargarTabla();
+					} else {
+						JOptionPane.showMessageDialog(this, "Id no exist.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(this, "The ID must be a valid number.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		}
 
 		if (e.getSource() == btnEdit) {
@@ -290,7 +307,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		if (e.getSource() == btnClear) {
 		}
 	}
-	
+
 	private void add() {
 		boolean valido = true;
 		String name = textField_name.getText();

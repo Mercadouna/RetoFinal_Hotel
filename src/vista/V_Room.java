@@ -2,7 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -30,12 +30,18 @@ public class V_Room extends JDialog {
 		this.cont=controlador;
 		setBounds(100, 100, 1060, 860);
 		getContentPane().setLayout(null);
+		
+		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
+		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
 		JScrollPane scrollPane_roomsTable = new JScrollPane();
 		scrollPane_roomsTable.setBounds(10, 101, 1024, 720);
 		getContentPane().add(scrollPane_roomsTable);
 
 		table = new JTable();
+		table.setFont(normalFont);
+		table.setRowHeight(30);
+		table.getTableHeader().setFont(boldFont);
 		scrollPane_roomsTable.setViewportView(table);
 
 		cargarTabla();
@@ -48,11 +54,9 @@ public class V_Room extends JDialog {
 		model.addColumn("Tipo");
 		model.addColumn("Estado");
 		model.addColumn("Precio");
-		model.addColumn("Capacidad");
 
-		ImplementacionBD bd = new ImplementacionBD();
-		ArrayList<Room> rooms = bd.viewRooms();
-
+		
+		ArrayList<Room> rooms = cont.viewRooms();
 		for (Room room : rooms) {
 			Object[] row = new Object[6];
 			row[0] = room.getIdRoom();
@@ -60,7 +64,6 @@ public class V_Room extends JDialog {
 			row[2] = room.getTypeRoom();
 			row[3] = room.getStatusRoom();
 			row[4] = room.getPricePerNight();
-			row[5] = room.getQuantPers();
 			model.addRow(row);
 		}
 
