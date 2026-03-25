@@ -27,12 +27,12 @@ public class ImplementacionBD implements AdminDAO {
 
 	// Sentencias SQL
 	private final String SQL_VIEW_ROOMS = "SELECT * FROM Room";
-	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_costumer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.room_number";
+	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_customer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.id_room";
 	private final String SQL_ADD_BOOKING = "INSERT INTO Booking (id_room, id_customer, check_in, check_out, paid) VALUES (?, ?, ?, ?, ?)";
 	private final String SQL_VIEW_CUSTOMERS = "SELECT * FROM Customer";
 	private final String SQL_VIEW_EXTRA_SERVICES = "SELECT * FROM Extra_Service";
 	private final String SQL_ADD_EXTRA_SERVICE = "INSERT INTO Extra_Service (name_service, price) VALUES (?, ?)";
-	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_costumer, surname, phone, dni) VALUES (?, ?, ?, ?)";
+	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_customer, surname, phone, dni) VALUES (?, ?, ?, ?)";
 	private final String SQL_BORRAR_CUSTOMER = "DELETE FROM Customer WHERE id_customer=?";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
@@ -93,7 +93,7 @@ public class ImplementacionBD implements AdminDAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int idCustomer = rs.getInt("id_customer");
-				String name = rs.getString("name_costumer");
+				String name = rs.getString("name_customer");
 				String surname = rs.getString("surname");
 				int phone = rs.getInt("phone");
 				String dni = rs.getString("dni");
