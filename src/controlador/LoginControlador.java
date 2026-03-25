@@ -2,6 +2,7 @@ package controlador;
 
 import vista.V_1;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -59,6 +60,10 @@ public class LoginControlador {
 
 	public ArrayList<Room> viewRooms() {
 		return dao.viewRooms();
+	}
+
+	public boolean isRoomAvailable(int roomNumber, LocalDate checkIn, LocalDate checkOut) {
+		return dao.isRoomAvailable(roomNumber, checkIn, checkOut);
 	}
 
 }

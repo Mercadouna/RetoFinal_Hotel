@@ -16,6 +16,7 @@ import controlador.LoginControlador;
 import java.util.ArrayList;
 import modelo.ImplementacionBD;
 import modelo.Room;
+import javax.swing.JLabel;
 
 public class V_Room extends JDialog {
 
@@ -43,6 +44,21 @@ public class V_Room extends JDialog {
 		table.setRowHeight(30);
 		table.getTableHeader().setFont(boldFont);
 		scrollPane_roomsTable.setViewportView(table);
+		
+		JPanel titulo = new JPanel();
+		titulo.setLayout(null);
+		titulo.setBounds(10, 23, 1024, 40);
+		getContentPane().add(titulo);
+		
+		JButton exit = new JButton("Exit");
+		exit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		exit.setBounds(910, 0, 100, 35);
+		titulo.add(exit);
+		
+		JLabel lblRooms = new JLabel("Rooms");
+		lblRooms.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblRooms.setBounds(10, 5, 200, 25);
+		titulo.add(lblRooms);
 
 		cargarTabla();
 	}

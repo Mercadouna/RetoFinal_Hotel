@@ -27,4 +27,6 @@ public interface AdminDAO {
 	public ArrayList<Room> viewRooms();
 
 	public boolean editCostumer(int id, String name, String surname, int phone, String dni);
+
+	public boolean isRoomAvailable(int roomNumber, LocalDate checkIn, LocalDate checkOut);
 }

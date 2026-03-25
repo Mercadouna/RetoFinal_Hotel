@@ -155,6 +155,19 @@ public class V_Customer extends JDialog implements ActionListener {
 			Tabla_Cust.setFont(normalFont);
 			Tabla_Cust.setRowHeight(30);
 			Tabla_Cust.getTableHeader().setFont(boldFont);
+			Tabla_Cust.addMouseListener(new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					int selectedRow = Tabla_Cust.getSelectedRow();
+					if (selectedRow >= 0) {
+						textField_ID.setText(Tabla_Cust.getValueAt(selectedRow, 0).toString());
+						textField_name.setText(Tabla_Cust.getValueAt(selectedRow, 1).toString());
+						textField_surname.setText(Tabla_Cust.getValueAt(selectedRow, 2).toString());
+						textField_phone.setText(Tabla_Cust.getValueAt(selectedRow, 3).toString());
+						textField_ID_DNI.setText(Tabla_Cust.getValueAt(selectedRow, 4).toString());
+					}
+				}
+			});
 			scrollPane.setViewportView(Tabla_Cust);
 		}
 		{

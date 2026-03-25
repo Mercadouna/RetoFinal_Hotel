@@ -1,4 +1,5 @@
 package vista;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -21,6 +22,7 @@ import modelo.Customer;
 import modelo.ImplementacionBD;
 import modelo.Room;
 import javax.swing.JComboBox;
+
 public class V_Booking extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTable Tabla_Cust;
@@ -50,15 +52,17 @@ public class V_Booking extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_2_4;
 	private JButton btnDelete;
 	private LoginControlador cont;
+
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
-		
+
 		model.addColumn("ID");
 		model.addColumn("Cliente");
 		model.addColumn("Habitacion");
@@ -66,17 +70,17 @@ public class V_Booking extends JDialog implements ActionListener {
 		model.addColumn("Check-in");
 		model.addColumn("Check-out");
 		model.addColumn("Pagado");
-		
+
 		ImplementacionBD bd = new ImplementacionBD();
 		ArrayList<Aux_booking> bookings = bd.viewBookings();
 		for (Aux_booking ab : bookings) {
 			Customer c = ab.getCustomer();
 			Room r = ab.getRoom();
 			Booking b = ab.getBooking();
-			
+
 			Object[] row = new Object[7];
 			row[0] = c.getIdCustomer();
-			row[1] = c.getNameCostumer()+ " "+c.getSurname();
+			row[1] = c.getNameCostumer() + " " + c.getSurname();
 			row[2] = r.getRoomNumber();
 			row[3] = r.getTypeRoom();
 			row[4] = b.getCheckIn();
@@ -86,12 +90,12 @@ public class V_Booking extends JDialog implements ActionListener {
 		}
 		Tabla_Cust.setModel(model);
 	}
-	
+
 	/**
 	 * Create the dialog.
 	 */
 	public V_Booking(LoginControlador cont) {
-		this.cont=cont;
+		this.cont = cont;
 		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
@@ -221,23 +225,28 @@ public class V_Booking extends JDialog implements ActionListener {
 		}
 		cargarTabla();
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == exit) {
-			V_Menu m = new V_Menu (cont);
+			V_Menu m = new V_Menu(cont);
 			m.setVisible(true);
 			this.dispose();
 		}
-		if (e.getSource() == comboBox1) {}
-		if (e.getSource() == Buscar) {}
-		if (e.getSource() == textField_room_id) {}
-		if (e.getSource() == textField_client_id) {}
-		if (e.getSource() == textField_check_in) {}
-		if (e.getSource() == textField_check_out) {}
-		if (e.getSource() == comboBox_paid) {}
-		if (e.getSource() == btnAadir) {}
-		if (e.getSource() == btnDelete) {}
-		if (e.getSource() == btnEdit) {}
-		if (e.getSource() == btnClear) {}
+		if (e.getSource() == Buscar) {
+
+		}
+		if (e.getSource() == btnAadir) {
+			
+		}
+		if (e.getSource() == btnDelete) {
+
+		}
+		if (e.getSource() == btnEdit) {
+
+		}
+		if (e.getSource() == btnClear) {
+
+		}
 	}
 }

@@ -1,10 +1,12 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+import com.mysql.cj.jdbc.CallableStatement;
+
 public class ImplementacionBD implements AdminDAO {
 	// Atributos
 	private Connection con;
 	private PreparedStatement stmt;
+	private java.sql.CallableStatement cs;
 
 	// Los siguientes atributos se utilizan para recoger los valores del fich de
 	// configuraci n
@@ -35,6 +40,8 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_customer, surname, phone, dni) VALUES (?, ?, ?, ?)";
 	private final String SQL_BORRAR_CUSTOMER = "DELETE FROM Customer WHERE id_customer=?";
 	private final String SQL_EDIT_CUSTOMER = "UPDATE Customer SET name_costumer = ?, surname = ?, phone = ?, dni = ? WHERE id_customer = ?";
+	private final String SQL_CHECK_ROOM_AVAILABILITY = "SELECT CheckRoomAvailability(?, ?, ?)";
+	private final String SQL_CHECK_CUSTOMER_AVAILABILITY = "SELECT CheckCustomerAvailability(?, ?, ?)";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -290,6 +297,7 @@ public class ImplementacionBD implements AdminDAO {
 	@Override
 	public boolean editCostumer(int id, String name, String surname, int phone, String dni) {
 		boolean correct = false;
+		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_EDIT_CUSTOMER);
@@ -298,7 +306,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.setInt(3, phone);
 			stmt.setString(4, dni);
 			stmt.setInt(5, id);
-			int rowsAffected = stmt.executeUpdate();
+			rowsAffected = stmt.executeUpdate();
 			if (rowsAffected > 0) {
 				correct = true;
 			}
@@ -307,6 +315,49 @@ public class ImplementacionBD implements AdminDAO {
 			e.printStackTrace();
 		}
 		return correct;
+	}
+
+	public boolean isRoomAvailable(int roomNumber, LocalDate checkIn, LocalDate checkOut) {
+		boolean valido = false;
+		try {
+			this.openConnection();
+			stmt = con.prepareStatement(SQL_CHECK_ROOM_AVAILABILITY);
+
+			stmt.setInt(1, roomNumber);
+			stmt.setDate(2, Date.valueOf(checkIn));
+			stmt.setDate(3, Date.valueOf(checkOut));
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				valido = rs.getBoolean(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar la disponibilidad de la habitación");
+			e.printStackTrace();
+		}
+		return valido;
+	}
+
+	public boolean isCustomerAvailable(int idCustomer, LocalDate checkIn, LocalDate checkOut) {
+		boolean valido = false;
+
+		try {
+			this.openConnection();
+			stmt = con.prepareStatement(SQL_CHECK_CUSTOMER_AVAILABILITY);
+
+			stmt.setInt(1, idCustomer);
+			stmt.setDate(2, Date.valueOf(checkIn));
+			stmt.setDate(3, Date.valueOf(checkOut));
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				valido = rs.getBoolean(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar la disponibilidad del cliente");
+			e.printStackTrace();
+		}
+		return valido;
 	}
 
 }
