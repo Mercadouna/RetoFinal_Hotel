@@ -32,7 +32,7 @@ public class ImplementacionBD implements AdminDAO {
 
 	// Sentencias SQL
 	private final String SQL_VIEW_ROOMS = "SELECT * FROM Room";
-	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_customer, c.surname, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.id_room";
+	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_customer, c.surname, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.id_room";
 	private final String SQL_ADD_BOOKING = "INSERT INTO Booking (id_room, id_customer, check_in, check_out, paid) VALUES (?, ?, ?, ?, ?)";
 	private final String SQL_VIEW_CUSTOMERS = "SELECT * FROM Customer";
 	private final String SQL_VIEW_EXTRA_SERVICES = "SELECT * FROM Extra_Service";
@@ -42,6 +42,10 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_EDIT_CUSTOMER = "UPDATE Customer SET name_costumer = ?, surname = ?, phone = ?, dni = ? WHERE id_customer = ?";
 	private final String SQL_CHECK_ROOM_AVAILABILITY = "SELECT CheckRoomAvailability(?, ?, ?)";
 	private final String SQL_CHECK_CUSTOMER_AVAILABILITY = "SELECT CheckCustomerAvailability(?, ?, ?)";
+	private final String SQL_CHECK_PHONE = "SELECT * FROM Customer WHERE phone = ?";
+	private final String SQL_CHECK_DNI = "SELECT * FROM Customer WHERE dni = ?";
+	private final String SQL_CHECK_ROOM_EXISTS = "SELECT * FROM Room WHERE id_room = ?";
+	private final String SQL_CHECK_CUSTOMER_EXISTS = "SELECT * FROM Customer WHERE id_customer = ?";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -135,6 +139,7 @@ public class ImplementacionBD implements AdminDAO {
 
 				r.setRoomNumber(rs.getInt("room_number"));
 				r.setTypeRoom(rs.getString("type_room"));
+				r.setIdRoom(rs.getInt("id_room"));
 
 				Booking b = new Booking();
 
@@ -198,6 +203,7 @@ public class ImplementacionBD implements AdminDAO {
 	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid) {
 		// TODO Auto-generated method stub
 		boolean correct = false;
+		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_ADD_BOOKING);
@@ -207,7 +213,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.setDate(4, java.sql.Date.valueOf(check_out));
 			stmt.setBoolean(5, paid);
 
-			int rowsAffected = stmt.executeUpdate();
+			rowsAffected = stmt.executeUpdate();
 			if (rowsAffected > 0) {
 				correct = true;
 			}
@@ -233,13 +239,14 @@ public class ImplementacionBD implements AdminDAO {
 	@Override
 	public boolean addExtraService(String name_service, double price) {
 		boolean correct = false;
+		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_ADD_EXTRA_SERVICE);
 			stmt.setString(1, name_service);
 			stmt.setDouble(2, price);
 
-			int rowsAffected = stmt.executeUpdate();
+			rowsAffected = stmt.executeUpdate();
 			if (rowsAffected > 0) {
 				correct = true;
 			}
@@ -261,8 +268,7 @@ public class ImplementacionBD implements AdminDAO {
 		boolean exists = false;
 		this.openConnection();
 		try {
-			String sql = "SELECT * FROM Customer WHERE phone = ?";
-			stmt = con.prepareStatement(sql);
+			stmt = con.prepareStatement(SQL_CHECK_PHONE);
 			stmt.setInt(1, phone);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -280,8 +286,7 @@ public class ImplementacionBD implements AdminDAO {
 		boolean exists = false;
 		this.openConnection();
 		try {
-			String sql = "SELECT * FROM Customer WHERE dni = ?";
-			stmt = con.prepareStatement(sql);
+			stmt = con.prepareStatement(SQL_CHECK_DNI);
 			stmt.setString(1, dni);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -358,6 +363,36 @@ public class ImplementacionBD implements AdminDAO {
 			e.printStackTrace();
 		}
 		return valido;
+	}
+
+	public boolean checkRoomExists(int roomNumber) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_ROOM_EXISTS);
+			stmt.setInt(1, roomNumber);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+				exists = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public boolean checkCustomerExists(int idCustomer) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_CUSTOMER_EXISTS);
+			stmt.setInt(1, idCustomer);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+				exists = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 }

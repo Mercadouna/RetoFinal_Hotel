@@ -29,4 +29,10 @@ public interface AdminDAO {
 	public boolean editCostumer(int id, String name, String surname, int phone, String dni);
 
 	public boolean isRoomAvailable(int roomNumber, LocalDate checkIn, LocalDate checkOut);
+
+	public boolean isCustomerAvailable(int idCustomer, LocalDate checkIn, LocalDate checkOut);
+
+	public boolean checkRoomExists(int roomNumber);
+
+	public boolean checkCustomerExists(int idCustomer);
 }

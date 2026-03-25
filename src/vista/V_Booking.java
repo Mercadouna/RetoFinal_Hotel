@@ -5,10 +5,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -81,7 +83,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			Object[] row = new Object[7];
 			row[0] = c.getIdCustomer();
 			row[1] = c.getNameCostumer() + " " + c.getSurname();
-			row[2] = r.getRoomNumber();
+			row[2] = r.getRoomNumber() + " - " + r.getIdRoom();
 			row[3] = r.getTypeRoom();
 			row[4] = b.getCheckIn();
 			row[5] = b.getCheckOut();
@@ -182,6 +184,8 @@ public class V_Booking extends JDialog implements ActionListener {
 			comboBox_paid = new JComboBox();
 			comboBox_paid.setFont(normalFont);
 			comboBox_paid.setBounds(440, 60, 180, 30);
+			comboBox_paid.addItem("Paid");
+			comboBox_paid.addItem("Not Paid");
 			info.add(comboBox_paid);
 			lblNewLabel_2_1 = new JLabel("Client ID:");
 			lblNewLabel_2_1.setFont(normalFont);
@@ -237,7 +241,7 @@ public class V_Booking extends JDialog implements ActionListener {
 
 		}
 		if (e.getSource() == btnAadir) {
-			
+			addBooking();
 		}
 		if (e.getSource() == btnDelete) {
 
@@ -247,6 +251,84 @@ public class V_Booking extends JDialog implements ActionListener {
 		}
 		if (e.getSource() == btnClear) {
 
+		}
+	}
+
+	private void addBooking() {
+		boolean valido = true;
+		int roomNumber = 0;
+		int customerId = 0;
+		LocalDate checkIn = null;
+		LocalDate checkOut = null;
+		boolean paid = false;
+
+		try {
+			roomNumber = Integer.parseInt(textField_room_id.getText().trim());
+			customerId = Integer.parseInt(textField_client_id.getText().trim());
+		} catch (NumberFormatException e) {
+			valido = false;
+			JOptionPane.showMessageDialog(this, "Room ID and Client ID must be valid numbers.", "Format Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				checkIn = LocalDate.parse(textField_check_in.getText().trim());
+				checkOut = LocalDate.parse(textField_check_out.getText().trim());
+			} catch (java.time.format.DateTimeParseException e) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Invalid date format. Please use YYYY-MM-DD.", "Format Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (checkIn.isBefore(LocalDate.now())) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Check-in date cannot be before today.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (!checkOut.isAfter(checkIn)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Check-out date must be after check-in date.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (!cont.checkRoomExists(roomNumber)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Room ID does not exist.", "Error", JOptionPane.ERROR_MESSAGE);
+			} else if (!cont.checkCustomerExists(customerId)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Client ID does not exist.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (!cont.isRoomAvailable(roomNumber, checkIn, checkOut)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Room is not available for the selected dates.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (!cont.isCustomerAvailable(customerId, checkIn, checkOut)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this,
+						"Client is not available or has conflicting bookings for these dates.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (comboBox_paid.getSelectedItem().equals("Paid")) {
+				paid = true;
+			}
+
+			if (cont.createBooking(roomNumber, customerId, checkIn, checkOut, paid)) {
+				JOptionPane.showMessageDialog(this, "Booking added successfully", "Success",
+						JOptionPane.INFORMATION_MESSAGE);
+				cargarTabla();
+			} else {
+				JOptionPane.showMessageDialog(this, "Error al añadir la reserva", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 }

@@ -66,4 +66,16 @@ public class LoginControlador {
 		return dao.isRoomAvailable(roomNumber, checkIn, checkOut);
 	}
 
+	public boolean isCustomerAvailable(int idCustomer, LocalDate checkIn, LocalDate checkOut) {
+		return dao.isCustomerAvailable(idCustomer, checkIn, checkOut);
+	}
+
+	public boolean checkRoomExists(int roomNumber) {
+		return dao.checkRoomExists(roomNumber);
+	}
+
+	public boolean checkCustomerExists(int idCustomer) {
+		return dao.checkCustomerExists(idCustomer);
+	}
+
 }
