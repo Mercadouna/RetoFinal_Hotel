@@ -34,6 +34,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_ADD_EXTRA_SERVICE = "INSERT INTO Extra_Service (name_service, price) VALUES (?, ?)";
 	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_costumer, surname, phone, dni) VALUES (?, ?, ?, ?)";
 	private final String SQL_BORRAR_CUSTOMER = "DELETE FROM Customer WHERE id_customer=?";
+	private final String SQL_EDIT_CUSTOMER = "UPDATE Customer SET name_costumer = ?, surname = ?, phone = ?, dni = ? WHERE id_customer = ?";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -168,12 +169,6 @@ public class ImplementacionBD implements AdminDAO {
 	}
 
 	@Override
-	public boolean editCostumer() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean deleteCostumer(int id) {
 		boolean correct = false;
 
@@ -292,6 +287,26 @@ public class ImplementacionBD implements AdminDAO {
 		return exists;
 	}
 
-
+	@Override
+	public boolean editCostumer(int id, String name, String surname, int phone, String dni) {
+		boolean correct = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_EDIT_CUSTOMER);
+			stmt.setString(1, name);
+			stmt.setString(2, surname);
+			stmt.setInt(3, phone);
+			stmt.setString(4, dni);
+			stmt.setInt(5, id);
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				correct = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al editar cliente");
+			e.printStackTrace();
+		}
+		return correct;
+	}
 
 }

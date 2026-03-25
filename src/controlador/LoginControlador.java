@@ -21,8 +21,8 @@ public class LoginControlador {
 		return dao.addCostumer(name, surname, phone, dni);
 	}
 
-	public boolean editCostumer() {
-		return dao.editCostumer();
+	public boolean editCostumer(int id, String name, String surname, int phone, String dni) {
+		return dao.editCostumer(id, name, surname, phone, dni);
 	}
 
 	public boolean deleteCostumer(int id) {

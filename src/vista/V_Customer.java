@@ -239,11 +239,13 @@ public class V_Customer extends JDialog implements ActionListener {
 			btnEdit.setFont(normalFont);
 			btnEdit.setBounds(680, 125, 120, 35);
 			info.add(btnEdit);
+			btnEdit.addActionListener(this);
 
 			btnClear = new JButton("Clear []");
 			btnClear.setFont(normalFont);
 			btnClear.setBounds(820, 125, 120, 35);
 			info.add(btnClear);
+			btnClear.addActionListener(this);
 		}
 
 		cargarTabla();
@@ -258,22 +260,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			this.dispose();
 		}
 
-		if (e.getSource() == textField) {
-		}
-
 		if (e.getSource() == search) {
-		}
-
-		if (e.getSource() == textField_name) {
-		}
-
-		if (e.getSource() == textField_phone) {
-		}
-
-		if (e.getSource() == textField_surname) {
-		}
-
-		if (e.getSource() == textField_ID_DNI) {
 		}
 
 		if (e.getSource() == btnAdd) {
@@ -281,30 +268,36 @@ public class V_Customer extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnDelete) {
-			if (textField_ID.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Please enter an ID to delete.", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				try {
-					int id = Integer.parseInt(textField_ID.getText().trim());
-					if (cont.deleteCostumer(id)) {
-						JOptionPane.showMessageDialog(this, "Deleted successfully.", "Success",
-								JOptionPane.INFORMATION_MESSAGE);
-						cargarTabla();
-					} else {
-						JOptionPane.showMessageDialog(this, "Id no exist.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(this, "The ID must be a valid number.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
+			delete();
 		}
 
 		if (e.getSource() == btnEdit) {
+			edit();
 		}
 
 		if (e.getSource() == btnClear) {
+			clear();
+		}
+	}
+
+	private void delete() {
+		if (textField_ID.getText().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please enter an ID to delete.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			try {
+				int id = Integer.parseInt(textField_ID.getText().trim());
+				if (cont.deleteCostumer(id)) {
+					JOptionPane.showMessageDialog(this, "Deleted successfully.", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+					cargarTabla();
+				} else {
+					JOptionPane.showMessageDialog(this, "Id no exist.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "The ID must be a valid number.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -366,6 +359,73 @@ public class V_Customer extends JDialog implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Cliente añadido con éxito.", "Éxito",
 					JOptionPane.INFORMATION_MESSAGE);
 			cargarTabla();
+		}
+	}
+
+	private void clear() {
+		textField_name.setText("");
+		textField_surname.setText("");
+		textField_phone.setText("");
+		textField_ID_DNI.setText("");
+		textField_ID.setText("");
+	}
+
+	private void edit() {
+		boolean valido = true;
+		int id = Integer.parseInt(textField_ID.getText().trim());
+		String name = textField_name.getText();
+		String surname = textField_surname.getText();
+		String phoneStr = textField_phone.getText();
+		String dni = textField_ID_DNI.getText();
+		int phoneInt = 0;
+
+		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()) {
+			valido = false;
+			JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				if (!phoneStr.matches("\\d{9}")) {
+					throw new PhoneNumException("Formato de teléfono incorrecto (deben ser 9 dígitos).");
+				}
+				phoneInt = Integer.parseInt(phoneStr);
+			} catch (PhoneNumException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de formato",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			try {
+				if (!dni.matches("\\d{8}[A-Za-z]")) {
+					throw new DniException("Formato de DNI incorrecto (8 números y 1 letra).");
+				}
+			} catch (DniException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			try {
+				if (cont.editCostumer(id, textField_name.getText(), textField_surname.getText(),
+						Integer.parseInt(textField_phone.getText()), textField_ID_DNI.getText())) {
+					JOptionPane.showMessageDialog(this, "Edited successfully.", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+					cargarTabla();
+				} else {
+					JOptionPane.showMessageDialog(this, "Id no exist.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "The ID must be a valid number.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 }

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public interface AdminDAO {
 	public boolean addCostumer(String name, String surname, int phone, String dni);
 
-	public boolean editCostumer();
-
 	public boolean deleteCostumer(int id);
 
 	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid);
@@ -27,4 +25,6 @@ public interface AdminDAO {
 	public boolean addExtraService(String name_service, double price);
 
 	public ArrayList<Room> viewRooms();
+
+	public boolean editCostumer(int id, String name, String surname, int phone, String dni);
 }
