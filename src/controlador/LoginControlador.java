@@ -2,7 +2,6 @@ package controlador;
 
 import vista.V_1;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -54,8 +53,18 @@ public class LoginControlador {
 		return dao.checkPhone(phone);
 	}
 
+	public boolean checkPhone(int phone, int excludeId) {
+		// Checks if phone exists for any customer other than excludeId
+		return ((ImplementacionBD) dao).checkPhone(phone, excludeId);
+	}
+
 	public boolean checkDni(String dni) {
 		return dao.checkDni(dni);
+	}
+
+	public boolean checkDni(String dni, int excludeId) {
+		// Checks if DNI exists for any customer other than excludeId
+		return ((ImplementacionBD) dao).checkDni(dni, excludeId);
 	}
 
 	public ArrayList<Room> viewRooms() {

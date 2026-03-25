@@ -385,17 +385,28 @@ public class V_Customer extends JDialog implements ActionListener {
 
 	private void edit() {
 		boolean valido = true;
-		int id = Integer.parseInt(textField_ID.getText().trim());
+		int id = 0;
 		String name = textField_name.getText();
 		String surname = textField_surname.getText();
 		String phoneStr = textField_phone.getText();
 		String dni = textField_ID_DNI.getText();
 		int phoneInt = 0;
 
-		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()) {
+		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()
+				|| textField_ID.getText().trim().isEmpty()) {
 			valido = false;
 			JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
 					JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				id = Integer.parseInt(textField_ID.getText().trim());
+			} catch (NumberFormatException ex) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "The ID must be a valid number.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 		if (valido) {
@@ -422,6 +433,18 @@ public class V_Customer extends JDialog implements ActionListener {
 			} catch (DniException ex) {
 				valido = false;
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (cont.checkDni(dni, id)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El DNI ya existe en la base de datos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (cont.checkPhone(phoneInt, id)) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "El teléfono ya existe en la base de datos.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 

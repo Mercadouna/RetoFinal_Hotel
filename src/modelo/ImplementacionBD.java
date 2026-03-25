@@ -39,13 +39,15 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_ADD_EXTRA_SERVICE = "INSERT INTO Extra_Service (name_service, price) VALUES (?, ?)";
 	private final String SQL_ADD_CUSTUMER = "INSERT INTO Customer (name_customer, surname, phone, dni) VALUES (?, ?, ?, ?)";
 	private final String SQL_BORRAR_CUSTOMER = "DELETE FROM Customer WHERE id_customer=?";
-	private final String SQL_EDIT_CUSTOMER = "UPDATE Customer SET name_costumer = ?, surname = ?, phone = ?, dni = ? WHERE id_customer = ?";
+	private final String SQL_EDIT_CUSTOMER = "UPDATE Customer SET name_customer = ?, surname = ?, phone = ?, dni = ? WHERE id_customer = ?";
 	private final String SQL_CHECK_ROOM_AVAILABILITY = "SELECT CheckRoomAvailability(?, ?, ?)";
 	private final String SQL_CHECK_CUSTOMER_AVAILABILITY = "SELECT CheckCustomerAvailability(?, ?, ?)";
 	private final String SQL_CHECK_PHONE = "SELECT * FROM Customer WHERE phone = ?";
 	private final String SQL_CHECK_DNI = "SELECT * FROM Customer WHERE dni = ?";
 	private final String SQL_CHECK_ROOM_EXISTS = "SELECT * FROM Room WHERE id_room = ?";
 	private final String SQL_CHECK_CUSTOMER_EXISTS = "SELECT * FROM Customer WHERE id_customer = ?";
+	private final String SQL_CHECK_PHONE_OTHER = "SELECT * FROM Customer WHERE phone = ? AND id_customer != ?";
+	private final String SQL_CHECK_DNI_OTHER = "SELECT * FROM Customer WHERE dni = ? AND id_customer != ?";
 
 	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
 	// ?";
@@ -281,6 +283,24 @@ public class ImplementacionBD implements AdminDAO {
 		return exists;
 	}
 
+	// Overloaded: excludes customer with given id (used in edit)
+	public boolean checkPhone(int phone, int excludeId) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_PHONE_OTHER);
+			stmt.setInt(1, phone);
+			stmt.setInt(2, excludeId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
 	@Override
 	public boolean checkDni(String dni) {
 		boolean exists = false;
@@ -294,6 +314,24 @@ public class ImplementacionBD implements AdminDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error al comprobar el DNI");
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	// Overloaded: excludes customer with given id (used in edit)
+	public boolean checkDni(String dni, int excludeId) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_DNI_OTHER);
+			stmt.setString(1, dni);
+			stmt.setInt(2, excludeId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return exists;

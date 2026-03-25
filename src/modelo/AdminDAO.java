@@ -35,4 +35,8 @@ public interface AdminDAO {
 	public boolean checkRoomExists(int roomNumber);
 
 	public boolean checkCustomerExists(int idCustomer);
+
+	public boolean checkPhone(int phone, int excludeId);
+
+	public boolean checkDni(String dni, int excludeId);
 }
