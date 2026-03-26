@@ -32,7 +32,7 @@ public class ImplementacionBD implements AdminDAO {
 
 	// Sentencias SQL
 	private final String SQL_VIEW_ROOMS = "SELECT * FROM Room";
-	private final String SQL_VIEW_BOOKINGS = "SELECT c.id_customer, c.name_customer, c.surname, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.id_room";
+	private final String SQL_VIEW_BOOKINGS = "SELECT b.id_booking, c.id_customer, c.name_customer, c.surname, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer=c.id_customer JOIN Room r ON b.id_room = r.id_room";
 	private final String SQL_ADD_BOOKING = "INSERT INTO Booking (id_room, id_customer, check_in, check_out, paid) VALUES (?, ?, ?, ?, ?)";
 	private final String SQL_VIEW_CUSTOMERS = "SELECT * FROM Customer";
 	private final String SQL_VIEW_EXTRA_SERVICES = "SELECT * FROM Extra_Service";
@@ -48,12 +48,10 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_CHECK_CUSTOMER_EXISTS = "SELECT * FROM Customer WHERE id_customer = ?";
 	private final String SQL_CHECK_PHONE_OTHER = "SELECT * FROM Customer WHERE phone = ? AND id_customer != ?";
 	private final String SQL_CHECK_DNI_OTHER = "SELECT * FROM Customer WHERE dni = ? AND id_customer != ?";
+	private final String SQL_LOGIN = "SELECT * FROM Adm WHERE name_a = ? AND password_a = ?";
+	private final String SQL_DELETE_BOOKING = "DELETE FROM Booking WHERE id_booking = ?";
+	private final String SQL_CHECK_BOOKING_EXISTS = "SELECT * FROM Booking WHERE id_booking = ?";
 
-	// final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena =
-	// ?";
-
-	// Para la conexi n utilizamos un fichero de configuaraci n, config que
-	// guardamos en el paquete control:
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
 		this.driverBD = this.configFile.getString("Driver");
@@ -148,6 +146,7 @@ public class ImplementacionBD implements AdminDAO {
 				b.setCheckIn(rs.getObject("check_in", LocalDate.class));
 				b.setCheckOut(rs.getObject("check_out", LocalDate.class));
 				b.setPaid(rs.getBoolean("paid"));
+				b.setIdBooking(rs.getInt("id_booking"));
 
 				Aux_booking booking = new Aux_booking(c, r, b);
 
@@ -424,6 +423,58 @@ public class ImplementacionBD implements AdminDAO {
 		try {
 			stmt = con.prepareStatement(SQL_CHECK_CUSTOMER_EXISTS);
 			stmt.setInt(1, idCustomer);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+				exists = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public boolean login(String user, String password) {
+		boolean correct = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_LOGIN);
+			stmt.setString(1, user);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				correct = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al iniciar sesión");
+			e.printStackTrace();
+		}
+		return correct;
+	}
+
+	@Override
+	public boolean deleteBooking(int id) {
+		boolean correct = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_DELETE_BOOKING);
+			stmt.setInt(1, id);
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected > 0) {
+				correct = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al eliminar reserva");
+			e.printStackTrace();
+		}
+		return correct;
+	}
+
+	@Override
+	public boolean checkBookingExists(int id) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_BOOKING_EXISTS);
+			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next())
 				exists = true;

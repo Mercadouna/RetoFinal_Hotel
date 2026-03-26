@@ -19,7 +19,7 @@ import controlador.LoginControlador;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-public class VentanaLogin extends JFrame implements ActionListener{
+public class VentanaLogin extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -34,14 +34,13 @@ public class VentanaLogin extends JFrame implements ActionListener{
 	private int ancho;
 
 	public VentanaLogin(LoginControlador controlador) {
-        // Guardamos el controlador en la variable de instancia
-        this.cont = controlador;
+		// Guardamos el controlador en la variable de instancia
+		this.cont = controlador;
 
-        // ── 2. CONFIGURAR LA VENTANA PRINCIPAL (JFrame) ────────────────
-        setTitle("Hotel Management System - Login");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // cerrar programa al cerrar ventana
-        
-        
+		// ── 2. CONFIGURAR LA VENTANA PRINCIPAL (JFrame) ────────────────
+		setTitle("Hotel Management System - Login");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // cerrar programa al cerrar ventana
+
 		setBounds(100, 100, 1060, 860);
 		getContentPane().setLayout(null);
 		contentPane = new JPanel();
@@ -75,16 +74,23 @@ public class VentanaLogin extends JFrame implements ActionListener{
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(363, 698, 274, 23);
 		contentPane.add(lblNewLabel_1);
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnLogin) {
-			V_Menu m = new V_Menu(cont);
-			m.setVisible(true);
-			this.dispose();
+		String user;
+		String password;
+		if (e.getSource() == btnLogin) {
+			user = campoUsuario.getText();
+			password = new String(campoContrasena.getPassword());
+			if (cont.login(user, password)) {
+				V_Menu m = new V_Menu(cont);
+				m.setVisible(true);
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+			}
 		}
 	}
 }
-

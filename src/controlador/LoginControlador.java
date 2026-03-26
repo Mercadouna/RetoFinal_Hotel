@@ -87,4 +87,15 @@ public class LoginControlador {
 		return dao.checkCustomerExists(idCustomer);
 	}
 
+	public boolean login(String user, String password) {
+		return dao.login(user, password);
+	}
+
+	public boolean deleteBooking(int id) {
+		return dao.deleteBooking(id);
+	}
+
+	public boolean checkBookingExists(int id) {
+		return dao.checkBookingExists(id);
+	}
 }

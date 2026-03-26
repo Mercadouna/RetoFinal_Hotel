@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -34,7 +35,7 @@ public class V_Menu extends JDialog implements ActionListener {
 		this.cont = controlador;
 		setBounds(100, 100, 1060, 850);
 		getContentPane().setLayout(null);
-		
+
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 
 		panel_Botones_Ventanas = new JPanel();
@@ -84,28 +85,35 @@ public class V_Menu extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		int opcion;
 		if (e.getSource() == btnNewButton_Rooms) {
 			V_Room r = new V_Room(cont);
 			r.setVisible(true);
 			this.dispose();
 		}
-		
-		if(e.getSource() == btnNewButton_Booking) {
+
+		if (e.getSource() == btnNewButton_Booking) {
 			V_Booking b = new V_Booking(cont);
 			b.setVisible(true);
 			this.dispose();
 		}
-		
-		if(e.getSource() == btnNewButton_Clients) {
+
+		if (e.getSource() == btnNewButton_Clients) {
 			V_Customer c = new V_Customer(cont);
 			c.setVisible(true);
 			this.dispose();
 		}
-		
-		if(e.getSource() == btnNewButton_ExtraServices) {
+
+		if (e.getSource() == btnNewButton_ExtraServices) {
 			V_ExtraServices ex = new V_ExtraServices(cont);
 			ex.setVisible(true);
 			this.dispose();
+		}
+		if (e.getSource() == btnNewButton_Exit) {
+			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
+			if (opcion == JOptionPane.YES_OPTION) {
+				this.dispose();
+			}
 		}
 	}
 }

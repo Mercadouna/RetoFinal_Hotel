@@ -39,4 +39,10 @@ public interface AdminDAO {
 	public boolean checkPhone(int phone, int excludeId);
 
 	public boolean checkDni(String dni, int excludeId);
+
+	public boolean login(String user, String password);
+
+	public boolean deleteBooking(int id);
+
+	public boolean checkBookingExists(int id);
 }
