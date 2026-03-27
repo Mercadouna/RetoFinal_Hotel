@@ -74,8 +74,7 @@ public class V_Booking extends JDialog implements ActionListener {
 		model.addColumn("Check-out");
 		model.addColumn("Paid");
 
-		ImplementacionBD bd = new ImplementacionBD();
-		ArrayList<Aux_booking> bookings = bd.viewBookings();
+		ArrayList<Aux_booking> bookings = cont.viewBookings();
 		for (Aux_booking ab : bookings) {
 			Customer c = ab.getCustomer();
 			Room r = ab.getRoom();
@@ -132,7 +131,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			subtitulo.add(lblNewLabel_1);
 
 			comboBox1 = new JComboBox();
-			comboBox1.setFont(normalFont);
+			comboBox1.setFont(normalFont); 
 			comboBox1.setBounds(120, 2, 150, 30);
 			subtitulo.add(comboBox1);
 
@@ -242,7 +241,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			info.add(btnClear);
 			btnClear.addActionListener(this);
 
-			JLabel lblNewLabel_2_4_1 = new JLabel("Booking ID (del / edit):");
+			JLabel lblNewLabel_2_4_1 = new JLabel("Booking ID (delete):");
 			lblNewLabel_2_4_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			lblNewLabel_2_4_1.setBounds(440, 101, 180, 20);
 			info.add(lblNewLabel_2_4_1);
@@ -274,7 +273,7 @@ public class V_Booking extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnClear) {
-			clearFields();
+			clearFields(); 
 		}
 	}
 

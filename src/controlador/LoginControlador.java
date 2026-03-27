@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import modelo.AdminDAO;
+import modelo.Aux_booking;
+import modelo.Customer;
+import modelo.ExtraService;
 import modelo.ImplementacionBD;
 import modelo.Room;
 
@@ -98,4 +101,17 @@ public class LoginControlador {
 	public boolean checkBookingExists(int id) {
 		return dao.checkBookingExists(id);
 	}
+
+	public ArrayList<Aux_booking> viewBookings() {
+		return dao.viewBookings();
+	}
+
+	public ArrayList<Customer> viewCustomers() {
+		return dao.viewCustomers();
+	}
+
+	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking) {
+		return dao.viewBookingExtraServices(idBooking);
+	}
+
 }

@@ -51,6 +51,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_LOGIN = "SELECT * FROM Adm WHERE name_a = ? AND password_a = ?";
 	private final String SQL_DELETE_BOOKING = "DELETE FROM Booking WHERE id_booking = ?";
 	private final String SQL_CHECK_BOOKING_EXISTS = "SELECT * FROM Booking WHERE id_booking = ?";
+	private final String SQL_VIEW_BOOKING_EXTRA_SERVICES = "SELECT E.id_service, E.name_service, E.price FROM Extra_Service E JOIN Booking_Service B ON E.id_service = B.id_service WHERE B.id_booking = ?";
 
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
@@ -71,6 +72,7 @@ public class ImplementacionBD implements AdminDAO {
 		}
 	}
 
+	@Override
 	public ArrayList<Room> viewRooms() {
 		ArrayList<Room> rooms = new ArrayList<>();
 		this.openConnection();
@@ -97,6 +99,7 @@ public class ImplementacionBD implements AdminDAO {
 		return rooms;
 	}
 
+	@Override
 	public ArrayList<Customer> viewCustomers() {
 		ArrayList<Customer> customers = new ArrayList<>();
 		this.openConnection();
@@ -121,6 +124,7 @@ public class ImplementacionBD implements AdminDAO {
 
 	}
 
+	@Override
 	public ArrayList<Aux_booking> viewBookings() {
 		ArrayList<Aux_booking> bookings = new ArrayList<>();
 		this.openConnection();
@@ -160,6 +164,7 @@ public class ImplementacionBD implements AdminDAO {
 
 	}
 
+	@Override
 	public boolean addCostumer(String name, String surname, int phone, String dni) {
 		boolean correct = false;
 		this.openConnection();
@@ -482,6 +487,28 @@ public class ImplementacionBD implements AdminDAO {
 			e.printStackTrace();
 		}
 		return exists;
+	}
+
+	@Override
+	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking) {
+		ArrayList<ExtraService> extraServices = new ArrayList<>();
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_VIEW_BOOKING_EXTRA_SERVICES);
+			stmt.setInt(1, idBooking);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ExtraService extraService = new ExtraService();
+				extraService.setIdService(rs.getInt("id_service"));
+				extraService.setNameService(rs.getString("name_service"));
+				extraService.setPrice(rs.getDouble("price"));
+				extraServices.add(extraService);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error al ver los servicios extra de la reserva");
+			e.printStackTrace();
+		}
+		return extraServices;
 	}
 
 }

@@ -74,17 +74,10 @@ public class V_Customer extends JDialog implements ActionListener {
 		model.addColumn("Teléfono");
 		model.addColumn("DNI");
 
-		ImplementacionBD bd = new ImplementacionBD();
-		ArrayList<Customer> customers = bd.viewCustomers();
-
-		for (Customer c : customers) {
-			Object[] row = new Object[5];
-			row[0] = c.getIdCustomer();
-			row[1] = c.getNameCostumer();
-			row[2] = c.getSurname();
-			row[3] = c.getPhone();
-			row[4] = c.getDni();
-			model.addRow(row);
+		ArrayList<Customer> customers = cont.viewCustomers();
+		for (Customer customer : customers) {
+			model.addRow(new Object[] { customer.getIdCustomer(), customer.getNameCostumer(), customer.getSurname(),
+					customer.getPhone(), customer.getDni() });
 		}
 
 		Tabla_Cust.setModel(model);
@@ -124,7 +117,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			getContentPane().add(subtitulo);
 			subtitulo.setLayout(null);
 
-			lblNewLabel_1 = new JLabel("Search for client: ");
+			lblNewLabel_1 = new JLabel("Search for Customer: ");
 			lblNewLabel_1.setFont(normalFont);
 			lblNewLabel_1.setBounds(10, 5, 150, 25);
 			subtitulo.add(lblNewLabel_1);

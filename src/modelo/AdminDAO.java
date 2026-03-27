@@ -45,4 +45,10 @@ public interface AdminDAO {
 	public boolean deleteBooking(int id);
 
 	public boolean checkBookingExists(int id);
+
+	public ArrayList<Aux_booking> viewBookings();
+
+	public ArrayList<Customer> viewCustomers();
+
+	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking);
 }
