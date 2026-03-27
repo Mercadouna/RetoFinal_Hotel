@@ -114,4 +114,7 @@ public class LoginControlador {
 		return dao.viewBookingExtraServices(idBooking);
 	}
 
+	public boolean addExtraServiceToBooking(int id, int cant) {
+		return dao.addExtraServiceToBooking(id, cant);
+	}
 }

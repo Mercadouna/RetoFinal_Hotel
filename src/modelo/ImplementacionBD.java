@@ -53,6 +53,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_CHECK_BOOKING_EXISTS = "SELECT * FROM Booking WHERE id_booking = ?";
 	private final String SQL_VIEW_BOOKING_EXTRA_SERVICES = "SELECT E.id_service, E.name_service, E.price FROM Extra_Service E JOIN Booking_Service B ON E.id_service = B.id_service WHERE B.id_booking = ?";
 
+	
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
 		this.driverBD = this.configFile.getString("Driver");
@@ -506,11 +507,22 @@ public class ImplementacionBD implements AdminDAO {
 				extraService.setPrice(rs.getDouble("price"));
 				extraServices.add(extraService);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al ver los servicios extra de la reserva");
 			e.printStackTrace();
 		}
 		return extraServices;
+	}
+	
+	@Override
+	public boolean addExtraServiceToBooking(int id, int cant) {
+		boolean valid = false;
+		this.openConnection();
+		
+		return valid;
 	}
 
 }
