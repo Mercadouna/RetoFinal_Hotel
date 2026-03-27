@@ -53,6 +53,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 	private JButton btnAdd;
 	private LoginControlador cont;
 	private JTable table_Extra_Services;
+	private JButton btnDelete; 
 
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel() {
@@ -243,6 +244,11 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			btnAdd.setFont(normalFont);
 			btnAdd.setBounds(971, 57, 120, 35);
 			info.add(btnAdd);
+			
+			btnDelete = new JButton("Delete []");
+			btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			btnDelete.setBounds(1134, 55, 120, 35);
+			info.add(btnDelete);
 			btnAdd.addActionListener(this);
 		}
 
@@ -272,11 +278,13 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 
 		if (e.getSource() == btnAdd) {
 		}
-
+		
+		if (e.getSource() == btnDelete) {
+			
+		}
 	}
 
 	private void searchBooking() {
-		boolean valid = true;
 		int bookingId;
 		if (textField_BookingId.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
@@ -292,7 +300,6 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Please enter a valid number.");
-				valid = false;
 			}
 
 		}
