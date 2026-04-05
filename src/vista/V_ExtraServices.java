@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -53,7 +54,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 	private JButton btnAdd;
 	private LoginControlador cont;
 	private JTable table_Extra_Services;
-	private JButton btnDelete; 
+	private JButton btnDelete;
 
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel() {
@@ -243,13 +244,13 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			btnAdd = new JButton("Add []");
 			btnAdd.setFont(normalFont);
 			btnAdd.setBounds(971, 57, 120, 35);
+			btnAdd.addActionListener(this);
 			info.add(btnAdd);
-			
+
 			btnDelete = new JButton("Delete []");
 			btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			btnDelete.setBounds(1134, 55, 120, 35);
 			info.add(btnDelete);
-			btnAdd.addActionListener(this);
 		}
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -277,11 +278,11 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		}
 
 		if (e.getSource() == btnAdd) {
-			
+			addExtraServiceToBooking();
 		}
-		
+
 		if (e.getSource() == btnDelete) {
-			
+
 		}
 	}
 
@@ -303,6 +304,37 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Please enter a valid number.");
 			}
 
+		}
+	}
+
+	private void addExtraServiceToBooking() {
+		int bookingId;
+		int extraServiceId;
+		if (textField_BookingId.getText().isEmpty() || textField_Extra_Service_ID.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please fill in all the fields.");
+		} else {
+			try {
+				bookingId = Integer.parseInt(textField_BookingId.getText());
+				extraServiceId = Integer.parseInt(textField_Extra_Service_ID.getText());
+				if (cont.checkBookingExists(bookingId)) {
+					if (cont.checkExtraServiceExists(extraServiceId)) {
+						if (cont.addExtraServiceToBooking(bookingId, extraServiceId)) { 
+							JOptionPane.showMessageDialog(this, "Extra service added successfully.");
+							cargarTablaExtraServices(bookingId);
+						} else {
+							JOptionPane.showMessageDialog(this, "Error al añadir servicio extra.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Extra service not found.");
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Booking not found.");
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Please enter a valid number.");
+			
+
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ package controlador;
 
 import vista.V_1;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -114,7 +115,11 @@ public class LoginControlador {
 		return dao.viewBookingExtraServices(idBooking);
 	}
 
-	public boolean addExtraServiceToBooking(int id, int cant) {
-		return dao.addExtraServiceToBooking(id, cant);
+	public boolean addExtraServiceToBooking(int idBooking, int idService) {
+		return dao.addExtraServiceToBooking(idBooking, idService);
+	}
+
+	public boolean checkExtraServiceExists(int extraServiceId) {
+		return dao.checkExtraServiceExists(extraServiceId);
 	}
 }

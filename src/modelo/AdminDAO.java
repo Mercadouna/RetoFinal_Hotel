@@ -52,5 +52,7 @@ public interface AdminDAO {
 
 	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking);
 
-	public boolean addExtraServiceToBooking(int id, int cant);
+	public boolean addExtraServiceToBooking(int idBooking, int idService);
+
+	public boolean checkExtraServiceExists(int idService);
 }

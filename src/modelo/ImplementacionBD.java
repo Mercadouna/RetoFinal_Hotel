@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-import com.mysql.cj.jdbc.CallableStatement;
-
 public class ImplementacionBD implements AdminDAO {
 	// Atributos
 	private Connection con;
@@ -52,8 +50,9 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_DELETE_BOOKING = "DELETE FROM Booking WHERE id_booking = ?";
 	private final String SQL_CHECK_BOOKING_EXISTS = "SELECT * FROM Booking WHERE id_booking = ?";
 	private final String SQL_VIEW_BOOKING_EXTRA_SERVICES = "SELECT E.id_service, E.name_service, E.price FROM Extra_Service E JOIN Booking_Service B ON E.id_service = B.id_service WHERE B.id_booking = ?";
+	private final String SQL_ADD_EXTRA_SERVICE_TO_BOOKING = "INSERT INTO Booking_Service (id_booking, id_service) VALUES (?, ?)";
+	private final String SQL_CHECK_EXTRA_SERVICE_EXISTS = "SELECT * FROM Extra_Service WHERE id_service = ?";
 
-	
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
 		this.driverBD = this.configFile.getString("Driver");
@@ -91,6 +90,9 @@ public class ImplementacionBD implements AdminDAO {
 				Room room = new Room(idRoom, roomNumber, typeRoom, statusRoom, pricePerNight, quantPers);
 				rooms.add(room);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 
 		} catch (SQLException e) {
 			System.out.println("Error al recuperar las habitaciones");
@@ -117,6 +119,9 @@ public class ImplementacionBD implements AdminDAO {
 				Customer customer = new Customer(idCustomer, name, surname, phone, dni);
 				customers.add(customer);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al recuperar los clientes");
 			e.printStackTrace();
@@ -157,6 +162,9 @@ public class ImplementacionBD implements AdminDAO {
 
 				bookings.add(booking);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al recuperar las habitaciones");
 			e.printStackTrace();
@@ -169,17 +177,19 @@ public class ImplementacionBD implements AdminDAO {
 	public boolean addCostumer(String name, String surname, int phone, String dni) {
 		boolean correct = false;
 		this.openConnection();
+
 		try {
 			stmt = con.prepareStatement(SQL_ADD_CUSTUMER);
+
 			stmt.setString(1, name);
 			stmt.setString(2, surname);
 			stmt.setInt(3, phone);
 			stmt.setString(4, dni);
-
-			int rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
+			if (stmt.executeUpdate() > 0) {
 				correct = true;
 			}
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al añadir cliente");
 			e.printStackTrace();
@@ -210,7 +220,6 @@ public class ImplementacionBD implements AdminDAO {
 	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid) {
 		// TODO Auto-generated method stub
 		boolean correct = false;
-		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_ADD_BOOKING);
@@ -219,11 +228,11 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.setDate(3, java.sql.Date.valueOf(check_in));
 			stmt.setDate(4, java.sql.Date.valueOf(check_out));
 			stmt.setBoolean(5, paid);
-
-			rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
+			if (stmt.executeUpdate() > 0) {
 				correct = true;
 			}
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al añadir Reserva");
 			e.printStackTrace();
@@ -246,17 +255,16 @@ public class ImplementacionBD implements AdminDAO {
 	@Override
 	public boolean addExtraService(String name_service, double price) {
 		boolean correct = false;
-		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_ADD_EXTRA_SERVICE);
 			stmt.setString(1, name_service);
 			stmt.setDouble(2, price);
-
-			rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
+			if (stmt.executeUpdate() > 0) {
 				correct = true;
 			}
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al añadir cliente");
 			e.printStackTrace();
@@ -281,6 +289,9 @@ public class ImplementacionBD implements AdminDAO {
 			if (rs.next()) {
 				exists = true;
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al comprobar el teléfono");
 			e.printStackTrace();
@@ -300,6 +311,9 @@ public class ImplementacionBD implements AdminDAO {
 			if (rs.next()) {
 				exists = true;
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -317,6 +331,9 @@ public class ImplementacionBD implements AdminDAO {
 			if (rs.next()) {
 				exists = true;
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al comprobar el DNI");
 			e.printStackTrace();
@@ -324,7 +341,6 @@ public class ImplementacionBD implements AdminDAO {
 		return exists;
 	}
 
-	// Overloaded: excludes customer with given id (used in edit)
 	public boolean checkDni(String dni, int excludeId) {
 		boolean exists = false;
 		this.openConnection();
@@ -336,6 +352,9 @@ public class ImplementacionBD implements AdminDAO {
 			if (rs.next()) {
 				exists = true;
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -345,7 +364,6 @@ public class ImplementacionBD implements AdminDAO {
 	@Override
 	public boolean editCostumer(int id, String name, String surname, int phone, String dni) {
 		boolean correct = false;
-		int rowsAffected;
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQL_EDIT_CUSTOMER);
@@ -354,10 +372,11 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.setInt(3, phone);
 			stmt.setString(4, dni);
 			stmt.setInt(5, id);
-			rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
+			if (stmt.executeUpdate() > 0) {
 				correct = true;
 			}
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al editar cliente");
 			e.printStackTrace();
@@ -370,15 +389,16 @@ public class ImplementacionBD implements AdminDAO {
 		try {
 			this.openConnection();
 			stmt = con.prepareStatement(SQL_CHECK_ROOM_AVAILABILITY);
-
 			stmt.setInt(1, roomNumber);
 			stmt.setDate(2, Date.valueOf(checkIn));
 			stmt.setDate(3, Date.valueOf(checkOut));
-
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				valido = rs.getBoolean(1);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al comprobar la disponibilidad de la habitación");
 			e.printStackTrace();
@@ -392,15 +412,16 @@ public class ImplementacionBD implements AdminDAO {
 		try {
 			this.openConnection();
 			stmt = con.prepareStatement(SQL_CHECK_CUSTOMER_AVAILABILITY);
-
 			stmt.setInt(1, idCustomer);
 			stmt.setDate(2, Date.valueOf(checkIn));
 			stmt.setDate(3, Date.valueOf(checkOut));
-
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				valido = rs.getBoolean(1);
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al comprobar la disponibilidad del cliente");
 			e.printStackTrace();
@@ -415,8 +436,12 @@ public class ImplementacionBD implements AdminDAO {
 			stmt = con.prepareStatement(SQL_CHECK_ROOM_EXISTS);
 			stmt.setInt(1, roomNumber);
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next())
+			if (rs.next()) {
 				exists = true;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -430,8 +455,12 @@ public class ImplementacionBD implements AdminDAO {
 			stmt = con.prepareStatement(SQL_CHECK_CUSTOMER_EXISTS);
 			stmt.setInt(1, idCustomer);
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next())
+			if (rs.next()) {
 				exists = true;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -449,6 +478,9 @@ public class ImplementacionBD implements AdminDAO {
 			if (rs.next()) {
 				correct = true;
 			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al iniciar sesión");
 			e.printStackTrace();
@@ -463,10 +495,11 @@ public class ImplementacionBD implements AdminDAO {
 		try {
 			stmt = con.prepareStatement(SQL_DELETE_BOOKING);
 			stmt.setInt(1, id);
-			int rowsAffected = stmt.executeUpdate();
-			if (rowsAffected > 0) {
+			if (stmt.executeUpdate() > 0) {
 				correct = true;
 			}
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al eliminar reserva");
 			e.printStackTrace();
@@ -482,16 +515,18 @@ public class ImplementacionBD implements AdminDAO {
 			stmt = con.prepareStatement(SQL_CHECK_BOOKING_EXISTS);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next())
+			if (rs.next()) {
 				exists = true;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return exists;
 	}
 
-	
-	
 	@Override
 	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking) {
 		ArrayList<ExtraService> extraServices = new ArrayList<>();
@@ -516,13 +551,48 @@ public class ImplementacionBD implements AdminDAO {
 		}
 		return extraServices;
 	}
-	
+
 	@Override
-	public boolean addExtraServiceToBooking(int id, int cant) {
+	public boolean addExtraServiceToBooking(int idBooking, int idService) {
 		boolean valid = false;
 		this.openConnection();
-		
+
+		try {
+
+			stmt = con.prepareStatement(SQL_ADD_EXTRA_SERVICE_TO_BOOKING);
+			stmt.setInt(1, idBooking);
+			stmt.setInt(2, idService);
+			if (stmt.executeUpdate() > 0) {
+				valid = true;
+			}
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return valid;
+	}
+
+	@Override
+	public boolean checkExtraServiceExists(int idService) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_EXTRA_SERVICE_EXISTS);
+			stmt.setInt(1, idService);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar si el servicio extra existe");
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 }
