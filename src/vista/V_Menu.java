@@ -110,7 +110,7 @@ public class V_Menu extends JDialog implements ActionListener {
 			this.dispose();
 		}
 		if (e.getSource() == btnNewButton_Exit) {
-			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir? ");
+			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?");
 			if (opcion == JOptionPane.YES_OPTION) {
 				this.dispose();
 			}
