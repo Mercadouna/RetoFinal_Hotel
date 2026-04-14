@@ -122,4 +122,16 @@ public class LoginControlador {
 	public boolean checkExtraServiceExists(int extraServiceId) {
 		return dao.checkExtraServiceExists(extraServiceId);
 	}
+
+	public boolean checkExtraServiceInBooking(int idBooking, int idService) {
+		return dao.checkExtraServiceInBooking(idBooking, idService);
+	}
+
+	public ArrayList<Aux_booking> viewUnpaidBookings() {
+		return dao.viewUnpaidBookings();
+	}
+
+	public boolean deleteExtraServiceFromBooking(int idBooking, int idService) {
+		return dao.deleteExtraServiceFromBooking(idBooking, idService);
+	}
 }

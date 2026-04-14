@@ -52,6 +52,9 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_VIEW_BOOKING_EXTRA_SERVICES = "SELECT E.id_service, E.name_service, E.price FROM Extra_Service E JOIN Booking_Service B ON E.id_service = B.id_service WHERE B.id_booking = ?";
 	private final String SQL_ADD_EXTRA_SERVICE_TO_BOOKING = "INSERT INTO Booking_Service (id_booking, id_service) VALUES (?, ?)";
 	private final String SQL_CHECK_EXTRA_SERVICE_EXISTS = "SELECT * FROM Extra_Service WHERE id_service = ?";
+	private final String SQL_DELETE_EXTRA_SERVICE_FROM_BOOKING = "DELETE FROM Booking_Service WHERE id_booking = ? AND id_service = ?";
+	private final String SQL_CHECK_EXTRA_SERVICE_IN_BOOKING = "SELECT * FROM Booking_Service WHERE id_booking = ? AND id_service = ?";
+	private final String SQL_VIEW_UNPAID_BOOKINGS = "SELECT b.id_booking, c.id_customer, c.name_customer, c.surname, c.phone, c.dni, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer = c.id_customer JOIN Room r ON b.id_room = r.id_room WHERE b.paid = false";
 
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
@@ -593,6 +596,86 @@ public class ImplementacionBD implements AdminDAO {
 			e.printStackTrace();
 		}
 		return exists;
+	}
+
+	@Override
+	public ArrayList<Aux_booking> viewUnpaidBookings() {
+		ArrayList<Aux_booking> bookings = new ArrayList<>();
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_VIEW_UNPAID_BOOKINGS);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Customer c = new Customer();
+				c.setIdCustomer(rs.getInt("id_customer"));
+				c.setNameCostumer(rs.getString("name_customer"));
+				c.setSurname(rs.getString("surname"));
+				c.setPhone(rs.getInt("phone"));
+				c.setDni(rs.getString("dni"));
+
+				Room r = new Room();
+				r.setIdRoom(rs.getInt("id_room"));
+				r.setRoomNumber(rs.getInt("room_number"));
+				r.setTypeRoom(rs.getString("type_room"));
+
+				Booking b = new Booking();
+				b.setIdBooking(rs.getInt("id_booking"));
+				b.setCheckIn(rs.getObject("check_in", LocalDate.class));
+				b.setCheckOut(rs.getObject("check_out", LocalDate.class));
+				b.setPaid(rs.getBoolean("paid"));
+
+				bookings.add(new Aux_booking(c, r, b));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al recuperar reservas sin pagar");
+			e.printStackTrace();
+		}
+		return bookings;
+	}
+
+	@Override
+	public boolean checkExtraServiceInBooking(int idBooking, int idService) {
+		boolean exists = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_CHECK_EXTRA_SERVICE_IN_BOOKING);
+			stmt.setInt(1, idBooking);
+			stmt.setInt(2, idService);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				exists = true;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al comprobar si el servicio extra está en la reserva");
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	@Override
+	public boolean deleteExtraServiceFromBooking(int idBooking, int idService) {
+		boolean correct = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_DELETE_EXTRA_SERVICE_FROM_BOOKING);
+			stmt.setInt(1, idBooking);
+			stmt.setInt(2, idService);
+			if (stmt.executeUpdate() > 0) {
+				correct = true;
+			}
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al eliminar servicio extra de la reserva");
+			e.printStackTrace();
+		}
+		return correct;
 	}
 
 }

@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import controlador.LoginControlador;
 
 import java.util.ArrayList;
-import modelo.ImplementacionBD;
+import modelo.ImplementacionBD; 
 import modelo.Customer;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -165,7 +165,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			titulo.setLayout(null);
 
 			// Etiqueta del título en dorado claro
-			lblNewLabel = new JLabel("Client Management");
+			lblNewLabel = new JLabel("Customer Management");
 			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			lblNewLabel.setForeground(new Color(230, 200, 110));
 			lblNewLabel.setBounds(24, 19, 220, 25);

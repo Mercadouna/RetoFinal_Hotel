@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -72,7 +73,9 @@ public class V_Booking extends JDialog implements ActionListener {
 				URL url = getClass().getResource(resourcePath);
 				if (url != null)
 					bgImage = new ImageIcon(url).getImage();
-			} catch (Exception ignored) {}
+			} catch (Exception ignored) {
+				
+			}
 		}
 
 		@Override
@@ -90,7 +93,9 @@ public class V_Booking extends JDialog implements ActionListener {
 			URL url = getClass().getResource("/images/" + name);
 			if (url != null)
 				icon = new ImageIcon(url);
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+			
+		}
 		return icon;
 	}
 
@@ -102,9 +107,7 @@ public class V_Booking extends JDialog implements ActionListener {
 		tf.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
 	}
 
-	// ── Helper: aplica estilo hotel a un JComboBox ────────────────────────────
-	private void styleComboBox(JComboBox cb) {
-	}
+	
 
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel() {
@@ -265,7 +268,6 @@ public class V_Booking extends JDialog implements ActionListener {
 			comboBox_paid.setBounds(440, 60, 180, 30);
 			comboBox_paid.addItem("Paid");
 			comboBox_paid.addItem("Not Paid");
-			styleComboBox(comboBox_paid);
 			info.add(comboBox_paid);
 
 			lblNewLabel_2_1 = new JLabel("Client ID:");
@@ -391,7 +393,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			try {
 				checkIn = LocalDate.parse(textField_check_in.getText().trim());
 				checkOut = LocalDate.parse(textField_check_out.getText().trim());
-			} catch (java.time.format.DateTimeParseException e) {
+			} catch (DateTimeParseException e) {
 				valido = false;
 				JOptionPane.showMessageDialog(this, "Invalid date format. Please use YYYY-MM-DD.", "Format Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -485,7 +487,7 @@ public class V_Booking extends JDialog implements ActionListener {
 
 		if (valido) {
 			if (JOptionPane.showConfirmDialog(this,
-					"Seguro que quieres eliminar la reserva?") == JOptionPane.NO_OPTION) {
+					"Seguro que quieres eliminar la reserva?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
 				valido = false;
 			}
 		}

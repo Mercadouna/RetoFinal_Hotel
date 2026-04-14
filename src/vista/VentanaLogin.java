@@ -1,23 +1,25 @@
 package vista;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.LoginControlador;
-
-import javax.swing.JLabel;
-import javax.swing.JTable;
 
 public class VentanaLogin extends JFrame implements ActionListener {
 
@@ -30,51 +32,106 @@ public class VentanaLogin extends JFrame implements ActionListener {
 	private LoginControlador cont;
 	private JLabel lblNewLabel;
 	private JLabel Contarseña;
-	private int alto;
-	private int ancho;
+
+	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	private ImageIcon loadIcon(String name) {
+		ImageIcon icon = null;
+		try {
+			URL url = getClass().getResource("/images/" + name);
+			if (url != null)
+				icon = new ImageIcon(url);
+		} catch (Exception ignored) {}
+		return icon;
+	}
+
+	// ── Helper: aplica estilo hotel a un JTextField ───────────────────────────
+	private void styleTextField(JTextField tf) {
+		tf.setBackground(new Color(20, 35, 58));
+		tf.setForeground(new Color(230, 200, 110));
+		tf.setCaretColor(new Color(201, 168, 76));
+		tf.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
+	}
 
 	public VentanaLogin(LoginControlador controlador) {
-		// Guardamos el controlador en la variable de instancia
 		this.cont = controlador;
-
-		// ── 2. CONFIGURAR LA VENTANA PRINCIPAL (JFrame) ────────────────
 		setTitle("Hotel Management System - Login");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // cerrar programa al cerrar ventana
-
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1060, 860);
-		getContentPane().setLayout(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		// ── Fondo: JLabel con imagen ocupa todo el contentPane ────────────────
+		// Al usar un JLabel como contentPane no hace falta sobreescribir Graphics
+		ImageIcon bgIcon = loadIcon("login_bg_1.png");
+		JLabel background = new JLabel();
+		if (bgIcon != null) {
+			Image scaled = bgIcon.getImage().getScaledInstance(1060, 860, Image.SCALE_SMOOTH);
+			background.setIcon(new ImageIcon(scaled));
+		}
+		background.setLayout(null);          // permite posicionar hijos con setBounds
+		background.setBounds(0, 0, 1060, 860);
+		setContentPane(background);          // sustituye el contentPane por el JLabel
 
-		campoUsuario = new JTextField();
-		campoUsuario.setBounds(567, 519, 105, 19);
-		contentPane.add(campoUsuario);
-		campoUsuario.setColumns(10);
+		// ── Logo centrado en la parte superior ────────────────────────────────
+		ImageIcon logoIcon = loadIcon("Logo_Hotel.png");
+		if (logoIcon != null) {
+			Image scaled = logoIcon.getImage().getScaledInstance(280, 280, Image.SCALE_SMOOTH);
+			JLabel lblLogo = new JLabel(new ImageIcon(scaled));
+			lblLogo.setBounds(390, 80, 280, 280);
+			background.add(lblLogo);
+		}
 
-		campoContrasena = new JPasswordField();
-		campoContrasena.setBounds(567, 570, 105, 19);
-		contentPane.add(campoContrasena);
+		Font normalFont  = new Font("Tahoma", Font.PLAIN, 14);
+		Font boldFont    = new Font("Tahoma", Font.BOLD, 14);
+		Color labelColor = new Color(230, 200, 110);
 
-		btnLogin = new JButton("Login");
-		btnLogin.setBounds(477, 639, 85, 21);
-		contentPane.add(btnLogin);
-		btnLogin.addActionListener(this);
-
+		// ── Etiqueta Usuario ──────────────────────────────────────────────────
 		lblNewLabel = new JLabel("Usuario");
-		lblNewLabel.setBounds(406, 521, 109, 16);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setFont(boldFont);
+		lblNewLabel.setForeground(labelColor);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setBounds(406, 490, 130, 20);
+		background.add(lblNewLabel);
 
-		Contarseña = new JLabel("Contarseña");
-		Contarseña.setBounds(406, 572, 109, 16);
-		contentPane.add(Contarseña);
+		// ── Campo Usuario ─────────────────────────────────────────────────────
+		campoUsuario = new JTextField();
+		campoUsuario.setFont(normalFont);
+		campoUsuario.setColumns(10);
+		campoUsuario.setBounds(406, 515, 245, 30);
+		styleTextField(campoUsuario);
+		background.add(campoUsuario);
 
+		// ── Etiqueta Contraseña ───────────────────────────────────────────────
+		Contarseña = new JLabel("Contraseña");
+		Contarseña.setFont(boldFont);
+		Contarseña.setForeground(labelColor);
+		Contarseña.setHorizontalAlignment(SwingConstants.RIGHT);
+		Contarseña.setBounds(406, 560, 130, 20);
+		background.add(Contarseña);
+
+		// ── Campo Contraseña ──────────────────────────────────────────────────
+		campoContrasena = new JPasswordField();
+		campoContrasena.setFont(normalFont);
+		campoContrasena.setBounds(406, 585, 245, 30);
+		styleTextField(campoContrasena);
+		background.add(campoContrasena);
+
+		// ── Botón Login ───────────────────────────────────────────────────────
+		btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLogin.setBounds(453, 640, 151, 38);
+		btnLogin.setBackground(new Color(20, 35, 58));
+		btnLogin.setForeground(new Color(230, 200, 110));
+		btnLogin.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
+		btnLogin.setFocusPainted(false);
+		btnLogin.addActionListener(this);
+		background.add(btnLogin);
+
+		// ── Label de mensaje de error / feedback ──────────────────────────────
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(363, 698, 274, 23);
-		contentPane.add(lblNewLabel_1);
-
+		lblNewLabel_1.setFont(normalFont);
+		lblNewLabel_1.setForeground(new Color(220, 130, 130));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(363, 698, 330, 23);
+		background.add(lblNewLabel_1);
 	}
 
 	@Override
@@ -82,7 +139,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		String user;
 		String password;
 		if (e.getSource() == btnLogin) {
-			user = campoUsuario.getText();
+			user     = campoUsuario.getText();
 			password = new String(campoContrasena.getPassword());
 			if (cont.login(user, password)) {
 				V_Menu m = new V_Menu(cont);
