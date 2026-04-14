@@ -36,6 +36,7 @@ public class V_Room extends JDialog implements ActionListener {
 	public V_Room(LoginControlador controlador) {
 		this.cont = controlador;
 		setBounds(100, 100, 1060, 860);
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);

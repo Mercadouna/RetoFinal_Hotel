@@ -40,7 +40,8 @@ public class VentanaLogin extends JFrame implements ActionListener {
 			URL url = getClass().getResource("/images/" + name);
 			if (url != null)
 				icon = new ImageIcon(url);
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+		}
 		return icon;
 	}
 
@@ -57,18 +58,20 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		setTitle("Hotel Management System - Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1060, 860);
+		setResizable(false);
 
 		// ── Fondo: JLabel con imagen ocupa todo el contentPane ────────────────
 		// Al usar un JLabel como contentPane no hace falta sobreescribir Graphics
 		ImageIcon bgIcon = loadIcon("login_bg_1.png");
 		JLabel background = new JLabel();
+
 		if (bgIcon != null) {
 			Image scaled = bgIcon.getImage().getScaledInstance(1060, 860, Image.SCALE_SMOOTH);
 			background.setIcon(new ImageIcon(scaled));
 		}
-		background.setLayout(null);          // permite posicionar hijos con setBounds
+		background.setLayout(null); // permite posicionar hijos con setBounds
 		background.setBounds(0, 0, 1060, 860);
-		setContentPane(background);          // sustituye el contentPane por el JLabel
+		setContentPane(background); // sustituye el contentPane por el JLabel
 
 		// ── Logo centrado en la parte superior ────────────────────────────────
 		ImageIcon logoIcon = loadIcon("Logo_Hotel.png");
@@ -79,8 +82,8 @@ public class VentanaLogin extends JFrame implements ActionListener {
 			background.add(lblLogo);
 		}
 
-		Font normalFont  = new Font("Tahoma", Font.PLAIN, 14);
-		Font boldFont    = new Font("Tahoma", Font.BOLD, 14);
+		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
+		Font boldFont = new Font("Tahoma", Font.BOLD, 14);
 		Color labelColor = new Color(230, 200, 110);
 
 		// ── Etiqueta Usuario ──────────────────────────────────────────────────
@@ -139,7 +142,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		String user;
 		String password;
 		if (e.getSource() == btnLogin) {
-			user     = campoUsuario.getText();
+			user = campoUsuario.getText();
 			password = new String(campoContrasena.getPassword());
 			if (cont.login(user, password)) {
 				V_Menu m = new V_Menu(cont);

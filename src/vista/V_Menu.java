@@ -32,6 +32,7 @@ import modelo.Customer;
 import modelo.Room;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class V_Menu extends JDialog implements ActionListener {
@@ -47,6 +48,8 @@ public class V_Menu extends JDialog implements ActionListener {
 	private JScrollPane scrollPane;
 	private JTable tableUnpaidBookings;
 	private LoginControlador cont;
+	private JTextField textField_editPaymentId;
+	private JButton btnEditPayment;
 
 	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
 	private static class ImagePanel extends JPanel {
@@ -116,8 +119,10 @@ public class V_Menu extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public V_Menu(LoginControlador controlador) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.cont = controlador;
 		setBounds(100, 100, 1060, 850);
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		// ── Fondo general de la ventana ──────────────────────────────────────
@@ -249,6 +254,35 @@ public class V_Menu extends JDialog implements ActionListener {
 		lblUnpaidTitle.setBounds(22, 11, 250, 30);
 		panel_Main.add(lblUnpaidTitle);
 
+		JLabel lblEditPaymentId = new JLabel("Booking ID:");
+		lblEditPaymentId.setFont(normalFont);
+		lblEditPaymentId.setForeground(new Color(230, 200, 110));
+		lblEditPaymentId.setBounds(22, 50, 100, 25);
+		panel_Main.add(lblEditPaymentId);
+
+		textField_editPaymentId = new JTextField();
+		textField_editPaymentId.setFont(normalFont);
+		textField_editPaymentId.setColumns(10);
+		textField_editPaymentId.setBounds(130, 47, 150, 30);
+		textField_editPaymentId.setBackground(new Color(20, 35, 58));
+		textField_editPaymentId.setForeground(new Color(230, 200, 110));
+		textField_editPaymentId.setCaretColor(new Color(201, 168, 76));
+		textField_editPaymentId.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
+		panel_Main.add(textField_editPaymentId);
+
+		btnEditPayment = new JButton("  Edit Payment");
+		btnEditPayment.setFont(normalFont);
+		btnEditPayment.setBounds(295, 46, 170, 35);
+		btnEditPayment.setBackground(new Color(20, 35, 58));
+		btnEditPayment.setForeground(new Color(230, 200, 110));
+		btnEditPayment.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
+		btnEditPayment.setIcon(loadIcon("ico_booking.png"));
+		btnEditPayment.setHorizontalAlignment(SwingConstants.LEFT);
+		btnEditPayment.setIconTextGap(8);
+		btnEditPayment.setFocusPainted(false);
+		panel_Main.add(btnEditPayment);
+		btnEditPayment.addActionListener(this);
+
 		tableUnpaidBookings = new JTable() {
 			private static final long serialVersionUID = 1L;
 
@@ -287,7 +321,7 @@ public class V_Menu extends JDialog implements ActionListener {
 		tableUnpaidBookings.getTableHeader().setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
 
 		JScrollPane scrollPaneTable = new JScrollPane(tableUnpaidBookings);
-		scrollPaneTable.setBounds(10, 50, 780, 600);
+		scrollPaneTable.setBounds(10, 95, 780, 555);
 		scrollPaneTable.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
 		scrollPaneTable.getViewport().setBackground(new Color(14, 26, 44));
 		panel_Main.add(scrollPaneTable);
@@ -374,9 +408,62 @@ public class V_Menu extends JDialog implements ActionListener {
 			this.dispose();
 		}
 		if (e.getSource() == btnNewButton_Exit) {
-			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirm", JOptionPane.YES_NO_OPTION);
+			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirm",
+					JOptionPane.YES_NO_OPTION);
 			if (opcion == JOptionPane.YES_OPTION) {
+				MusicPlayer.stop();
 				this.dispose();
+			}
+		}
+		if (e.getSource() == btnEditPayment) {
+			editPayment();
+		}
+	}
+
+	private void editPayment() {
+		boolean valido = true;
+		boolean found = false;
+		int bookingId = 0;
+		int i = 0;
+		DefaultTableModel tableModel;
+
+		if (textField_editPaymentId.getText().trim().isEmpty()) {
+			valido = false;
+			JOptionPane.showMessageDialog(this, "Booking ID is empty", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				bookingId = Integer.parseInt(textField_editPaymentId.getText().trim());
+			} catch (NumberFormatException e) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Booking ID must be a valid number.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			tableModel = (DefaultTableModel) tableUnpaidBookings.getModel();
+			for (i = 0; i < tableModel.getRowCount() && !found; i++) {
+				if ((int) tableModel.getValueAt(i, 0) == bookingId) {
+					found = true;
+				}
+			}
+			if (!found) {
+				valido = false;
+				JOptionPane.showMessageDialog(this, "Unpaid booking not found.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if (valido) {
+			if (cont.togglePayment(bookingId)) {
+				JOptionPane.showMessageDialog(this, "Payment status updated for booking " + bookingId,
+						"Success", JOptionPane.INFORMATION_MESSAGE);
+				textField_editPaymentId.setText("");
+				cargarTablaUnpaid();
+			} else {
+				JOptionPane.showMessageDialog(this, "Error updating payment status.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

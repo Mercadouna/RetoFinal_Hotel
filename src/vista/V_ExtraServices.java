@@ -171,6 +171,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		this.cont = cont;
 		// Altura aumentada a 920 para acomodar los iconos en el subtítulo
 		setBounds(100, 100, 1500, 920);
+		setResizable(false);
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);

@@ -144,6 +144,7 @@ public class V_Customer extends JDialog implements ActionListener {
 	public V_Customer(LoginControlador cont) {
 		this.cont = cont;
 		setBounds(100, 100, 1060, 850);
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		// Fondo general de la ventana en navy oscuro

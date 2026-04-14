@@ -61,4 +61,6 @@ public interface AdminDAO {
 	public boolean checkExtraServiceInBooking(int idBooking, int idService);
 
 	public ArrayList<Aux_booking> viewUnpaidBookings();
+
+	public boolean togglePayment(int id);
 }

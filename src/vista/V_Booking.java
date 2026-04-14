@@ -152,6 +152,7 @@ public class V_Booking extends JDialog implements ActionListener {
 	public V_Booking(LoginControlador cont) {
 		this.cont = cont;
 		setBounds(100, 100, 1060, 850);
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		// Fondo general de la ventana en navy oscuro

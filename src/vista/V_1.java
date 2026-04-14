@@ -11,10 +11,12 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.LoginControlador;
+import exceptions.MusicPlayerException;
 
 import java.awt.FlowLayout;
 
@@ -24,12 +26,18 @@ public class V_1 extends JFrame {
 	private JPanel contentPane;
 	private LoginControlador cont;
 
-
-
 	public V_1(LoginControlador loginControlador) {
 		this.cont = loginControlador;
+		try {
+			MusicPlayer.play();
+		} catch (MusicPlayerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {

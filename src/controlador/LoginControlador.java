@@ -134,4 +134,8 @@ public class LoginControlador {
 	public boolean deleteExtraServiceFromBooking(int idBooking, int idService) {
 		return dao.deleteExtraServiceFromBooking(idBooking, idService);
 	}
+
+	public boolean togglePayment(int id) {
+		return dao.togglePayment(id);
+	}
 }
