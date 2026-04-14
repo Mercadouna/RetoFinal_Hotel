@@ -55,6 +55,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_DELETE_EXTRA_SERVICE_FROM_BOOKING = "DELETE FROM Booking_Service WHERE id_booking = ? AND id_service = ?";
 	private final String SQL_CHECK_EXTRA_SERVICE_IN_BOOKING = "SELECT * FROM Booking_Service WHERE id_booking = ? AND id_service = ?";
 	private final String SQL_VIEW_UNPAID_BOOKINGS = "SELECT b.id_booking, c.id_customer, c.name_customer, c.surname, c.phone, c.dni, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer = c.id_customer JOIN Room r ON b.id_room = r.id_room WHERE b.paid = false";
+	private final String SQL_TOGGLE_PAYMENT = "UPDATE Booking SET paid = NOT paid WHERE id_booking = ?";
 
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
@@ -673,6 +674,25 @@ public class ImplementacionBD implements AdminDAO {
 			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error al eliminar servicio extra de la reserva");
+			e.printStackTrace();
+		}
+		return correct;
+	}
+
+	@Override
+	public boolean togglePayment(int id) {
+		boolean correct = false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_TOGGLE_PAYMENT);
+			stmt.setInt(1, id);
+			if (stmt.executeUpdate() > 0) {
+				correct = true;
+			}
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al cambiar el estado de pago de la reserva");
 			e.printStackTrace();
 		}
 		return correct;
