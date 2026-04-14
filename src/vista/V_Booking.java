@@ -74,7 +74,7 @@ public class V_Booking extends JDialog implements ActionListener {
 				if (url != null)
 					bgImage = new ImageIcon(url).getImage();
 			} catch (Exception ignored) {
-				
+
 			}
 		}
 
@@ -94,7 +94,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			if (url != null)
 				icon = new ImageIcon(url);
 		} catch (Exception ignored) {
-			
+
 		}
 		return icon;
 	}
@@ -106,8 +106,6 @@ public class V_Booking extends JDialog implements ActionListener {
 		tf.setCaretColor(new Color(201, 168, 76));
 		tf.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
 	}
-
-	
 
 	private void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel() {
@@ -159,11 +157,11 @@ public class V_Booking extends JDialog implements ActionListener {
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
-		Font boldFont   = new Font("Tahoma", Font.BOLD, 16);
+		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
 		// Colores reutilizables del tema hotel
-		Color btnBg     = new Color(20, 35, 58);
-		Color btnFg     = new Color(230, 200, 110);
+		Color btnBg = new Color(20, 35, 58);
+		Color btnFg = new Color(230, 200, 110);
 		Color btnBorder = new Color(201, 168, 76);
 
 		{
@@ -245,7 +243,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			styleTextField(textField_room_id);
 			info.add(textField_room_id);
 
-			lblNewLabel_2_2_1 = new JLabel("Check-in (DD/MM/YY):");
+			lblNewLabel_2_2_1 = new JLabel("Check-in (yyyy-mm-dd):");
 			lblNewLabel_2_2_1.setFont(normalFont);
 			lblNewLabel_2_2_1.setForeground(new Color(230, 200, 110));
 			lblNewLabel_2_2_1.setBounds(230, 35, 180, 20);
@@ -284,7 +282,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			styleTextField(textField_client_id);
 			info.add(textField_client_id);
 
-			lblNewLabel_2_3 = new JLabel("Check-out (DD/MM/YY):");
+			lblNewLabel_2_3 = new JLabel("Check-out (yyyy-mm-dd):");
 			lblNewLabel_2_3.setFont(normalFont);
 			lblNewLabel_2_3.setForeground(new Color(230, 200, 110));
 			lblNewLabel_2_3.setBounds(230, 100, 180, 20);
@@ -488,7 +486,8 @@ public class V_Booking extends JDialog implements ActionListener {
 
 		if (valido) {
 			if (JOptionPane.showConfirmDialog(this,
-					"Seguro que quieres eliminar la reserva?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+					"Seguro que quieres eliminar la reserva?", "Confirm",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
 				valido = false;
 			}
 		}

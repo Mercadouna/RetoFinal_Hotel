@@ -11,7 +11,7 @@ public class MusicPlayer {
 	private static Clip clip;
 
 	public static void play() throws MusicPlayerException {
-		boolean canPlay = clip == null || !clip.isRunning();
+		boolean canPlay = clip == null || !clip.isRunning(); //comprueba si puede ser reproducido. Si no esta reproduciendose o no existe el clip, se reproduce.
 		if (canPlay) {
 			try {
 				URL url = MusicPlayer.class.getResource("/music/Back.wav");
