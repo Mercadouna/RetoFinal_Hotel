@@ -915,19 +915,4 @@ public class ImplementacionBD implements AdminDAO {
 		}
 		return correct;
 	}
-	@Override
-	public boolean editBooking() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean deleteBooking() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean deleteExtraService() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
