@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.LoginControlador;
+import java.awt.Toolkit;
 
 public class VentanaLogin extends JFrame implements ActionListener {
 
@@ -54,6 +55,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 	}
 
 	public VentanaLogin(LoginControlador controlador) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource("/images/Logo_Hotel.png")));
 		this.cont = controlador;
 		setTitle("Hotel Management System - Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +64,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 
 		// ── Fondo: JLabel con imagen ocupa todo el contentPane ────────────────
 		// Al usar un JLabel como contentPane no hace falta sobreescribir Graphics
-		ImageIcon bgIcon = loadIcon("login_bg_1.png");
+		ImageIcon bgIcon = loadIcon("login_bg_2.png");
 		JLabel background = new JLabel();
 
 		if (bgIcon != null) {

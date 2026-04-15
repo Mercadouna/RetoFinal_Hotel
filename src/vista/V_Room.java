@@ -56,7 +56,7 @@ public class V_Room extends JDialog implements ActionListener {
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────	
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -72,6 +72,7 @@ public class V_Room extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public V_Room(LoginControlador controlador) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.cont = controlador;
 		setBounds(100, 100, 1060, 860);
 		setResizable(false);

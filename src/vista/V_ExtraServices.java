@@ -10,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -61,6 +65,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 	private LoginControlador cont;
 	private JTable table_Extra_Services;
 	private JButton btnDelete;
+	private JLabel lblTotal;
 
 	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
 	private static class ImagePanel extends JPanel {
@@ -122,8 +127,11 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		model.addColumn("Check-out");
 		model.addColumn("Paid");
 
-		ArrayList<Aux_booking> bookings = cont.viewBookings();
-		for (Aux_booking ab : bookings) {
+		TreeMap<Integer, Aux_booking> sortedBookings = new TreeMap<>();
+		for (Aux_booking ab : cont.viewBookings()) {
+			sortedBookings.put(ab.getBooking().getIdBooking(), ab);
+		}
+		for (Aux_booking ab : sortedBookings.values()) {
 			Customer c = ab.getCustomer();
 			Room r = ab.getRoom();
 			Booking b = ab.getBooking();
@@ -141,6 +149,14 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 	}
 
 	private void cargarTablaExtraServices(int idBooking) {
+		ArrayList<ExtraService> extraServices;
+		Aux_booking bookingData;
+		long nights;
+		double roomCost;
+		double extraTotal;
+		double total;
+		Object[] row;
+
 		DefaultTableModel model = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -153,22 +169,39 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		model.addColumn("Name");
 		model.addColumn("Price");
 
-		ArrayList<ExtraService> extraServices = cont.viewBookingExtraServices(idBooking);
+		extraServices = cont.viewBookingExtraServices(idBooking);
+		bookingData = cont.getBookingById(idBooking);
+		nights = ChronoUnit.DAYS.between(bookingData.getBooking().getCheckIn(), bookingData.getBooking().getCheckOut()); //Un enum  que sirve para pillar los dias que ha pasado en el hotel.
+		roomCost = bookingData.getRoom().getPricePerNight() * nights;
+
+		extraTotal = 0.0;
 		for (ExtraService extraService : extraServices) {
-			Object[] row = new Object[3];
+			row = new Object[3];
 			row[0] = extraService.getIdService();
 			row[1] = extraService.getNameService();
 			row[2] = extraService.getPrice();
 			model.addRow(row);
+			extraTotal += extraService.getPrice();
 		}
+
+		total = roomCost + extraTotal;
 		table_Extra_Services.setModel(model);
+		lblTotal.setText(String.format(Locale.US, "%.2f€", total));
 	}
 
 	/**
 	 * Create the dialog.
 	 */
 	public V_ExtraServices(LoginControlador cont) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.cont = cont;
+
+		ArrayList<ExtraService> allServices = cont.viewExtraServices();
+		HashMap<Integer, Double> priceMap = new HashMap<>();
+		for (ExtraService es : allServices) {
+			priceMap.put(es.getIdService(), es.getPrice());
+		}
+
 		// Altura aumentada a 920 para acomodar los iconos en el subtítulo
 		setBounds(100, 100, 1500, 920);
 		setResizable(false);
@@ -240,7 +273,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgBreakfast.setBounds(255, 8, 70, 52);
 			subtitulo.add(imgBreakfast);
 
-			JLabel txtBreakfast = new JLabel("1 - Breakfast");
+			JLabel txtBreakfast = new JLabel("<html><center>1 - Breakfast<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(1, 0.0)) + "</center></html>");
 			txtBreakfast.setFont(svcFont);
 			txtBreakfast.setForeground(svcColor);
 			txtBreakfast.setHorizontalAlignment(SwingConstants.CENTER);
@@ -257,7 +290,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgMediaPension.setBounds(421, 8, 70, 52);
 			subtitulo.add(imgMediaPension);
 
-			JLabel txtMediaPension = new JLabel("2 - Media Pension");
+			JLabel txtMediaPension = new JLabel("<html><center>2 - Media Pension<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(2, 0.0)) + "</center></html>");
 			txtMediaPension.setFont(svcFont);
 			txtMediaPension.setForeground(svcColor);
 			txtMediaPension.setHorizontalAlignment(SwingConstants.CENTER);
@@ -273,7 +306,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgParking.setBounds(595, 8, 70, 52);
 			subtitulo.add(imgParking);
 
-			JLabel txtParking = new JLabel("3 - Parking");
+			JLabel txtParking = new JLabel("<html><center>3 - Parking<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(3, 0.0)) + "</center></html>");
 			txtParking.setFont(svcFont);
 			txtParking.setForeground(svcColor);
 			txtParking.setHorizontalAlignment(SwingConstants.CENTER);
@@ -289,7 +322,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgAirport.setBounds(777, 8, 70, 52);
 			subtitulo.add(imgAirport);
 
-			JLabel txtAirport = new JLabel("4 - Airport Transport");
+			JLabel txtAirport = new JLabel("<html><center>4 - Airport Transport<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(4, 0.0)) + "</center></html>");
 			txtAirport.setFont(svcFont);
 			txtAirport.setForeground(svcColor);
 			txtAirport.setHorizontalAlignment(SwingConstants.CENTER);
@@ -305,7 +338,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgSpa.setBounds(990, 8, 70, 52);
 			subtitulo.add(imgSpa);
 
-			JLabel txtSpa = new JLabel("5 - Spa & Wellness");
+			JLabel txtSpa = new JLabel("<html><center>5 - Spa & Wellness<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(5, 0.0)) + "</center></html>");
 			txtSpa.setFont(svcFont);
 			txtSpa.setForeground(svcColor);
 			txtSpa.setHorizontalAlignment(SwingConstants.CENTER);
@@ -322,7 +355,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgRoomService.setBounds(1173, 8, 70, 52);
 			subtitulo.add(imgRoomService);
 
-			JLabel txtRoomService = new JLabel("6 - Room Service");
+			JLabel txtRoomService = new JLabel("<html><center>6 - Room Service<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(6, 0.0)) + "</center></html>");
 			txtRoomService.setFont(svcFont);
 			txtRoomService.setForeground(svcColor);
 			txtRoomService.setHorizontalAlignment(SwingConstants.CENTER);
@@ -338,7 +371,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			imgCradle.setBounds(1354, 8, 70, 52);
 			subtitulo.add(imgCradle);
 
-			JLabel txtCradle = new JLabel("7 - Baby Cradle");
+			JLabel txtCradle = new JLabel("<html><center>7 - Baby Cradle<br>" + String.format(Locale.US, "%.2f€", priceMap.getOrDefault(7, 0.0)) + "</center></html>");
 			txtCradle.setFont(svcFont);
 			txtCradle.setForeground(svcColor);
 			txtCradle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -444,6 +477,19 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			btnDelete.setFocusPainted(false);
 			btnDelete.addActionListener(this);
 			info.add(btnDelete);
+
+			// ── Total extra services ──────────────────────────────────────────────
+			JLabel lblTotalTitle = new JLabel("Total price:");
+			lblTotalTitle.setFont(normalFont);
+			lblTotalTitle.setForeground(new Color(201, 168, 76));
+			lblTotalTitle.setBounds(1240, 120, 200, 25);
+			info.add(lblTotalTitle);
+
+			lblTotal = new JLabel("-");
+			lblTotal.setFont(new Font("Tahoma", Font.BOLD, 18));
+			lblTotal.setForeground(new Color(230, 200, 110));
+			lblTotal.setBounds(1240, 148, 200, 35);
+			info.add(lblTotal);
 		}
 
 		// ── Tabla de servicios extra (panel derecho, desplazado 60px) ─────────
@@ -486,7 +532,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		if (e.getSource() == btnDelete) {
 			deleteExtraServiceFromBooking();
 		}
-	}
+	}	
 
 	private void searchBooking() {
 		int bookingId;

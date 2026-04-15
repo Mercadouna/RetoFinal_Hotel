@@ -138,4 +138,12 @@ public class LoginControlador {
 	public boolean togglePayment(int id) {
 		return dao.togglePayment(id);
 	}
+
+	public ArrayList<ExtraService> viewExtraServices() {
+		return dao.viewExtraServices();
+	}
+
+	public Aux_booking getBookingById(int idBooking) {
+		return dao.getBookingById(idBooking);
+	}
 }

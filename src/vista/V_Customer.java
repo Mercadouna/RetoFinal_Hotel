@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import controlador.LoginControlador;
 
 import java.util.ArrayList;
-import modelo.ImplementacionBD; 
+import modelo.ImplementacionBD;
 import modelo.Customer;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -142,6 +142,7 @@ public class V_Customer extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public V_Customer(LoginControlador cont) {
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.cont = cont;
 		setBounds(100, 100, 1060, 850);
 		setResizable(false);
@@ -158,7 +159,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		Color btnFg = new Color(230, 200, 110);
 		Color btnBorder = new Color(201, 168, 76);
 
-		{
+		
 			// ── Panel título con fondo decorativo ─────────────────────────────
 			titulo = new ImagePanel("/images/cust_titulo_bg.png");
 			titulo.setBounds(10, 10, 1024, 60);
@@ -185,8 +186,9 @@ public class V_Customer extends JDialog implements ActionListener {
 			exit.setHorizontalAlignment(SwingConstants.LEFT);
 			exit.setIconTextGap(8);
 			exit.setFocusPainted(false);
-		}
-		{
+		
+		
+		
 			// ── Tabla con estilo hotel ─────────────────────────────────────────
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 110, 1024, 470);
@@ -224,8 +226,8 @@ public class V_Customer extends JDialog implements ActionListener {
 			});
 			scrollPane.setViewportView(Tabla_Cust);
 			scrollPane.getViewport().setBackground(new Color(14, 26, 44));
-		}
-		{
+		
+		
 			// ── Panel info / formulario con fondo decorativo ──────────────────
 			info = new ImagePanel("/images/cust_info_bg.png");
 			info.setBounds(10, 600, 1024, 200);
@@ -358,15 +360,15 @@ public class V_Customer extends JDialog implements ActionListener {
 			btnClear.setFocusPainted(false);
 			info.add(btnClear);
 			btnClear.addActionListener(this);
-		}
+		
 
 		cargarTabla();
-	}
+}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		getContentPane().add(scrollPane); 
-		getContentPane().add(titulo); 
+		getContentPane().add(scrollPane);
+		getContentPane().add(titulo);
 		getContentPane().add(info);
 
 		// TODO Auto-generated method stub

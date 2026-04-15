@@ -56,6 +56,7 @@ public class ImplementacionBD implements AdminDAO {
 	private final String SQL_CHECK_EXTRA_SERVICE_IN_BOOKING = "SELECT * FROM Booking_Service WHERE id_booking = ? AND id_service = ?";
 	private final String SQL_VIEW_UNPAID_BOOKINGS = "SELECT b.id_booking, c.id_customer, c.name_customer, c.surname, c.phone, c.dni, r.id_room, r.room_number, r.type_room, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer = c.id_customer JOIN Room r ON b.id_room = r.id_room WHERE b.paid = false";
 	private final String SQL_TOGGLE_PAYMENT = "UPDATE Booking SET paid = NOT paid WHERE id_booking = ?";
+	private final String SQL_GET_BOOKING_BY_ID = "SELECT b.id_booking, c.id_customer, c.name_customer, c.surname, r.id_room, r.room_number, r.type_room, r.price_per_night, b.check_in, b.check_out, b.paid FROM Booking b JOIN Customer c ON b.id_customer = c.id_customer JOIN Room r ON b.id_room = r.id_room WHERE b.id_booking = ?";
 
 	public ImplementacionBD() {
 		this.configFile = ResourceBundle.getBundle("configClase");
@@ -677,6 +678,68 @@ public class ImplementacionBD implements AdminDAO {
 			e.printStackTrace();
 		}
 		return correct;
+	}
+
+	@Override
+	public Aux_booking getBookingById(int idBooking) {
+		Aux_booking result = null;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_GET_BOOKING_BY_ID);
+			stmt.setInt(1, idBooking);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				Customer c = new Customer();
+				c.setIdCustomer(rs.getInt("id_customer"));
+				c.setNameCostumer(rs.getString("name_customer"));
+				c.setSurname(rs.getString("surname"));
+
+				Room r = new Room();
+				r.setIdRoom(rs.getInt("id_room"));
+				r.setRoomNumber(rs.getInt("room_number"));
+				r.setTypeRoom(rs.getString("type_room"));
+				r.setPricePerNight(rs.getDouble("price_per_night"));
+
+				Booking b = new Booking();
+				b.setIdBooking(rs.getInt("id_booking"));
+				b.setCheckIn(rs.getObject("check_in", LocalDate.class));
+				b.setCheckOut(rs.getObject("check_out", LocalDate.class));
+				b.setPaid(rs.getBoolean("paid"));
+
+				result = new Aux_booking(c, r, b);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al recuperar la reserva por ID");
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<ExtraService> viewExtraServices() {
+		ArrayList<ExtraService> extraServices = new ArrayList<>();
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQL_VIEW_EXTRA_SERVICES);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ExtraService extraService = new ExtraService();
+				extraService.setIdService(rs.getInt("id_service"));
+				extraService.setNameService(rs.getString("name_service"));
+				extraService.setPrice(rs.getDouble("price"));
+				extraServices.add(extraService);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error al ver los servicios extra");
+			e.printStackTrace();
+		}
+		return extraServices;
 	}
 
 	@Override
