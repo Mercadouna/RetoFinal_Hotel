@@ -37,20 +37,8 @@ public class LoginControlador {
 		return dao.createBooking(id_room, id_customer, check_in, check_out, paid);
 	}
 
-	public boolean editBooking() {
-		return dao.editBooking();
-	}
-
-	public boolean deleteBooking() {
-		return dao.deleteBooking();
-	}
-
 	public boolean addExtraService(String name_service, double price) {
 		return dao.addExtraService(name_service, price);
-	}
-
-	public boolean deleteExtraService() {
-		return dao.deleteExtraService();
 	}
 
 	public boolean checkPhone(int phone) {
