@@ -706,7 +706,7 @@ public class ImplementacionBD implements AdminDAO {
 				b.setCheckOut(rs.getObject("check_out", LocalDate.class));
 				b.setPaid(rs.getBoolean("paid"));
 
-				result = new Aux_booking(c, r, b);
+				result = new Aux_booking(c, r, b); 
 			}
 			rs.close();
 			stmt.close();
