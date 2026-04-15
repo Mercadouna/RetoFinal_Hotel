@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -14,13 +16,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import controlador.LoginControlador;
+import modelo.Aux_booking;
+import modelo.Booking;
+import modelo.Customer;
+import modelo.ExtraService;
 import modelo.Room;
 
 public class V_Room extends JDialog implements ActionListener {
@@ -31,6 +42,7 @@ public class V_Room extends JDialog implements ActionListener {
 	private JScrollPane scrollPane_roomsTable;
 	private JPanel titulo;
 	private JButton exit;
+	private JButton btnExportXml;
 	private JLabel lblRooms;
 
 	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
@@ -56,7 +68,7 @@ public class V_Room extends JDialog implements ActionListener {
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────	
+	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -89,6 +101,17 @@ public class V_Room extends JDialog implements ActionListener {
 		titulo.setLayout(null);
 		titulo.setBounds(10, 11, 1024, 65);
 		getContentPane().add(titulo);
+
+		// Botón Export XML: tonos azules
+		btnExportXml = new JButton("  Export XML");
+		btnExportXml.setFont(normalFont);
+		btnExportXml.setBounds(755, 16, 145, 35);
+		btnExportXml.setBackground(new Color(15, 25, 55));
+		btnExportXml.setForeground(new Color(130, 180, 255));
+		btnExportXml.setBorder(BorderFactory.createLineBorder(new Color(70, 120, 210), 1));
+		btnExportXml.setFocusPainted(false);
+		btnExportXml.addActionListener(this);
+		titulo.add(btnExportXml);
 
 		// Botón Exit: tonos rojizos
 		exit = new JButton("  Exit");
@@ -173,6 +196,109 @@ public class V_Room extends JDialog implements ActionListener {
 			V_Menu m = new V_Menu(cont);
 			m.setVisible(true);
 			this.dispose();
+		}
+		if (e.getSource() == btnExportXml) {
+			exportXml();
+		}
+	}
+
+	private void exportXml() {
+		boolean valido = true;
+		ArrayList<Room> rooms;
+		ArrayList<Customer> customers;
+		ArrayList<Aux_booking> bookings;
+		ArrayList<ExtraService> extraServices;
+		Element root;
+		Element sectRooms;
+		Element sectCustomers;
+		Element sectBookings;
+		Element sectExtraServices;
+		Document doc;
+		XMLOutputter outputter;
+		File file;
+		Booking b;
+		Customer c;
+		Room r;
+
+		rooms = cont.viewRooms();
+		customers = cont.viewCustomers();
+		bookings = cont.viewBookings();
+		extraServices = cont.viewExtraServices();
+
+		if (rooms.isEmpty() && customers.isEmpty() && bookings.isEmpty() && extraServices.isEmpty()) {
+			valido = false;
+			JOptionPane.showMessageDialog(this, "No hay datos para exportar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+		}
+
+		if (valido) {
+			try {
+				root = new Element("hotel");
+				doc = new Document(root);
+
+				// ── Rooms ──────────────────────────────────────────────────
+				sectRooms = new Element("rooms");
+				root.addContent(sectRooms);
+				for (Room room : rooms) {
+					sectRooms.addContent(new Element("room")
+						.addContent(new Element("id").setText(String.valueOf(room.getIdRoom())))
+						.addContent(new Element("roomNumber").setText(String.valueOf(room.getRoomNumber())))
+						.addContent(new Element("type").setText(room.getTypeRoom()))
+						.addContent(new Element("status").setText(room.getStatusRoom()))
+						.addContent(new Element("pricePerNight").setText(String.valueOf(room.getPricePerNight())))
+					);
+				}
+
+				// ── Customers ──────────────────────────────────────────────
+				sectCustomers = new Element("customers");
+				root.addContent(sectCustomers);
+				for (Customer customer : customers) {
+					sectCustomers.addContent(new Element("customer")
+						.addContent(new Element("id").setText(String.valueOf(customer.getIdCustomer())))
+						.addContent(new Element("name").setText(customer.getNameCostumer()))
+						.addContent(new Element("surname").setText(customer.getSurname()))
+						.addContent(new Element("phone").setText(String.valueOf(customer.getPhone())))
+						.addContent(new Element("dni").setText(customer.getDni()))
+					);
+				}
+
+				// ── Bookings ───────────────────────────────────────────────
+				sectBookings = new Element("bookings");
+				root.addContent(sectBookings);
+				for (Aux_booking ab : bookings) {
+					b = ab.getBooking();
+					c = ab.getCustomer();
+					r = ab.getRoom();
+					sectBookings.addContent(new Element("booking")
+						.addContent(new Element("id").setText(String.valueOf(b.getIdBooking())))
+						.addContent(new Element("customerId").setText(String.valueOf(c.getIdCustomer())))
+						.addContent(new Element("roomId").setText(String.valueOf(r.getIdRoom())))
+						.addContent(new Element("checkIn").setText(String.valueOf(b.getCheckIn())))
+						.addContent(new Element("checkOut").setText(String.valueOf(b.getCheckOut())))
+						.addContent(new Element("paid").setText(String.valueOf(b.isPaid())))
+					);
+				}
+
+				// ── Extra Services ─────────────────────────────────────────
+				sectExtraServices = new Element("extraServices");
+				root.addContent(sectExtraServices);
+				for (ExtraService es : extraServices) {
+					sectExtraServices.addContent(new Element("extraService")
+						.addContent(new Element("id").setText(String.valueOf(es.getIdService())))
+						.addContent(new Element("name").setText(es.getNameService()))
+						.addContent(new Element("price").setText(String.valueOf(es.getPrice())))
+					);
+				}
+
+				file = new File("hotel_data.xml");
+				outputter = new XMLOutputter(Format.getPrettyFormat());
+				outputter.output(doc, new FileOutputStream(file));
+
+				JOptionPane.showMessageDialog(this, "Exportado correctamente:\n" + file.getAbsolutePath(), "Éxito",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, "Error al exportar XML: " + ex.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 }
