@@ -201,7 +201,7 @@ public class V_Room extends JDialog implements ActionListener {
 			exportXml();
 		}
 	}
-
+ 
 	private void exportXml() {
 		boolean valido = true;
 		ArrayList<Room> rooms;
