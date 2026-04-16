@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
+// import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import modelo.Booking;
 import modelo.Customer;
 import modelo.ExtraService;
 import modelo.Room;
+// import modelo.AdminDAO;
+// import controlador.LoginControlador;
 
 class Tests {
 
@@ -84,9 +87,37 @@ class Tests {
 		assertTrue(es.getPrice() > 0, "El precio de un servicio extra debe ser positivo");
 	}
 
+	/*
+	 * =====================================================================
+	 * TESTS CON MOCKITO — LoginControlador + AdminDAO (mock)
+	 *
+	 * Para ejecutar estos tests sería necesario:
+	 * 1. Tener mockito-core en el classpath (p.ej. mockito-core-5.x.jar)
+	 * 2. Descomentar los imports de arriba (AdminDAO, LoginControlador,
+	 * org.mockito.Mockito.*)
+	 * =====================================================================
+	 *
+	 * @Test
+	 * void testLogin_CredencialesCorrectas() {
+	 * // Arrange: creamos el mock de AdminDAO y configuramos su comportamiento
+	 * AdminDAO mockDao = mock(AdminDAO.class);
+	 * when(mockDao.login("admin", "1234")).thenReturn(true);
+	 *
+	 * // Inyectamos el mock en el controlador mediante el constructor
+	 * LoginControlador controlador = new LoginControlador(mockDao);
+	 *
+	 * // Act
+	 * boolean resultado = controlador.login("admin", "1234");
+	 *
+	 * // Assert
+	 * assertTrue(resultado,
+	 * "El login con credenciales correctas debe devolver true");
+	 * }
+	 */
+
 	@Test
 	void testConstructorsNoThrow() {
-		// Crear un Customer con datos válidos no debe lanzar ninguna excepción 
+		// Crear un Customer con datos válidos no debe lanzar ninguna excepción
 		assertDoesNotThrow(new Executable() {
 			@Override
 			public void execute() throws Throwable {

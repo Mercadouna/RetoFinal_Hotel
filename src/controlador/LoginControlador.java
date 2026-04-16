@@ -16,6 +16,14 @@ import modelo.Room;
 public class LoginControlador {
 	AdminDAO dao = new ImplementacionBD();
 
+	public LoginControlador(AdminDAO dao) {
+		this.dao = dao;
+	}
+
+	//para el mockito
+	public LoginControlador() {
+	}
+
 	public void visualizarPantalla() {
 		V_1 ven = new V_1(this);
 		ven.setVisible(true);
