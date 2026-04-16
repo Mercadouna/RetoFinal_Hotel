@@ -1,3 +1,5 @@
+//Javadock: Lorea
+
 package modelo;
 
 /**

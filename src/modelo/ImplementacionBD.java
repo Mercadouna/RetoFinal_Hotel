@@ -1,3 +1,5 @@
+//Javadock: Alain
+
 package modelo;
 import java.sql.Connection;
 import java.sql.Date;
