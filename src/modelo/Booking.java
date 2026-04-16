@@ -11,7 +11,7 @@ public class Booking {
     private LocalDate checkOut;
     private boolean paid;
     private ArrayList<ExtraService> extraServices;
-
+ 
     public Booking() {
     }
 

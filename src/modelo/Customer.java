@@ -7,7 +7,7 @@ public class Customer {
     private int phone;
     private String dni;
 
-    public Customer() {
+    public Customer() { 
     }
 
     public Customer(int idCustomer, String nameCostumer, String surname, int phone, String dni) {

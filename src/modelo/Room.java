@@ -8,7 +8,7 @@ public class Room {
     private double pricePerNight;
 
     public Room() {
-    }
+    } 
 
     public Room(int idRoom, int roomNumber, String typeRoom, String statusRoom, double pricePerNight, int quantPers) {
         this.idRoom = idRoom;
