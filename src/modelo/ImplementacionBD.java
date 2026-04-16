@@ -896,7 +896,7 @@ public class ImplementacionBD implements AdminDAO {
 	Después ejecuta la consulta y devuelve true si el cambio se ha hecho correctamente, o false si ocurre algún error.
 	 * @param id
 	 * @return
-	 */
+	 */ 
 	@Override
 	public boolean togglePayment(int id) {
 		boolean correct = false;
