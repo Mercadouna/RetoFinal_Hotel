@@ -74,10 +74,11 @@ public class ImplementacionBD implements AdminDAO {
 		}
 	}
 	/**
-	 * Este método sirve para obtener todas las habitaciones de la base de datos.
-	Primero se conecta, luego hace una consulta y va leyendo cada habitación, creando objetos Room con sus datos.
-	Al final guarda todas las habitaciones en una lista y la devuelve.
-	 * @return
+	 * Retrieves all rooms from the database.
+	 * Opens a connection, executes a query, and reads each row to build a Room object.
+	 * All rooms are collected into a list and returned.
+	 *
+	 * @return an {@link ArrayList} of {@link Room} objects representing all rooms in the database
 	 */
 	@Override
 	public ArrayList<Room> viewRooms() {
@@ -107,10 +108,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para obtener todos los clientes de la base de datos.
-	Primero se conecta, luego ejecuta una consulta para leer los clientes y va recorriendo los resultados uno a uno, creando objetos Customer con sus datos.
-	Al final guarda todos esos clientes en una lista y la devuelve
-	 * @return
+	 * Retrieves all customers from the database.
+	 * Opens a connection, executes a query, and iterates over each row to build a Customer object.
+	 * All customers are collected into a list and returned.
+	 *
+	 * @return an {@link ArrayList} of {@link Customer} objects representing all customers in the database
 	 */
 	@Override
 	public ArrayList<Customer> viewCustomers() {
@@ -139,10 +141,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para obtener todas las reservas de la base de datos.
-	Primero se conecta, luego hace una consulta y va leyendo cada resultado, creando objetos de cliente, habitación y reserva con sus datos.
-	Después junta todo en un objeto Aux_booking, lo guarda en una lista y al final devuelve todas las reservas.
-	 * @return
+	 * Retrieves all bookings from the database.
+	 * Opens a connection, executes a JOIN query, and reads each row to build Customer, Room, and Booking objects.
+	 * These are combined into an {@link Aux_booking} object, collected into a list, and returned.
+	 *
+	 * @return an {@link ArrayList} of {@link Aux_booking} objects representing all bookings in the database
 	 */
 	@Override
 	public ArrayList<Aux_booking> viewBookings() {
@@ -179,14 +182,14 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para añadir un cliente nuevo a la base de datos.
-	 Primero se conecta, luego prepara una consulta para insertar los datos del cliente y le pasa el nombre, apellido, teléfono y DNI.
-	 Después ejecuta la consulta y, si todo ha ido bien, devuelve true; si hay algún error, devuelve false.
-	 * @param name
-	 * @param surname
-	 * @param phone
-	 * @param dni
-	 * @return
+	 * Adds a new customer to the database.
+	 * Opens a connection and executes an INSERT statement with the provided customer data.
+	 *
+	 * @param name    the first name of the customer
+	 * @param surname the surname of the customer
+	 * @param phone   the phone number of the customer
+	 * @param dni     the national ID (DNI) of the customer
+	 * @return {@code true} if the customer was inserted successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean addCostumer(String name, String surname, int phone, String dni) {
@@ -211,11 +214,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para eliminar un cliente de la base de datos según su ID.
-	Primero se conecta y prepara una consulta de tipo DELETE, donde se le pasa el identificador del cliente.
-	Después ejecuta la consulta y, si se elimina alguna fila, devuelve true; si no o si ocurre un error, devuelve false.
-	 * @param id
-	 * @return
+	 * Deletes a customer from the database by their ID.
+	 * Opens a connection and executes a DELETE statement using the given customer identifier.
+	 *
+	 * @param id the ID of the customer to delete
+	 * @return {@code true} if the customer was deleted successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean deleteCostumer(int id) {
@@ -236,15 +239,15 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para crear una nueva reserva en la base de datos.
-	Primero se conecta y prepara una consulta INSERT con los datos de la reserva, como la habitación, el cliente, las fechas de entrada y salida y si está pagada o no.
-	Después ejecuta la consulta y devuelve true si se ha guardado correctamente, o false si hay algún error.
-	 * @param id_room
-	 * @param id_customer
-	 * @param check_in
-	 * @param check_out
-	 * @param paid
-	 * @return
+	 * Creates a new booking in the database.
+	 * Opens a connection and executes an INSERT statement with the provided booking data.
+	 *
+	 * @param id_room      the ID of the room to be booked
+	 * @param id_customer  the ID of the customer making the booking
+	 * @param check_in     the check-in date
+	 * @param check_out    the check-out date
+	 * @param paid         {@code true} if the booking has been paid; {@code false} otherwise
+	 * @return {@code true} if the booking was created successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean createBooking(int id_room, int id_customer, LocalDate check_in, LocalDate check_out, boolean paid) {
@@ -271,12 +274,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para añadir un nuevo servicio extra a la base de datos.
-	Primero se conecta y prepara una consulta de tipo INSERT, donde se guardan el nombre del servicio y su precio.
-	Después ejecuta la consulta y devuelve true si se ha añadido correctamente, o false si ocurre algún error.
-	 * @param name_service
-	 * @param price
-	 * @return
+	 * Adds a new extra service to the database.
+	 * Opens a connection and executes an INSERT statement with the service name and price.
+	 *
+	 * @param name_service the name of the extra service
+	 * @param price        the price of the extra service
+	 * @return {@code true} if the service was added successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean addExtraService(String name_service, double price) {
@@ -299,11 +302,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un número de teléfono ya existe en la base de datos.
-	Primero se conecta y ejecuta una consulta que busca ese teléfono.
-	Si encuentra algún resultado, significa que existe y devuelve true; si no, devuelve false.
-	 * @param phone
-	 * @return
+	 * Checks whether a phone number already exists in the database.
+	 * Opens a connection and executes a query searching for the given phone number.
+	 *
+	 * @param phone the phone number to check
+	 * @return {@code true} if the phone number exists; {@code false} otherwise
 	 */
 	@Override
 	public boolean checkPhone(int phone) {
@@ -327,12 +330,13 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un número de teléfono ya existe en la base de datos, pero ignorando un cliente concreto.
-	Primero se conecta y ejecuta una consulta buscando ese teléfono en otros clientes distintos al que se excluye por su ID.
-	Si encuentra algún resultado, devuelve true; si no, devuelve false.
-	 * @param phone
-	 * @param excludeId
-	 * @return
+	 * Checks whether a phone number already exists in the database, ignoring a specific customer.
+	 * Opens a connection and searches for the phone number among customers other than the one excluded by ID.
+	 * This overload is intended for use during customer editing.
+	 *
+	 * @param phone     the phone number to check
+	 * @param excludeId the ID of the customer to exclude from the search
+	 * @return {@code true} if another customer has the same phone number; {@code false} otherwise
 	 */
 	// Overloaded: excludes customer with given id (used in edit)
 	public boolean checkPhone(int phone, int excludeId) {
@@ -356,11 +360,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un DNI ya existe en la base de datos.
-	Primero se conecta y ejecuta una consulta que busca ese DNI en los clientes.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param dni
-	 * @return
+	 * Checks whether a DNI (national ID) already exists in the database.
+	 * Opens a connection and executes a query searching for the given DNI among customers.
+	 *
+	 * @param dni the DNI to check
+	 * @return {@code true} if the DNI exists; {@code false} otherwise
 	 */
 	@Override
 	public boolean checkDni(String dni) {
@@ -384,12 +388,13 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un DNI ya existe en la base de datos, pero ignorando a un cliente concreto por su ID.
-	Primero se conecta y ejecuta una consulta que busca ese DNI en otros clientes distintos al que se excluye.
-	Si encuentra algún resultado, devuelve true; si no, devuelve false.
-	 * @param dni
-	 * @param excludeId
-	 * @return
+	 * Checks whether a DNI (national ID) already exists in the database, ignoring a specific customer.
+	 * Opens a connection and searches for the DNI among customers other than the one excluded by ID.
+	 * This overload is intended for use during customer editing.
+	 *
+	 * @param dni       the DNI to check
+	 * @param excludeId the ID of the customer to exclude from the search
+	 * @return {@code true} if another customer has the same DNI; {@code false} otherwise
 	 */
 	public boolean checkDni(String dni, int excludeId) {
 		boolean exists = false;
@@ -412,15 +417,15 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para modificar los datos de un cliente en la base de datos.
-	Primero se conecta y prepara una consulta UPDATE, donde se actualizan el nombre, apellido, teléfono y DNI del cliente.
-	Después ejecuta la consulta usando el ID para saber qué cliente se tiene que modificar, y devuelve true si se ha actualizado correctamente o false si hay algún error.
-	 * @param id
-	 * @param name
-	 * @param surname
-	 * @param phone
-	 * @param dni
-	 * @return
+	 * Updates the data of an existing customer in the database.
+	 * Opens a connection and executes an UPDATE statement using the customer ID to identify the record.
+	 *
+	 * @param id      the ID of the customer to update
+	 * @param name    the new first name of the customer
+	 * @param surname the new surname of the customer
+	 * @param phone   the new phone number of the customer
+	 * @param dni     the new national ID (DNI) of the customer
+	 * @return {@code true} if the customer was updated successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean editCostumer(int id, String name, String surname, int phone, String dni) {
@@ -446,13 +451,14 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si una habitación está disponible en unas fechas concretas.
-	Primero se conecta a la base de datos y ejecuta una consulta que busca si la habitación está libre entre la fecha de entrada y salida.
-	Si la consulta devuelve un resultado, guarda ese valor y lo devuelve como true o false según la disponibilidad.
-	 * @param roomNumber
-	 * @param checkIn
-	 * @param checkOut
-	 * @return
+	 * Checks whether a room is available for the given date range.
+	 * Opens a connection and calls a database function that returns whether the room is free
+	 * between the check-in and check-out dates.
+	 *
+	 * @param roomNumber the number of the room to check
+	 * @param checkIn    the desired check-in date
+	 * @param checkOut   the desired check-out date
+	 * @return {@code true} if the room is available; {@code false} otherwise
 	 */
 	public boolean isRoomAvailable(int roomNumber, LocalDate checkIn, LocalDate checkOut) {
 		boolean valido = false;
@@ -477,13 +483,14 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un cliente está disponible en unas fechas concretas.
-	Primero se conecta a la base de datos y ejecuta una consulta que comprueba si el cliente tiene alguna reserva entre la fecha de entrada y salida.
-	Si la consulta devuelve un resultado, se guarda y se devuelve como true o false según si el cliente está libre o no.
-	 * @param idCustomer
-	 * @param checkIn
-	 * @param checkOut
-	 * @return
+	 * Checks whether a customer is available for the given date range.
+	 * Opens a connection and calls a database function that returns whether the customer
+	 * has no overlapping bookings between the check-in and check-out dates.
+	 *
+	 * @param idCustomer the ID of the customer to check
+	 * @param checkIn    the desired check-in date
+	 * @param checkOut   the desired check-out date
+	 * @return {@code true} if the customer is available; {@code false} otherwise
 	 */
 	public boolean isCustomerAvailable(int idCustomer, LocalDate checkIn, LocalDate checkOut) {
 		boolean valido = false;
@@ -508,11 +515,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si una habitación existe en la base de datos.
-	Primero se conecta y ejecuta una consulta buscando el número de habitación.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param roomNumber
-	 * @return
+	 * Checks whether a room exists in the database.
+	 * Opens a connection and executes a query searching for the given room number.
+	 *
+	 * @param roomNumber the number of the room to look up
+	 * @return {@code true} if the room exists; {@code false} otherwise
 	 */
 	public boolean checkRoomExists(int roomNumber) {
 		boolean exists = false;
@@ -534,11 +541,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un cliente existe en la base de datos.
-	Primero se conecta y ejecuta una consulta buscando el cliente por su ID.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param idCustomer
-	 * @return
+	 * Checks whether a customer exists in the database.
+	 * Opens a connection and executes a query searching for the customer by their ID.
+	 *
+	 * @param idCustomer the ID of the customer to look up
+	 * @return {@code true} if the customer exists; {@code false} otherwise
 	 */
 	public boolean checkCustomerExists(int idCustomer) {
 		boolean exists = false;
@@ -560,12 +567,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si el usuario y la contraseña son correctos.
-	Primero se conecta a la base de datos y ejecuta una consulta buscando un usuario que coincida con esos datos.
-	Si encuentra un resultado, significa que el login es correcto y devuelve true; si no, devuelve false.
-	 * @param user
-	 * @param password
-	 * @return
+	 * Validates administrator credentials against the database.
+	 * Opens a connection and executes a query searching for a matching username and password.
+	 *
+	 * @param user     the administrator username
+	 * @param password the administrator password
+	 * @return {@code true} if the credentials are valid; {@code false} otherwise
 	 */
 	public boolean login(String user, String password) {
 		boolean correct = false;
@@ -589,11 +596,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para eliminar una reserva de la base de datos.
-	Primero se conecta y prepara una consulta DELETE usando el ID de la reserva.
-	Después ejecuta la consulta y, si se elimina alguna fila, devuelve true; si no o si hay un error, devuelve false.
-	 * @param id
-	 * @return
+	 * Deletes a booking from the database by its ID.
+	 * Opens a connection and executes a DELETE statement using the given booking identifier.
+	 *
+	 * @param id the ID of the booking to delete
+	 * @return {@code true} if the booking was deleted successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean deleteBooking(int id) {
@@ -615,11 +622,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si una reserva existe en la base de datos.
-	Primero se conecta y ejecuta una consulta buscando la reserva por su ID.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param id
-	 * @return
+	 * Checks whether a booking exists in the database.
+	 * Opens a connection and executes a query searching for the booking by its ID.
+	 *
+	 * @param id the ID of the booking to look up
+	 * @return {@code true} if the booking exists; {@code false} otherwise
 	 */
 	@Override
 	public boolean checkBookingExists(int id) {
@@ -642,11 +649,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para obtener los servicios extra de una reserva concreta.
-	Primero se conecta a la base de datos y ejecuta una consulta usando el ID de la reserva.
-	Luego recorre los resultados, crea objetos ExtraService con los datos y los guarda en una lista que finalmente devuelve.
-	 * @param idBooking
-	 * @return
+	 * Retrieves all extra services associated with a specific booking.
+	 * Opens a connection and executes a JOIN query filtered by the booking ID.
+	 * Each result row is used to build an {@link ExtraService} object, which is added to a list.
+	 *
+	 * @param idBooking the ID of the booking whose extra services are to be retrieved
+	 * @return an {@link ArrayList} of {@link ExtraService} objects linked to the given booking
 	 */
 	@Override
 	public ArrayList<ExtraService> viewBookingExtraServices(int idBooking) {
@@ -674,12 +682,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para añadir un servicio extra a una reserva.
-	Primero se conecta a la base de datos y prepara una consulta INSERT con el ID de la reserva y el ID del servicio.
-	Después ejecuta la consulta y devuelve true si se ha añadido correctamente, o false si ocurre algún error.
-	 * @param idBooking
-	 * @param idService
-	 * @return
+	 * Adds an extra service to an existing booking.
+	 * Opens a connection and executes an INSERT statement linking the booking and the service.
+	 *
+	 * @param idBooking the ID of the booking to add the service to
+	 * @param idService the ID of the extra service to add
+	 * @return {@code true} if the service was added successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean addExtraServiceToBooking(int idBooking, int idService) {
@@ -701,11 +709,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un servicio extra existe en la base de datos.
-	Primero se conecta y ejecuta una consulta buscando el servicio por su ID.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param extraServiceId
-	 * @return
+	 * Checks whether an extra service exists in the database.
+	 * Opens a connection and executes a query searching for the service by its ID.
+	 *
+	 * @param idService the ID of the extra service to look up
+	 * @return {@code true} if the extra service exists; {@code false} otherwise
 	 */
 	@Override
 	public boolean checkExtraServiceExists(int idService) {
@@ -729,10 +737,11 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para obtener todas las reservas que todavía no están pagadas.
-	Primero se conecta a la base de datos y ejecuta una consulta que filtra solo las reservas sin pagar.
-	Después recorre los resultados, crea objetos de cliente, habitación y reserva, los junta en un Aux_booking, los guarda en una lista y finalmente la devuelve.
-	 * @return
+	 * Retrieves all unpaid bookings from the database.
+	 * Opens a connection and executes a query filtered to bookings where {@code paid = false}.
+	 * Each row is used to build Customer, Room, and Booking objects combined into an {@link Aux_booking}.
+	 *
+	 * @return an {@link ArrayList} of {@link Aux_booking} objects for all unpaid bookings
 	 */
 	@Override
 	public ArrayList<Aux_booking> viewUnpaidBookings() {
@@ -770,12 +779,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para comprobar si un servicio extra ya está añadido a una reserva concreta.
-	Primero se conecta a la base de datos y ejecuta una consulta usando el ID de la reserva y el ID del servicio.
-	Si encuentra algún resultado, devuelve true, y si no encuentra nada, devuelve false.
-	 * @param idBooking
-	 * @param idService
-	 * @return
+	 * Checks whether an extra service is already linked to a specific booking.
+	 * Opens a connection and executes a query using both the booking ID and the service ID.
+	 *
+	 * @param idBooking the ID of the booking to check
+	 * @param idService the ID of the extra service to check
+	 * @return {@code true} if the service is already associated with the booking; {@code false} otherwise
 	 */
 	@Override
 	public boolean checkExtraServiceInBooking(int idBooking, int idService) {
@@ -800,12 +809,12 @@ public class ImplementacionBD implements AdminDAO {
 	}
 	
 	/**
-	 * Este método sirve para eliminar un servicio extra de una reserva.
-	Primero se conecta a la base de datos y prepara una consulta DELETE usando el ID de la reserva y el ID del servicio.
-	Después ejecuta la consulta y devuelve true si se ha eliminado correctamente, o false si ocurre algún error.
-	 * @param idBooking
-	 * @param idService
-	 * @return
+	 * Removes an extra service from a booking.
+	 * Opens a connection and executes a DELETE statement targeting the booking-service link.
+	 *
+	 * @param idBooking the ID of the booking from which the service will be removed
+	 * @param idService the ID of the extra service to remove
+	 * @return {@code true} if the service was removed successfully; {@code false} otherwise
 	 */
 	@Override
 	public boolean deleteExtraServiceFromBooking(int idBooking, int idService) {
@@ -827,6 +836,14 @@ public class ImplementacionBD implements AdminDAO {
 		return correct;
 	}
 	
+	/**
+	 * Retrieves a single booking from the database by its ID.
+	 * Opens a connection and executes a JOIN query to fetch customer, room, and booking data
+	 * for the specified booking. The results are combined into an {@link Aux_booking} object.
+	 *
+	 * @param idBooking the ID of the booking to retrieve
+	 * @return an {@link Aux_booking} containing the booking details, or {@code null} if not found
+	 */
 	@Override
 	public Aux_booking getBookingById(int idBooking) {
 		Aux_booking result = null;
@@ -865,6 +882,13 @@ public class ImplementacionBD implements AdminDAO {
 		return result;
 	}
 
+	/**
+	 * Retrieves all extra services from the database.
+	 * Opens a connection, executes a query, and reads each row to build an {@link ExtraService} object.
+	 * All services are collected into a list and returned.
+	 *
+	 * @return an {@link ArrayList} of {@link ExtraService} objects representing all available extra services
+	 */
 	@Override
 	public ArrayList<ExtraService> viewExtraServices() {
 		ArrayList<ExtraService> extraServices = new ArrayList<>();
@@ -891,12 +915,13 @@ public class ImplementacionBD implements AdminDAO {
 
 	
 	/**
-	 * Este método sirve para cambiar el estado de pago de una reserva.
-	Primero se conecta a la base de datos y ejecuta una consulta que actualiza el campo de “pagado” usando el ID de la reserva.
-	Después ejecuta la consulta y devuelve true si el cambio se ha hecho correctamente, o false si ocurre algún error.
-	 * @param id
-	 * @return
-	 */ 
+	 * Toggles the payment status of a booking.
+	 * Opens a connection and executes an UPDATE statement that flips the {@code paid} field
+	 * for the booking with the given ID.
+	 *
+	 * @param id the ID of the booking whose payment status will be toggled
+	 * @return {@code true} if the update was applied successfully; {@code false} otherwise
+	 */
 	@Override
 	public boolean togglePayment(int id) {
 		boolean correct = false;
