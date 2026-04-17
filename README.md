@@ -1,56 +1,61 @@
-# Proyecto: Reto Final - Hotel DAMI
+**Final Challenge – DAMI Hotel**  
+📝 **Description**  
+Desktop application for hotel management that allows you to manage clients, rooms, reservations, and extra services. The project includes a login system and a main menu with graphical interfaces, connected to a relational database for data persistence.
 
-## 📝 Descripción
-Aplicación de escritorio para la gestión hotelera que permite administrar clientes, habitaciones, reservas y servicios extra. El proyecto cuenta con un sistema de login y un menú principal con interfaces gráficas, conectado a una base de datos relacional para la persistencia de los datos.
+🧰 **Technologies Used**  
+- Java (Swing for graphical interfaces)  
+- 🗄️ MySQL  
+- 🔌 JDBC (MySQL connector)  
+- Mockito (testing with JARs)  
+- Tools: NetBeans / Eclipse / VS Code / IntelliJ IDEA  
 
-## 🧰 Tecnologías utilizadas
-- Java (Swing para las interfaces gráficas)
-- 🗄️ MySQL
-- 🔌 JDBC (conector MySQL)
-- Mockito (testing con JARs)
-- Herramientas: NetBeans / Eclipse / VS Code / IntelliJ IDEA
+📚 **Dependencies**  
+This project uses the following external libraries:
 
-## 📚 Dependencias
-Este proyecto utiliza las siguientes librerías externas:
-- Conector JDBC MySQL 
-- Mockito 
+- MySQL JDBC Connector  
+- Mockito  
 
-**Asegúrate de añadir los .jar al proyecto:**
-- **En Eclipse:** Click derecho al proyecto → Build Path → Configure Build Path → Libraries → Add JARs...
-- **En NetBeans:** Properties → Libraries → Add JAR/Folder
-- **En IntelliJ:** File → Project Structure → Modules → Dependencies
+Make sure to add the .jar files to the project:
 
-## 🗄️ Base de datos
-El proyecto incluye el script de base de datos: 
+- **In Eclipse:** Right‑click the project → *Build Path* → *Configure Build Path* → *Libraries* → *Add JARs…*  
+- **In NetBeans:** *Properties* → *Libraries* → *Add JAR/Folder*  
+- **In IntelliJ:** *File* → *Project Structure* → *Modules* → *Dependencies*  
 
-### ▶️ Cómo usarlo
-1. Crear una base de datos en MySQL.
-2. Importar el fichero 
-   a. Desde consola: `mysql -u usuario -p nombre_bd < bd.sql`
-   b. O usando una herramienta gráfica como MySQL Workbench, phpMyAdmin o DBeaver.
+🗄️ **Database**  
+The project includes the database script:
 
-## 📦 Instalación
+▶️ **How to use it**  
+1. Create a database in MySQL.  
+2. Import the file:  
+   a. From console:  
+      `mysql -u user -p database_name < bd.sql`  
+   b. Or using a graphical tool such as MySQL Workbench, phpMyAdmin, or DBeaver.
 
-### 📥 Clonar el repositorio
-```bash
-git clone https://github.com/usuario/repositorio.git
+📦 **Installation**
+
+📥 **Clone the repository**  
+```
+git clone https://github.com/user/repository.git
 ```
 
-### 📁 Importar el proyecto
-- Abrir el proyecto localmente en tu IDE preferido (Eclipse / IntelliJ / VS Code / NetBeans).
+📁 **Import the project**  
+Open the project locally in your preferred IDE (Eclipse / IntelliJ / VS Code / NetBeans).
 
-### ➕ Añadir dependencias manualmente
-1. Descargar / Localizar:
-   a. Conector JDBC de MySQL (dentro del proyecto).
-   b. Librerías de Mockito.
-2. Añadir los archivos `.jar` al classpath/build path del proyecto (ver sección *"Dependencias"*).
+➕ **Add dependencies manually**  
+Download / locate:  
+a. MySQL JDBC Connector (included in the project).  
+b. Mockito libraries.  
 
-## ▶️ Ejecución
-1. Configurar la conexión a la base de datos MySQL en el proyecto (puedes verificar credenciales y base de datos en archivos como `src/configClase.properties` o en tus clases de modelo de base de datos).
-2. Ejecutar la aplicación desde el main, iniciando desde la clase:
-   `src/principal/ProgramaPrincipal.java`
+Add the .jar files to the project’s classpath/build path (see the “Dependencies” section).
 
-## Tests
-El proyecto incluye pruebas unitarias usando Mockito (en el paquete `test`). Para ejecutarlas:
-- Desde el IDE → Botón derecho en la clase de test o carpeta `test` → Ejecutar tests (Run as JUnit Test).
-- Asegúrate de que los JAR de Mockito (y JUnit) están correctamente añadidos al build path antes de comenzar.
+▶️ **Execution**  
+- Configure the MySQL database connection in the project (you can verify credentials and database settings in files such as `src/configClase.properties` or in your database model classes).  
+- Run the application from the main class:  
+  `src/principal/ProgramaPrincipal.java`
+
+### **Tests**  
+The project includes unit tests using Mockito (in the *test* package). To run them:
+
+- From the IDE → Right‑click the test class or the *test* folder → *Run as JUnit Test*.
+  
+Make sure the Mockito (and JUnit) JARs are correctly added to the build path before running the tests.
