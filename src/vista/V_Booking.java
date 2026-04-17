@@ -62,7 +62,7 @@ public class V_Booking extends JDialog implements ActionListener {
 	private JTextField textField_BookingId;
 	private JScrollPane scrollPane;
 
-	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
+	// ── Helper: JPanel that paints a background image ────────────────────────
 	private static class ImagePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private Image bgImage;
@@ -86,7 +86,7 @@ public class V_Booking extends JDialog implements ActionListener {
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: loads an ImageIcon from /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -99,7 +99,7 @@ public class V_Booking extends JDialog implements ActionListener {
 		return icon;
 	}
 
-	// ── Helper: aplica estilo hotel a un JTextField ───────────────────────────
+	// ── Helper: applies hotel style to a JTextField ──────────────────────────
 	private void styleTextField(JTextField tf) {
 		tf.setBackground(new Color(20, 35, 58));
 		tf.setForeground(new Color(230, 200, 110));
@@ -154,25 +154,25 @@ public class V_Booking extends JDialog implements ActionListener {
 		setResizable(false);
 		getContentPane().setLayout(null);
 
-		// Fondo general de la ventana en navy oscuro
+		// General window background in dark navy
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
-		// Colores reutilizables del tema hotel
+		// Reusable hotel-theme colours
 		Color btnBg = new Color(20, 35, 58);
 		Color btnFg = new Color(230, 200, 110);
 		Color btnBorder = new Color(201, 168, 76);
 
 		{
-			// ── Panel título con fondo decorativo ─────────────────────────────
+			// ── Title panel with decorative background ───────────────────────
 			titulo = new ImagePanel("/images/cust_titulo_bg.png");
 			titulo.setBounds(10, 10, 1024, 66);
 			getContentPane().add(titulo);
 			titulo.setLayout(null);
 
-			// Botón Exit: tonos rojizos para diferenciarlo
+			// Exit button: reddish tones to stand out
 			exit = new JButton("  Exit");
 			exit.setBounds(914, 16, 100, 35);
 			exit.setFont(normalFont);
@@ -186,7 +186,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			titulo.add(exit);
 			exit.addActionListener(this);
 
-			// Etiqueta del título en dorado claro
+			// Title label in light gold
 			lblNewLabel = new JLabel("Booking Management");
 			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			lblNewLabel.setForeground(new Color(230, 200, 110));
@@ -194,7 +194,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			titulo.add(lblNewLabel);
 		}
 		{
-			// ── Tabla con estilo hotel ─────────────────────────────────────────
+			// ── Table with hotel style ────────────────────────────────────────
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 110, 1024, 470);
 			scrollPane.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
@@ -209,7 +209,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			Tabla_Cust.setSelectionBackground(new Color(201, 168, 76));
 			Tabla_Cust.setSelectionForeground(new Color(10, 20, 35));
 
-			// Cabecera de la tabla en estilo hotel
+			// Table header in hotel style
 			Tabla_Cust.getTableHeader().setFont(boldFont);
 			Tabla_Cust.getTableHeader().setBackground(new Color(10, 20, 35));
 			Tabla_Cust.getTableHeader().setForeground(new Color(201, 168, 76));
@@ -219,7 +219,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			scrollPane.getViewport().setBackground(new Color(14, 26, 44));
 		}
 		{
-			// ── Panel info / formulario con fondo decorativo ──────────────────
+			// ── Info / form panel with decorative background ─────────────────
 			info = new ImagePanel("/images/cust_info_bg.png");
 			info.setBounds(10, 600, 1024, 200);
 			getContentPane().add(info);
@@ -296,7 +296,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			styleTextField(textField_check_out);
 			info.add(textField_check_out);
 
-			// Botón Add: tonos verdes
+			// Add button: green tones
 			btnAadir = new JButton("  Add +");
 			btnAadir.setFont(normalFont);
 			btnAadir.addActionListener(this);
@@ -310,7 +310,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			btnAadir.setFocusPainted(false);
 			info.add(btnAadir);
 
-			// Botón Delete: tonos rojizos
+			// Delete button: reddish tones
 			btnDelete = new JButton("  Delete");
 			btnDelete.addActionListener(this);
 			btnDelete.setFont(normalFont);
@@ -324,7 +324,7 @@ public class V_Booking extends JDialog implements ActionListener {
 			btnDelete.setFocusPainted(false);
 			info.add(btnDelete);
 
-			// Botón Clear: tonos dorados
+			// Clear button: golden tones
 			btnClear = new JButton("  Clear");
 			btnClear.setFont(normalFont);
 			btnClear.setBounds(680, 122, 120, 35);
@@ -444,7 +444,7 @@ public class V_Booking extends JDialog implements ActionListener {
 						JOptionPane.INFORMATION_MESSAGE);
 				cargarTabla();
 			} else {
-				JOptionPane.showMessageDialog(this, "Error al añadir la reserva", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error adding booking", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -487,7 +487,7 @@ public class V_Booking extends JDialog implements ActionListener {
 
 		if (valido) {
 			if (JOptionPane.showConfirmDialog(this,
-					"Seguro que quieres eliminar la reserva?", "Confirm",
+					"Are you sure you want to delete this booking?", "Confirm",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
 				valido = false;
 			}
@@ -500,7 +500,7 @@ public class V_Booking extends JDialog implements ActionListener {
 						"Success", JOptionPane.INFORMATION_MESSAGE);
 				cargarTabla();
 			} else {
-				JOptionPane.showMessageDialog(this, "Error al eliminar la reserva", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error deleting booking", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

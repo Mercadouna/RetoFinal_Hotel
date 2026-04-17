@@ -61,55 +61,55 @@ public class V_Customer extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_2_3_1;
 	private JScrollPane scrollPane;
 
-	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
+	// ── Helper: JPanel that paints a background image ────────────────────────
 	private static class ImagePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
-		// Almacena la imagen de fondo que se pintará en el panel
+		// Stores the background image to be painted on the panel
 		private Image bgImage;
 
 		public ImagePanel(String resourcePath) {
-			// Hace el panel transparente para que no tape la imagen con un color sólido
+			// Makes the panel transparent so it does not cover the image with a solid colour
 			setOpaque(false);
 			try {
-				// Busca la imagen dentro del classpath del proyecto usando su ruta
+				// Looks for the image inside the project classpath using its path
 				URL url = getClass().getResource(resourcePath);
-				// Solo carga la imagen si la URL se encontró, evitando NullPointerException
+				// Only loads the image if the URL was found, avoiding NullPointerException
 				if (url != null)
 					bgImage = new ImageIcon(url).getImage();
 			} catch (Exception ignored) {
-				// Si la imagen no existe o falla la carga, el panel queda sin fondo
+				// If the image does not exist or fails to load, the panel has no background
 			}
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
-			// Solo intenta dibujar si la imagen se cargó correctamente
+			// Only tries to draw if the image was loaded successfully
 			if (bgImage != null)
-				// Dibuja la imagen estirada al tamaño exacto del panel
+				// Draws the image stretched to the exact size of the panel
 				g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this);
-			// Llama al pintado original para que los componentes hijos se dibujen encima
+			// Calls the original paint method so child components are drawn on top
 			super.paintComponent(g);
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: loads an ImageIcon from /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
-			// Construye la ruta completa desde la raíz del classpath
+			// Builds the full path from the root of the classpath
 			URL url = getClass().getResource("/images/" + name);
-			// Si encontró el archivo, crea el ImageIcon listo para usar
+			// If the file was found, creates the ImageIcon ready to use
 			if (url != null)
 				icon = new ImageIcon(url);
 		} catch (Exception ignored) {
-			// Si falla, icon se queda null sin romper el programa
+			// If it fails, icon stays null without crashing
 		}
-		// Único return: devuelve el icono cargado, o null si algo falló
+		// Single return: returns the loaded icon, or null if something failed
 		return icon;
 	}
 
-	// ── Helper: aplica estilo hotel a un JTextField ───────────────────────────
+	// ── Helper: applies hotel style to a JTextField ──────────────────────────
 	private void styleTextField(JTextField tf) {
 	}
 
@@ -124,9 +124,9 @@ public class V_Customer extends JDialog implements ActionListener {
 		};
 
 		model.addColumn("ID");
-		model.addColumn("Nombre");
-		model.addColumn("Apellido");
-		model.addColumn("Teléfono");
+		model.addColumn("Name");
+		model.addColumn("Surname");
+		model.addColumn("Phone");
 		model.addColumn("DNI");
 
 		ArrayList<Customer> customers = cont.viewCustomers();
@@ -148,32 +148,32 @@ public class V_Customer extends JDialog implements ActionListener {
 		setResizable(false);
 		getContentPane().setLayout(null);
 
-		// Fondo general de la ventana en navy oscuro
+		// General window background in dark navy
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
-		// Colores reutilizables del tema hotel
+		// Reusable hotel-theme colours
 		Color btnBg = new Color(20, 35, 58);
 		Color btnFg = new Color(230, 200, 110);
 		Color btnBorder = new Color(201, 168, 76);
 
 		
-			// ── Panel título con fondo decorativo ─────────────────────────────
+			// ── Title panel with decorative background ───────────────────────
 			titulo = new ImagePanel("/images/cust_titulo_bg.png");
 			titulo.setBounds(10, 10, 1024, 60);
 			getContentPane().add(titulo);
 			titulo.setLayout(null);
 
-			// Etiqueta del título en dorado claro
+			// Title label in light gold
 			lblNewLabel = new JLabel("Customer Management");
 			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			lblNewLabel.setForeground(new Color(230, 200, 110));
 			lblNewLabel.setBounds(24, 19, 220, 25);
 			titulo.add(lblNewLabel);
 
-			// Botón Exit: tonos rojizos para diferenciarlo
+			// Exit button: reddish tones to stand out
 			exit = new JButton("  Exit");
 			exit.setBounds(914, 14, 100, 35);
 			titulo.add(exit);
@@ -189,7 +189,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		
 		
 		
-			// ── Tabla con estilo hotel ─────────────────────────────────────────
+			// ── Table with hotel style ────────────────────────────────────────
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 110, 1024, 470);
 			scrollPane.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
@@ -204,14 +204,13 @@ public class V_Customer extends JDialog implements ActionListener {
 			Tabla_Cust.setSelectionBackground(new Color(201, 168, 76));
 			Tabla_Cust.setSelectionForeground(new Color(10, 20, 35));
 
-			// Cabecera de la tabla en estilo hotel
+			// Table header in hotel style
 			Tabla_Cust.getTableHeader().setFont(boldFont);
 			Tabla_Cust.getTableHeader().setBackground(new Color(10, 20, 35));
 			Tabla_Cust.getTableHeader().setForeground(new Color(201, 168, 76));
 			Tabla_Cust.getTableHeader().setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
 
-			Tabla_Cust.addMouseListener(new java.awt.event.MouseAdapter() { // esto es para cuando seleccionamos una
-																			// fila, se copie toda la info.
+			Tabla_Cust.addMouseListener(new java.awt.event.MouseAdapter() { // copies all row data into the form fields on row click
 				@Override
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					int selectedRow = Tabla_Cust.getSelectedRow();
@@ -228,7 +227,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			scrollPane.getViewport().setBackground(new Color(14, 26, 44));
 		
 		
-			// ── Panel info / formulario con fondo decorativo ──────────────────
+			// ── Info / form panel with decorative background ─────────────────
 			info = new ImagePanel("/images/cust_info_bg.png");
 			info.setBounds(10, 600, 1024, 200);
 			getContentPane().add(info);
@@ -305,7 +304,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			styleTextField(textField_ID_DNI);
 			info.add(textField_ID_DNI);
 
-			// Botón Add: tonos verdes
+			// Add button: green tones
 			btnAdd = new JButton("  Add +");
 			btnAdd.setFont(normalFont);
 			btnAdd.addActionListener(this);
@@ -319,7 +318,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			btnAdd.setFocusPainted(false);
 			info.add(btnAdd);
 
-			// Botón Delete: tonos rojizos
+			// Delete button: reddish tones
 			btnDelete = new JButton("  Delete");
 			btnDelete.addActionListener(this);
 			btnDelete.setFont(normalFont);
@@ -333,7 +332,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			btnDelete.setFocusPainted(false);
 			info.add(btnDelete);
 
-			// Botón Edit: tonos dorados
+			// Edit button: golden tones
 			btnEdit = new JButton("  Edit");
 			btnEdit.setFont(normalFont);
 			btnEdit.setBounds(680, 125, 120, 35);
@@ -347,7 +346,7 @@ public class V_Customer extends JDialog implements ActionListener {
 			info.add(btnEdit);
 			btnEdit.addActionListener(this);
 
-			// Botón Clear: tonos dorados
+			// Clear button: golden tones
 			btnClear = new JButton("  Clear");
 			btnClear.setFont(normalFont);
 			btnClear.setBounds(820, 125, 120, 35);
@@ -426,22 +425,22 @@ public class V_Customer extends JDialog implements ActionListener {
 
 		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()) {
 			valido = false;
-			JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
+			JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
 		if (valido) {
 			try {
 				if (!phoneStr.matches("\\d{9}")) {
-					throw new PhoneNumException("Formato de teléfono incorrecto (deben ser 9 dígitos).");
+					throw new PhoneNumException("Invalid phone format (must be 9 digits).");
 				}
 				phoneInt = Integer.parseInt(phoneStr);
 			} catch (PhoneNumException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Format Error", JOptionPane.ERROR_MESSAGE);
 			} catch (NumberFormatException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de formato",
+				JOptionPane.showMessageDialog(this, "Phone number must contain digits only.", "Format Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -449,29 +448,29 @@ public class V_Customer extends JDialog implements ActionListener {
 		if (valido) {
 			try {
 				if (!dni.matches("\\d{8}[A-Za-z]")) {
-					throw new DniException("Formato de DNI incorrecto (8 números y 1 letra).");
+					throw new DniException("Invalid DNI format (8 digits and 1 letter).");
 				}
 			} catch (DniException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Format Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
 		if (valido) {
 			if (cont.checkDni(dni)) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El DNI ya existe en la base de datos.", "Error",
+				JOptionPane.showMessageDialog(this, "DNI already exists in the database.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else if (cont.checkPhone(phoneInt)) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El teléfono ya existe en la base de datos.", "Error",
+				JOptionPane.showMessageDialog(this, "Phone number already exists in the database.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
 		if (valido) {
 			cont.addCostumer(name, surname, phoneInt, dni);
-			JOptionPane.showMessageDialog(this, "Cliente añadido con éxito.", "Éxito",
+			JOptionPane.showMessageDialog(this, "Customer added successfully.", "Success",
 					JOptionPane.INFORMATION_MESSAGE);
 			cargarTabla();
 		}
@@ -497,7 +496,7 @@ public class V_Customer extends JDialog implements ActionListener {
 		if (name.isEmpty() || surname.isEmpty() || phoneStr.isEmpty() || dni.isEmpty()
 				|| textField_ID.getText().trim().isEmpty()) {
 			valido = false;
-			JOptionPane.showMessageDialog(this, "Todos los campos deben estar rellenos.", "Error",
+			JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -514,15 +513,15 @@ public class V_Customer extends JDialog implements ActionListener {
 		if (valido) {
 			try {
 				if (!phoneStr.matches("\\d{9}")) {
-					throw new PhoneNumException("Formato de teléfono incorrecto (deben ser 9 dígitos).");
+					throw new PhoneNumException("Invalid phone format (must be 9 digits).");
 				}
 				phoneInt = Integer.parseInt(phoneStr);
 			} catch (PhoneNumException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Format Error", JOptionPane.ERROR_MESSAGE);
 			} catch (NumberFormatException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.", "Error de formato",
+				JOptionPane.showMessageDialog(this, "Phone number must contain digits only.", "Format Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -530,22 +529,22 @@ public class V_Customer extends JDialog implements ActionListener {
 		if (valido) {
 			try {
 				if (!dni.matches("\\d{8}[A-Za-z]")) {
-					throw new DniException("Formato de DNI incorrecto (8 números y 1 letra).");
+					throw new DniException("Invalid DNI format (8 digits and 1 letter).");
 				}
 			} catch (DniException ex) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Format Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
 		if (valido) {
 			if (cont.checkDni(dni, id)) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El DNI ya existe en la base de datos.", "Error",
+				JOptionPane.showMessageDialog(this, "DNI already exists in the database.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else if (cont.checkPhone(phoneInt, id)) {
 				valido = false;
-				JOptionPane.showMessageDialog(this, "El teléfono ya existe en la base de datos.", "Error",
+				JOptionPane.showMessageDialog(this, "Phone number already exists in the database.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}

@@ -20,7 +20,7 @@ public class LoginControlador {
 		this.dao = dao;
 	}
 
-	//para el mockito
+	// Default constructor for Mockito
 	public LoginControlador() {
 	}
 

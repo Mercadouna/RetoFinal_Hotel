@@ -15,12 +15,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 public class ImplementacionBD implements AdminDAO {
-	// Atributos
+	// Fields
 	private Connection con;
 	private PreparedStatement stmt;
 	private java.sql.CallableStatement cs;
-	// Los siguientes atributos se utilizan para recoger los valores del fich de
-	// configuraci n
+	// The following fields hold configuration values read from the config file
 	private ResourceBundle configFile;
 	private String driverBD;
 	private String urlBD;
@@ -69,7 +68,7 @@ public class ImplementacionBD implements AdminDAO {
 		try {
 			con = DriverManager.getConnection(urlBD, this.userBD, this.passwordBD);
 		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
+			System.out.println("Error trying to open the database connection");
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,7 +102,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al recuperar las habitaciones");
+			System.out.println("Error retrieving rooms");
 			e.printStackTrace();
 		}
 		return rooms;
@@ -136,7 +135,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al recuperar los clientes");
+			System.out.println("Error retrieving customers");
 			e.printStackTrace();
 		}
 		return customers;
@@ -177,7 +176,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al recuperar las habitaciones");
+			System.out.println("Error retrieving bookings");
 			e.printStackTrace();
 		}
 		return bookings;
@@ -209,12 +208,12 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al añadir cliente");
+			System.out.println("Error adding customer");
 			e.printStackTrace();
 		}
 		return correct;
 	}
-	
+
 	/**
 	 * Deletes a customer from the database by their ID.
 	 * Opens a connection and executes a DELETE statement using the given customer identifier.
@@ -269,7 +268,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al añadir Reserva");
+			System.out.println("Error adding booking");
 			e.printStackTrace();
 		}
 		return correct;
@@ -297,12 +296,12 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al añadir cliente");
+			System.out.println("Error adding extra service");
 			e.printStackTrace();
 		}
 		return correct;
 	}
-	
+
 	/**
 	 * Checks whether a phone number already exists in the database.
 	 * Opens a connection and executes a query searching for the given phone number.
@@ -325,7 +324,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar el teléfono");
+			System.out.println("Error checking phone number");
 			e.printStackTrace();
 		}
 		return exists;
@@ -383,7 +382,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar el DNI");
+			System.out.println("Error checking DNI");
 			e.printStackTrace();
 		}
 		return exists;
@@ -446,7 +445,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al editar cliente");
+			System.out.println("Error editing customer");
 			e.printStackTrace();
 		}
 		return correct;
@@ -478,7 +477,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar la disponibilidad de la habitación");
+			System.out.println("Error checking room availability");
 			e.printStackTrace();
 		}
 		return valido;
@@ -510,7 +509,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar la disponibilidad del cliente");
+			System.out.println("Error checking customer availability");
 			e.printStackTrace();
 		}
 		return valido;
@@ -591,7 +590,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al iniciar sesión");
+			System.out.println("Error during login");
 			e.printStackTrace();
 		}
 		return correct;
@@ -617,7 +616,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al eliminar reserva");
+			System.out.println("Error deleting booking");
 			e.printStackTrace();
 		}
 		return correct;
@@ -677,7 +676,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al ver los servicios extra de la reserva");
+			System.out.println("Error retrieving extra services for the booking");
 			e.printStackTrace();
 		}
 		return extraServices;
@@ -732,7 +731,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar si el servicio extra existe");
+			System.out.println("Error checking if extra service exists");
 			e.printStackTrace();
 		}
 		return exists;
@@ -774,7 +773,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al recuperar reservas sin pagar");
+			System.out.println("Error retrieving unpaid bookings");
 			e.printStackTrace();
 		}
 		return bookings;
@@ -804,7 +803,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al comprobar si el servicio extra está en la reserva");
+			System.out.println("Error checking if extra service is already in the booking");
 			e.printStackTrace();
 		}
 		return exists;
@@ -832,7 +831,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al eliminar servicio extra de la reserva");
+			System.out.println("Error removing extra service from booking");
 			e.printStackTrace();
 		}
 		return correct;
@@ -878,7 +877,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al recuperar la reserva por ID");
+			System.out.println("Error retrieving booking by ID");
 			e.printStackTrace();
 		}
 		return result;
@@ -909,7 +908,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al ver los servicios extra");
+			System.out.println("Error retrieving extra services");
 			e.printStackTrace();
 		}
 		return extraServices;
@@ -937,7 +936,7 @@ public class ImplementacionBD implements AdminDAO {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("Error al cambiar el estado de pago de la reserva");
+			System.out.println("Error toggling payment status of booking");
 			e.printStackTrace();
 		}
 		return correct;

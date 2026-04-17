@@ -45,7 +45,7 @@ public class V_Room extends JDialog implements ActionListener {
 	private JButton btnExportXml;
 	private JLabel lblRooms;
 
-	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
+	// ── Helper: JPanel that paints a background image ────────────────────────
 	private static class ImagePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private Image bgImage;
@@ -68,7 +68,7 @@ public class V_Room extends JDialog implements ActionListener {
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: loads an ImageIcon from /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -90,19 +90,19 @@ public class V_Room extends JDialog implements ActionListener {
 		setResizable(false);
 		getContentPane().setLayout(null);
 
-		// Fondo general de la ventana en navy oscuro
+		// General window background in dark navy
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
-		// ── Panel título con fondo decorativo ─────────────────────────────────
+		// ── Title panel with decorative background ───────────────────────────
 		titulo = new ImagePanel("/images/cust_titulo_bg.png");
 		titulo.setLayout(null);
 		titulo.setBounds(10, 11, 1024, 65);
 		getContentPane().add(titulo);
 
-		// Botón Export XML: tonos azules
+		// Export XML button: blue tones
 		btnExportXml = new JButton("  Export XML");
 		btnExportXml.setFont(normalFont);
 		btnExportXml.setBounds(755, 16, 145, 35);
@@ -113,7 +113,7 @@ public class V_Room extends JDialog implements ActionListener {
 		btnExportXml.addActionListener(this);
 		titulo.add(btnExportXml);
 
-		// Botón Exit: tonos rojizos
+		// Exit button: reddish tones
 		exit = new JButton("  Exit");
 		exit.setFont(normalFont);
 		exit.setBounds(914, 16, 100, 35);
@@ -127,14 +127,14 @@ public class V_Room extends JDialog implements ActionListener {
 		titulo.add(exit);
 		exit.addActionListener(this);
 
-		// Etiqueta título en dorado claro
+		// Title label in light gold
 		lblRooms = new JLabel("Rooms");
 		lblRooms.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblRooms.setForeground(new Color(230, 200, 110));
 		lblRooms.setBounds(34, 21, 200, 25);
 		titulo.add(lblRooms);
 
-		// ── Tabla con estilo hotel ─────────────────────────────────────────────
+		// ── Table with hotel style ────────────────────────────────────────────
 		scrollPane_roomsTable = new JScrollPane();
 		scrollPane_roomsTable.setBounds(10, 87, 1024, 734);
 		scrollPane_roomsTable.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
@@ -149,7 +149,7 @@ public class V_Room extends JDialog implements ActionListener {
 		table.setSelectionBackground(new Color(201, 168, 76));
 		table.setSelectionForeground(new Color(10, 20, 35));
 
-		// Cabecera en estilo hotel
+		// Table header in hotel style
 		table.getTableHeader().setFont(boldFont);
 		table.getTableHeader().setBackground(new Color(10, 20, 35));
 		table.getTableHeader().setForeground(new Color(201, 168, 76));
@@ -227,7 +227,7 @@ public class V_Room extends JDialog implements ActionListener {
 
 		if (rooms.isEmpty() && customers.isEmpty() && bookings.isEmpty() && extraServices.isEmpty()) {
 			valido = false;
-			JOptionPane.showMessageDialog(this, "No hay datos para exportar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No data to export.", "Warning", JOptionPane.WARNING_MESSAGE);
 		}
 
 		if (valido) {
@@ -293,10 +293,10 @@ public class V_Room extends JDialog implements ActionListener {
 				outputter = new XMLOutputter(Format.getPrettyFormat());
 				outputter.output(doc, new FileOutputStream(file));
 
-				JOptionPane.showMessageDialog(this, "Exportado correctamente:\n" + file.getAbsolutePath(), "Éxito",
+				JOptionPane.showMessageDialog(this, "Exported successfully:\n" + file.getAbsolutePath(), "Success",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Error al exportar XML: " + ex.getMessage(), "Error",
+				JOptionPane.showMessageDialog(this, "Error exporting XML: " + ex.getMessage(), "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}

@@ -48,7 +48,8 @@ public class Booking {
      * @param idCustomer    the ID of the customer who made the booking
      * @param checkIn       the check-in date
      * @param checkOut      the check-out date
-     * @param paid          {@code true} if the booking has been paid; {@code false} otherwise
+     * @param paid          {@code true} if the booking has been paid; {@code false}
+     *                      otherwise
      * @param extraServices the list of extra services associated with this booking
      */
     public Booking(int idBooking, int idRoom, int idCustomer, LocalDate checkIn, LocalDate checkOut, boolean paid,

@@ -51,45 +51,45 @@ public class V_Menu extends JDialog implements ActionListener {
 	private JTextField textField_editPaymentId;
 	private JButton btnEditPayment;
 
-	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
+	// ── Helper: JPanel that paints a background image ────────────────────────
 	private static class ImagePanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 
-		// Almacena la imagen de fondo que se pintará en el panel
+		// Stores the background image to be painted on the panel
 		private Image bgImage;
 
 		public ImagePanel(String resourcePath) {
 
-			// Hace el panel transparente para que no tape la imagen con un color sólido
+			// Makes the panel transparent so it does not cover the image with a solid colour
 			setOpaque(false);
 
 			try {
-				// Busca la imagen dentro del classpath del proyecto usando su ruta
-				// Funciona tanto en desarrollo como si el proyecto se exporta a .jar
+				// Looks for the image inside the project classpath using its path
+				// Works both in development and when the project is exported to a .jar
 				URL url = getClass().getResource(resourcePath);
 
-				// Solo carga la imagen si la URL se encontró, evitando NullPointerException
+				// Only loads the image if the URL was found, avoiding NullPointerException
 				if (url != null)
 					bgImage = new ImageIcon(url).getImage();
 
 			} catch (Exception ignored) {
-				// Si la imagen no existe o falla la carga, el panel queda sin fondo
-				// pero el programa no se rompe
+				// If the image does not exist or fails to load, the panel has no background
+				// but the program does not crash
 			}
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
 
-			// Solo intenta dibujar si la imagen se cargó correctamente
+			// Only tries to draw if the image was loaded successfully
 			if (bgImage != null)
-				// Dibuja la imagen estirada al tamaño exacto del panel (getWidth, getHeight)
-				// El parámetro "this" avisa al panel cuando la imagen termina de cargar
+				// Draws the image stretched to the exact size of the panel (getWidth, getHeight)
+				// The "this" parameter notifies the panel when the image finishes loading
 				g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this);
 
-			// Llama al pintado original de JPanel para que los componentes
-			// hijos (botones, labels...) se dibujen encima de la imagen
+			// Calls the original JPanel paint method so child components
+			// (buttons, labels...) are drawn on top of the image
 			super.paintComponent(g);
 		}
 	}
@@ -97,21 +97,20 @@ public class V_Menu extends JDialog implements ActionListener {
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
-			// Construye la ruta completa añadiendo el prefijo "/images/" al nombre del
-			// archivo
-			// La barra inicial "/" indica que busca desde la raíz del classpath
+			// Builds the full path by prepending "/images/" to the file name
+			// The leading "/" means it searches from the root of the classpath
 			URL url = getClass().getResource("/images/" + name);
 
-			// Si encontró el archivo, crea el ImageIcon listo para usar en un botón
-			// Si url es null, icon se queda como null
+			// If the file was found, creates the ImageIcon ready to use on a button
+			// If url is null, icon stays null
 			if (url != null)
 				icon = new ImageIcon(url);
 
 		} catch (Exception ignored) {
-			// Si el archivo no existe o falla, icon se queda null sin romper el programa
+			// If the file does not exist or fails, icon stays null without crashing
 		}
 
-		// Único return: devuelve el icono cargado, o null si algo falló
+		// Single return: returns the loaded icon, or null if something failed
 		return icon;
 	}
 
@@ -125,18 +124,18 @@ public class V_Menu extends JDialog implements ActionListener {
 		setResizable(false);
 		getContentPane().setLayout(null);
 
-		// ── Fondo general de la ventana ──────────────────────────────────────
+		// ── General window background ────────────────────────────────────────
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Font normalFont = new Font("Tahoma", Font.PLAIN, 14);
 
-		// ── Panel lateral con imagen de fondo ─────────────────────────────────
+		// ── Sidebar panel with background image ──────────────────────────────
 		panel_Botones_Ventanas = new ImagePanel("/images/sidebar_bg_2.png ");
 		panel_Botones_Ventanas.setBounds(0, 157, 222, 655);
 		getContentPane().add(panel_Botones_Ventanas);
 		panel_Botones_Ventanas.setLayout(null);
 
-		// Colores de botón acordes al tema hotel
+		// Button colours matching the hotel theme
 		Color btnBg = new Color(20, 35, 58);
 		Color btnFg = new Color(230, 200, 110);
 		Color btnBorder = new Color(201, 168, 76);
@@ -193,25 +192,18 @@ public class V_Menu extends JDialog implements ActionListener {
 		panel_Botones_Ventanas.add(btnNewButton_ExtraServices);
 		btnNewButton_ExtraServices.addActionListener(this);
 
-		btnNewButton_Exit = new JButton("  Exit"); // Crea el botón con el texto "Exit"
-		btnNewButton_Exit.setFont(normalFont); // Aplica la fuente Tahoma 14px definida arriba
-		btnNewButton_Exit.setBounds(20, 600, 180, 45); // Posición (x=20, y=600) y tamaño (180x45 píxeles)
-		btnNewButton_Exit.setBackground(new Color(35, 15, 15)); // Fondo rojo oscuro para diferenciarlo del
-																// resto de botones
-		btnNewButton_Exit.setForeground(new Color(220, 130, 130)); // Texto en rojo claro
-		btnNewButton_Exit.setBorder(BorderFactory.createLineBorder(new Color(160, 70, 70), 1)); // Borde
-																								// de
-																								// 1px
-																								// en
-																								// rojo
-																								// medio
-		btnNewButton_Exit.setIcon(loadIcon("ico_exit.png")); // Carga y asigna el icono de salida desde /images/
-		btnNewButton_Exit.setHorizontalAlignment(SwingConstants.LEFT); // Alinea el icono y el texto a la
-																		// izquierda
-		btnNewButton_Exit.setIconTextGap(10); // Espacio de 10px entre el icono y el texto
-		btnNewButton_Exit.setFocusPainted(false); // Elimina el borde punteado que aparece al hacer clic
-		panel_Botones_Ventanas.add(btnNewButton_Exit); // Añade el botón al panel lateral
-		btnNewButton_Exit.addActionListener(this); // Registra la clase actual como listener para detectar el clic
+		btnNewButton_Exit = new JButton("  Exit");
+		btnNewButton_Exit.setFont(normalFont);
+		btnNewButton_Exit.setBounds(20, 600, 180, 45);
+		btnNewButton_Exit.setBackground(new Color(35, 15, 15)); // Dark red background to stand out from other buttons
+		btnNewButton_Exit.setForeground(new Color(220, 130, 130)); // Light red text
+		btnNewButton_Exit.setBorder(BorderFactory.createLineBorder(new Color(160, 70, 70), 1));
+		btnNewButton_Exit.setIcon(loadIcon("ico_exit.png"));
+		btnNewButton_Exit.setHorizontalAlignment(SwingConstants.LEFT);
+		btnNewButton_Exit.setIconTextGap(10); // 10px gap between icon and text
+		btnNewButton_Exit.setFocusPainted(false); // Removes the dotted border that appears on click
+		panel_Botones_Ventanas.add(btnNewButton_Exit);
+		btnNewButton_Exit.addActionListener(this);
 
 		// ── Panel logo (esquina superior izquierda, 0,0 – 222,157) ────────────
 		JPanel panel_Logo = new ImagePanel("/images/Logo_Hotel.png");
@@ -221,22 +213,19 @@ public class V_Menu extends JDialog implements ActionListener {
 
 		ImageIcon logoIcon = loadIcon("logo.png");
 		if (logoIcon != null) {
-			Image scaled = logoIcon.getImage().getScaledInstance(190, 130, Image.SCALE_SMOOTH); // SCALE_SMOOTH es para
-																								// que la imagen
-																								// aparezca con mejor
-																								// calidad.
+			Image scaled = logoIcon.getImage().getScaledInstance(190, 130, Image.SCALE_SMOOTH); // SCALE_SMOOTH for better image quality
 			JLabel lblLogo = new JLabel(new ImageIcon(scaled));
 			lblLogo.setBounds(16, 13, 190, 130);
 			panel_Logo.add(lblLogo);
 		}
 
-		// ── Panel título / header con imagen de fondo ─────────────────────────
+		// ── Title / header panel with background image ───────────────────────
 		panel_Titulo = new ImagePanel("/images/header_bg_1.png");
 		panel_Titulo.setBounds(223, 0, 811, 157);
 		getContentPane().add(panel_Titulo);
 		panel_Titulo.setLayout(null);
 
-		// ── ScrollPane con panel de fondo ────────────────────────────────────
+		// ── ScrollPane with background panel ─────────────────────────────────
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 
 		JPanel panel_Main = new ImagePanel("/images/main_bg.png");
@@ -408,7 +397,7 @@ public class V_Menu extends JDialog implements ActionListener {
 			this.dispose();
 		}
 		if (e.getSource() == btnNewButton_Exit) {
-			opcion = JOptionPane.showConfirmDialog(this, "Seguro que quieres salir?", "Confirm",
+			opcion = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Confirm",
 					JOptionPane.YES_NO_OPTION);
 			if (opcion == JOptionPane.YES_OPTION) {
 				MusicPlayer.stop();

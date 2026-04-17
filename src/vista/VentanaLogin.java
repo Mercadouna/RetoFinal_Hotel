@@ -34,7 +34,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private JLabel Contarseña;
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: loads an ImageIcon from /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -46,7 +46,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		return icon;
 	}
 
-	// ── Helper: aplica estilo hotel a un JTextField ───────────────────────────
+	// ── Helper: applies hotel style to a JTextField ──────────────────────────
 	private void styleTextField(JTextField tf) {
 		tf.setBackground(new Color(20, 35, 58));
 		tf.setForeground(new Color(230, 200, 110));
@@ -62,8 +62,8 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		setBounds(100, 100, 1060, 860);
 		setResizable(false);
 
-		// ── Fondo: JLabel con imagen ocupa todo el contentPane ────────────────
-		// Al usar un JLabel como contentPane no hace falta sobreescribir Graphics
+		// ── Background: JLabel with image covers the entire contentPane ─────────
+		// Using a JLabel as contentPane avoids the need to override paintComponent
 		ImageIcon bgIcon = loadIcon("login_bg_2.png");
 		JLabel background = new JLabel();
 
@@ -71,11 +71,11 @@ public class VentanaLogin extends JFrame implements ActionListener {
 			Image scaled = bgIcon.getImage().getScaledInstance(1060, 860, Image.SCALE_SMOOTH);
 			background.setIcon(new ImageIcon(scaled));
 		}
-		background.setLayout(null); // permite posicionar hijos con setBounds
+		background.setLayout(null); // allows children to be positioned with setBounds
 		background.setBounds(0, 0, 1060, 860);
-		setContentPane(background); // sustituye el contentPane por el JLabel
+		setContentPane(background); // replaces the default contentPane with the JLabel
 
-		// ── Logo centrado en la parte superior ────────────────────────────────
+		// ── Logo centered at the top ──────────────────────────────────────────
 		ImageIcon logoIcon = loadIcon("Logo_Hotel.png");
 		if (logoIcon != null) {
 			Image scaled = logoIcon.getImage().getScaledInstance(280, 280, Image.SCALE_SMOOTH);
@@ -88,15 +88,15 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		Font boldFont = new Font("Tahoma", Font.BOLD, 14);
 		Color labelColor = new Color(230, 200, 110);
 
-		// ── Etiqueta Usuario ──────────────────────────────────────────────────
-		lblNewLabel = new JLabel("Usuario");
+		// ── Username label ────────────────────────────────────────────────────
+		lblNewLabel = new JLabel("Username");
 		lblNewLabel.setFont(boldFont);
 		lblNewLabel.setForeground(labelColor);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(406, 490, 130, 20);
 		background.add(lblNewLabel);
 
-		// ── Campo Usuario ─────────────────────────────────────────────────────
+		// ── Username field ────────────────────────────────────────────────────
 		campoUsuario = new JTextField();
 		campoUsuario.setFont(normalFont);
 		campoUsuario.setColumns(10);
@@ -104,22 +104,22 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		styleTextField(campoUsuario);
 		background.add(campoUsuario);
 
-		// ── Etiqueta Contraseña ───────────────────────────────────────────────
-		Contarseña = new JLabel("Contraseña");
+		// ── Password label ────────────────────────────────────────────────────
+		Contarseña = new JLabel("Password");
 		Contarseña.setFont(boldFont);
 		Contarseña.setForeground(labelColor);
 		Contarseña.setHorizontalAlignment(SwingConstants.RIGHT);
 		Contarseña.setBounds(406, 560, 130, 20);
 		background.add(Contarseña);
 
-		// ── Campo Contraseña ──────────────────────────────────────────────────
+		// ── Password field ────────────────────────────────────────────────────
 		campoContrasena = new JPasswordField();
 		campoContrasena.setFont(normalFont);
 		campoContrasena.setBounds(406, 585, 245, 30);
 		styleTextField(campoContrasena);
 		background.add(campoContrasena);
 
-		// ── Botón Login ───────────────────────────────────────────────────────
+		// ── Login button ─────────────────────────────────────────────────────
 		btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnLogin.setBounds(453, 640, 151, 38);
@@ -130,7 +130,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		btnLogin.addActionListener(this);
 		background.add(btnLogin);
 
-		// ── Label de mensaje de error / feedback ──────────────────────────────
+		// ── Error / feedback message label ───────────────────────────────────
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setFont(normalFont);
 		lblNewLabel_1.setForeground(new Color(220, 130, 130));
@@ -151,7 +151,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 				m.setVisible(true);
 				this.dispose();
 			} else {
-				JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+				JOptionPane.showMessageDialog(this, "Incorrect username or password");
 			}
 		}
 	}

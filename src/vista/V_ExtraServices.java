@@ -67,7 +67,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 	private JButton btnDelete;
 	private JLabel lblTotal;
 
-	// ── Helper: JPanel que pinta una imagen de fondo ─────────────────────────
+	// ── Helper: JPanel that paints a background image ────────────────────────
 	private static class ImagePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private Image bgImage;
@@ -90,7 +90,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		}
 	}
 
-	// ── Helper: carga un ImageIcon desde /images/ ─────────────────────────────
+	// ── Helper: loads an ImageIcon from /images/ ─────────────────────────────
 	private ImageIcon loadIcon(String name) {
 		ImageIcon icon = null;
 		try {
@@ -102,7 +102,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		return icon;
 	}
 
-	// ── Helper: aplica estilo hotel a un JTextField ───────────────────────────
+	// ── Helper: applies hotel style to a JTextField ──────────────────────────
 	private void styleTextField(JTextField tf) {
 		tf.setBackground(new Color(20, 35, 58));
 		tf.setForeground(new Color(230, 200, 110));
@@ -171,7 +171,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 
 		extraServices = cont.viewBookingExtraServices(idBooking);
 		bookingData = cont.getBookingById(idBooking);
-		nights = ChronoUnit.DAYS.between(bookingData.getBooking().getCheckIn(), bookingData.getBooking().getCheckOut()); //Un enum  que sirve para pillar los dias que ha pasado en el hotel.
+		nights = ChronoUnit.DAYS.between(bookingData.getBooking().getCheckIn(), bookingData.getBooking().getCheckOut()); // calculates the number of nights between check-in and check-out
 		roomCost = bookingData.getRoom().getPricePerNight() * nights;
 
 		extraTotal = 0.0;
@@ -202,7 +202,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			priceMap.put(es.getIdService(), es.getPrice());
 		}
 
-		// Altura aumentada a 920 para acomodar los iconos en el subtítulo
+		// Height increased to 920 to accommodate the icons in the subtitle panel
 		setBounds(100, 100, 1500, 920);
 		setResizable(false);
 
@@ -210,7 +210,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		Font boldFont = new Font("Tahoma", Font.BOLD, 16);
 		getContentPane().setLayout(null);
 
-		// Fondo general de la ventana en navy oscuro
+		// General window background in dark navy
 		getContentPane().setBackground(new Color(10, 20, 35));
 
 		Color btnBg = new Color(20, 35, 58);
@@ -218,13 +218,13 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 		Color btnBorder = new Color(201, 168, 76);
 
 		{
-			// ── Panel título ──────────────────────────────────────────────────
+			// ── Title panel ──────────────────────────────────────────────────
 			titulo = new ImagePanel("/images/extra_titulo_bg.png");
 			titulo.setBounds(10, 10, 1464, 40);
 			getContentPane().add(titulo);
 			titulo.setLayout(null);
 
-			// Botón Exit: tonos rojizos
+			// Exit button: reddish tones
 			exit = new JButton("  Exit");
 			exit.addActionListener(this);
 			exit.setFont(normalFont);
@@ -238,7 +238,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			exit.setFocusPainted(false);
 			titulo.add(exit);
 
-			// Título en dorado claro
+			// Title label in light gold
 			lblNewLabel = new JLabel("Extra Service Management");
 			lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			lblNewLabel.setForeground(new Color(230, 200, 110));
@@ -246,8 +246,8 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			titulo.add(lblNewLabel);
 		}
 		{
-			// ── Panel catálogo: icono + nombre para cada servicio ─────────────
-			// Altura aumentada a 110 para que los iconos de 52px sean visibles
+			// ── Catalogue panel: icon + name for each service ────────────────
+			// Height increased to 110 to make the 52px icons visible
 			subtitulo = new ImagePanel("/images/extra_subtitulo_bg.png");
 			subtitulo.setBounds(20, 61, 1464, 110);
 			getContentPane().add(subtitulo);
@@ -379,7 +379,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			subtitulo.add(txtCradle);
 		}
 		{
-			// ── Tabla principal de reservas (desplazada 60px hacia abajo) ─────
+			// ── Main bookings table (shifted 60px down) ──────────────────────
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 180, 1056, 400);
 			scrollPane.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
@@ -426,7 +426,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			styleTextField(textField_BookingId);
 			info.add(textField_BookingId);
 
-			// Botón Search en tonos dorados
+			// Search button: golden tones
 			btn_Search = new JButton("  Search");
 			btn_Search.setFont(normalFont);
 			btn_Search.addActionListener(this);
@@ -450,7 +450,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			styleTextField(textField_Extra_Service_ID);
 			info.add(textField_Extra_Service_ID);
 
-			// Botón Add: tonos verdes
+			// Add button: green tones
 			btnAdd = new JButton("  Add +");
 			btnAdd.setFont(normalFont);
 			btnAdd.setBounds(971, 57, 120, 35);
@@ -464,7 +464,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			btnAdd.setFocusPainted(false);
 			info.add(btnAdd);
 
-			// Botón Delete: tonos rojizos
+			// Delete button: reddish tones
 			btnDelete = new JButton("  Delete");
 			btnDelete.setFont(normalFont);
 			btnDelete.setBounds(1110, 57, 120, 35);
@@ -492,7 +492,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 			info.add(lblTotal);
 		}
 
-		// ── Tabla de servicios extra (panel derecho, desplazado 60px) ─────────
+		// ── Extra services table (right panel, shifted 60px down) ───────────
 		JScrollPane scrollPaneExtra = new JScrollPane();
 		scrollPaneExtra.setBounds(1076, 181, 398, 400);
 		scrollPaneExtra.setBorder(BorderFactory.createLineBorder(new Color(201, 168, 76), 1));
@@ -573,7 +573,7 @@ public class V_ExtraServices extends JDialog implements ActionListener {
 								JOptionPane.showMessageDialog(this, "Extra service added successfully.");
 								cargarTablaExtraServices(bookingId);
 							} else {
-								JOptionPane.showMessageDialog(this, "Error al añadir servicio extra.");
+								JOptionPane.showMessageDialog(this, "Error adding extra service.");
 							}
 						}
 					} else {

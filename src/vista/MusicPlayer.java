@@ -11,7 +11,7 @@ public class MusicPlayer {
 	private static Clip clip;
 
 	public static void play() throws MusicPlayerException {
-		boolean canPlay = clip == null || !clip.isRunning(); //comprueba si puede ser reproducido. Si no esta reproduciendose o no existe el clip, se reproduce.
+		boolean canPlay = clip == null || !clip.isRunning(); // checks if it can be played — true if the clip does not exist or is not currently running
 		if (canPlay) {
 			try {
 				URL url = MusicPlayer.class.getResource("/music/Back.wav");
@@ -23,7 +23,7 @@ public class MusicPlayer {
 					clip.start();
 				}
 			} catch (Exception e) {
-				throw new MusicPlayerException("Error al reproducir la musica de fondo");
+				throw new MusicPlayerException("Error playing background music");
 			}
 		}
 	}
